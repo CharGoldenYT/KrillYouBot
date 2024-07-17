@@ -1,0 +1,1 @@
+python pyinstaller\Lib\site-packages\PyInstaller\__main__.py -F --workpath ./export/build/ --distpath ./export/ krillyou.py
