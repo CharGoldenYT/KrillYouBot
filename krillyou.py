@@ -15,9 +15,10 @@ except OSError as e:
     print(message); logging.error(message)
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
-logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log",filemode="a", format="%(asctime)s %(levelname)s %(message)s")
+
 
 def cleanup():
+    logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
     print("closing!"); logging.info('closing!')
 
 atexit.register(cleanup)
@@ -55,7 +56,7 @@ async def on_message(message):
 
         if strippedUserID == 'Null':print('is null'); logging.warning('is null');finalMessage = 'Incorrect Useage! Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)'; isNull = 'true'
 
-        if not strippedUserID.startswith('<') and not isNull == 'true':print('has no user'); logging.warning('has no user');finalMessage = 'No User Specified!\nHow am i supposed to krill an unknown target?'; noUser = 'true'
+        if not strippedUserID.startswith('<') and not isNull == 'true':print('has no user'); logging.warning('has no user');finalMessage = 'No User Specified!\nHow am i supposed to krill an unknown target?\n(Try /krill <@userID>/@user (e.g. <@300020084808744962>))'; noUser = 'true'
 
         if not isNull == 'true' and not noUser == 'true':finalMessage = 'Krilling ' + userID; print('isNull: ' + isNull + '\nnoUser: ' + noUser)
 
