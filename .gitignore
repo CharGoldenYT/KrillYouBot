@@ -1,6 +1,4 @@
-botKey.txt
 bot-env/*
 logs/*
 export/*
-krillyou.spec
 pyinstaller/*
