@@ -9,7 +9,10 @@ from readme import get_readme
 from readme import get_error
 from readme import get_privacy_policy
 from readme import get_tos
+from readme import get_gitVer
 from krillcommand import getKrillMessage
+
+ver = '1.3h'
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
@@ -47,6 +50,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    gitVer = get_gitVer()
+    if not str(gitVer).strip() == ver:
+        if not gitVer == None:print('Update Available! Check the github!')
     if message.author == client.user:
         return
 

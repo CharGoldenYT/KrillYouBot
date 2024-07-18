@@ -1,5 +1,6 @@
 # This generates the Readme used in the main krillyou.py
 import os
+from tkinter import NO
 import urllib.request as urllib
 readme = ''
 error = None
@@ -10,7 +11,7 @@ def get_readme():
     url = ''
     writeToFile = True
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/discord_readme.md').read().decode('utf-8'))
-    except urllib.HTTPError as e: print('shit the url handler died lmao: ' + str(e)); writeToFile = False
+    except urllib.HTTPError as e: print('shit the readme url handler died lmao: ' + str(e)); writeToFile = False
     if writeToFile == True:file = open('discord_readme.md', 'w'); print('final file: "' + url + '"'); file.write(url); file.close()
 
     if os.path.exists('discord_readme.md'): readme = open('discord_readme.md'); readme = 'This was generated with the [GitHub "discord_readme"](https://github.com/gameygu-0213/KrillYouBot/blob/main/discord_readme.md):\n\n' + readme.read()
@@ -33,7 +34,7 @@ def get_privacy_policy():
     url = ''
     writeToFile = True
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/Privacy%20Policy.md').read().decode('utf-8'))
-    except urllib.HTTPError as e: print('shit the url handler died lmao: ' + str(e)); writeToFile = False
+    except urllib.HTTPError as e: print('shit the privacyPolicy url handler died lmao: ' + str(e)); writeToFile = False
     if writeToFile == True:file = open('privacyPolicy.md', 'w'); file.write(url); file.close()
 
     if os.path.exists('privacyPolicy.md'): privacyPolicy = open('privacyPolicy.md'); privacyPolicy = 'This was generated with the [GitHub "Privacy Policy.md"](https://github.com/gameygu-0213/KrillYouBot/blob/main/Privacy%20Policy.md):\n\n' + privacyPolicy.read()
@@ -47,7 +48,7 @@ def get_tos():
     url = ''
     writeToFile = True
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/tos.md').read().decode('utf-8'))
-    except urllib.HTTPError as e: print('shit the url handler died lmao: ' + str(e)); writeToFile = False
+    except urllib.HTTPError as e: print('shit the tos url handler died lmao: ' + str(e)); writeToFile = False
     if writeToFile == True:file = open('tos.md', 'w'); file.write(url); file.close()
 
     if os.path.exists('tos.md'): tos = open('tos.md'); tos = 'This was generated with the [GitHub "tos.md"](https://github.com/gameygu-0213/KrillYouBot/blob/main/tos.md):\n\n' + tos.read()
@@ -56,3 +57,11 @@ def get_tos():
 
     print('get_tos returned: ' + tos)
     return tos
+
+def get_gitVer():
+    url = ''
+    versionToReturn = None
+    try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/gitVer.txt').read().decode('utf-8'))
+    except urllib.HTTPError as e: print('shit the gitVer url handler died lmao: ' + str(e)); url = None
+    if not url == None:versionToReturn = url
+    return versionToReturn
