@@ -1,4 +1,4 @@
-# Krill you bot (V1.3) - A Wacky simple Discord bot for krilling your friends!
+# Krill you bot (V1.3h) - A Wacky simple Discord bot for krilling your friends!
 
 ### Usage:
 
@@ -15,3 +15,5 @@
 ### In case the bot goes offline contact: @annyconducter on Discord.
 
 [GitHub](https://github.com/gameygu-0213/KrillYouBot)
+
+(P.S. you'll see the messages are special around April Fools :3)

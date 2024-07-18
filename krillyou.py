@@ -9,6 +9,7 @@ from readme import get_readme
 from readme import get_error
 from readme import get_privacy_policy
 from readme import get_tos
+from krillcommand import getKrillMessage
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
@@ -66,17 +67,15 @@ async def on_message(message):
         finalMessage = ''
         isNull = ''
         noUser = ''
-        if strippedUserID.startswith(' ') or strippedUserID.startswith('/krill'):strippedUserID = 'Null'
+        if strippedUserID.startswith(' ') or strippedUserID.startswith('/krill'):strippedUserID = None
 
-        if strippedUserID == 'Null':print('no option specified!'); logging.warning('no option specified!');finalMessage = 'Incorrect Useage! Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)'; isNull = 'true'
+        if strippedUserID == None:print('no option specified!'); logging.warning('no option specified!');finalMessage = 'Unknown Command! Got: Null\nuse ?krill about for a list of commands.'
 
-        if not strippedUserID.startswith('<') and not isNull == 'true':print('has no user'); logging.warning('has no user');finalMessage = 'No User Specified!\nHow am i supposed to krill an unknown target?\n(Try /krill <@userID>/@user (e.g. <@300020084808744962>))'; noUser = 'true'
-
-        if not isNull == 'true' and not noUser == 'true':finalMessage = 'Krilling ' + userID; print('isNull: ' + isNull + '\nnoUser: ' + noUser)
+        if not strippedUserID == None:finalMessage = getKrillMessage(strippedUserID)
 
         #print('userID:"' + strippedUserID + '"')
         #print('messageContent:' + messageContent)
-        if not messageContent == '/krill' and messageContent.startswith('/krill <'):
+        if lowercaseMessage.startswith('/krill <@'):
             try:await message.delete()
             except:logging.critical("Can't Delete Message! Does the bot have sufficient permissions?"); print("Can't Delete Message! Does the bot have sufficient permissions?")
         try:await message.channel.send(finalMessage)
