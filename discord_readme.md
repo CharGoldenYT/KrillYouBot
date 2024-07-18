@@ -1,4 +1,4 @@
-# Krill you bot (V1.3.1) - A Wacky simple Discord bot for krilling your friends!
+# Krill you bot (V1.3.1h) - A Wacky simple Discord bot for krilling your friends!
 
 ### Usage:
 
@@ -8,9 +8,11 @@
 
 `?krill about` Displays this message.
 
-`?krill privacyPolicy` Tells you the Privacy Policy of the bot.
+`?krill privacypolicy` Tells you the Privacy Policy of the bot.
 
-`?krill termsOfService` Tells you the Terms of Service of the bot.
+`?krill termsofservice` Tells you the Terms of Service of the bot.
+
+`?krill version` Displays Current version and its changelog
 
 ### In case the bot goes offline contact: @annyconducter on Discord.
 

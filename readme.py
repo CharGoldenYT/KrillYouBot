@@ -1,7 +1,6 @@
 # This generates the Readme used in the main krillyou.py
 import logging
 import os
-from tkinter import NO
 import urllib.request as urllib
 readme = ''
 error = None

@@ -12,7 +12,8 @@ from readme import get_tos
 from readme import get_gitVer
 from krillcommand import getKrillMessage
 
-ver = '1.3.1'
+ver = '1.3.1h'
+changelog = '\n# [1.3.1h]\n\n### Added\n\n- A changelog\n- A Version command\n\n### Changed\n- Removed accidental leftover import from readme.py'
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
@@ -121,6 +122,13 @@ async def on_message(message):
             print(author); logging.info(author)
 
             await message.channel.send(tos, suppress_embeds=(True))
+
+        if lowercaseMessage.startswith('?krill version'):
+
+            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"'
+            print(author); logging.info(author)
+
+            await message.channel.send('The current version is' + ver + '\n the current version\'s changelog is:' + changelog + ' \nSee the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)', suppress_embeds=(True))
             
             
 try:client.run(botKey)

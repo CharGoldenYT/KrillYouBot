@@ -6,7 +6,15 @@ in any server this bot is installed:
 
 `/krill <@userID>/@user` Krill any user (Requires send messages permission and read messages permission)
 
-`?krill help` Tells you how to use the bot (Case Sensitive!)
+`?krill help` Tells you how to use the bot
+
+`?krill about` Displays this message.
+
+`?krill privacypolicy` Tells you the Privacy Policy of the bot.
+
+`?krill termsofservice` Tells you the Terms of Service of the bot.
+
+`?krill version` Displays Current version and its changelog
 
 ### In case the bot goes offline contact: @annyconducter on Discord.
 
