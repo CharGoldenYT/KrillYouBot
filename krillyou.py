@@ -5,9 +5,14 @@ import logging
 import atexit
 from datetime import datetime
 import os
+from readme import get_readme
+from readme import get_error
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
+showReadme = True
 
+readme = get_readme()
+error = get_error()
 logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
 
 try:
@@ -18,8 +23,7 @@ except OSError as e:
 
 botKeyTxt = open('botKey.txt')
 botKey = botKeyTxt.read()
-
-readme = "# Krill you bot (V1.2.1) - A Wacky simple Discord bot for krilling your friends!\n\n### Usage:\n`/krill <@userID>/@user` Krill any user\n`?krill help` Tells you how to use the bot\n`?krill about` Displays this message\n### In case the bot goes offline contact: @annyconducter on Discord.\n\n[GitHub](https://github.com/gameygu-0213/KrillYouBot)"
+if not error == None: logging.error(error)
 
 def cleanup():
     var = input('Press any key to continue')
@@ -75,6 +79,8 @@ async def on_message(message):
         except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
     if lowercaseMessage.startswith('?krill'):
+        addReadme = ''
+        if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + readme
         if lowercaseMessage.startswith('?krill help'):
             author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
             print(author); logging.info(author)
@@ -82,11 +88,9 @@ async def on_message(message):
             await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)')
 
         if lowercaseMessage.startswith('?krill about'):
-            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"'
+            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"' + addReadme
             print(author); logging.info(author)
 
-botKey = botKeyTxt.read()
-string = input("Show key?"); logging.info('Show key?')
             await message.channel.send(readme, suppress_embeds=(True))
             
             
