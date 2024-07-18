@@ -7,11 +7,15 @@ from datetime import datetime
 import os
 from readme import get_readme
 from readme import get_error
+from readme import get_privacy_policy
+from readme import get_tos
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
 
 readme = get_readme()
+privacyPolicy = get_privacy_policy()
+tos = get_tos()
 error = get_error()
 logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
 
@@ -92,6 +96,18 @@ async def on_message(message):
             print(author); logging.info(author)
 
             await message.channel.send(readme, suppress_embeds=(True))
+
+        if lowercaseMessage.startswith('?krill privacypolicy'):
+            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill privacypolicy command | Full command ran: "' + message.content + '"' + addReadme
+            print(author); logging.info(author)
+
+            await message.channel.send(privacyPolicy, suppress_embeds=(True))
+
+        if lowercaseMessage.startswith('?krill tos'):
+            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"' + addReadme
+            print(author); logging.info(author)
+
+            await message.channel.send(tos, suppress_embeds=(True))
             
             
 try:client.run(botKey)

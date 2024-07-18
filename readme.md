@@ -24,3 +24,7 @@ you need the [latest version of Python (Python 3.12.4 as of writing this)](https
 `python -m pip install pyinstaller`
 
 then simply run `build.bat` from the root of the repo with everything downloaded.
+
+# Randomly common issues:
+
+For some reason it'll occasionally fail to create a logs folder and crash, just simple make a logs folder where you put the EXE and it'll stop crashing as long as the main requirement of having a valid bot key is satisfied.
