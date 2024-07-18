@@ -92,4 +92,4 @@ if string == 'n':print('Not Showing key!'); logging.info('not showing key!')
 if not string == 'n' and not string == 'y':print('INVALID ANSWER: "' + string + '", not showing key!'); logging.warning('INVALID ANSWER:' + string + ', not showing key!')
 try:client.run(botKey)
 except:
-    logging.critical('Invalid Bot Key!!'); print('CRITICAL: Invalid key!')
+    logging.critical('Invalid Bot Key!! got: ' + botKey); print('CRITICAL: Invalid key! got: ' + botKey)
