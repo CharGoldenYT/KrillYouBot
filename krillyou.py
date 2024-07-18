@@ -16,7 +16,10 @@ except OSError as e:
     message = 'Error Creating Dir! ' + str(e)
     print(message); logging.error(message)
 
-readme = "# Krill you bot (V1.2 HotFix) - A Wacky simple Discord bot for krilling your friends!\n\n### Usage:\n`/krill <@userID>/@user` Krill any user\n`?krill help` Tells you how to use the bot\n`?krill about` Displays this message\n### In case the bot goes offline contact: @annyconducter on Discord.\n\n[GitHub](https://github.com/gameygu-0213/KrillYouBot)"
+botKeyTxt = open('botKey.txt')
+botKey = botKeyTxt.read()
+
+readme = "# Krill you bot (V1.2.1) - A Wacky simple Discord bot for krilling your friends!\n\n### Usage:\n`/krill <@userID>/@user` Krill any user\n`?krill help` Tells you how to use the bot\n`?krill about` Displays this message\n### In case the bot goes offline contact: @annyconducter on Discord.\n\n[GitHub](https://github.com/gameygu-0213/KrillYouBot)"
 
 def cleanup():
     var = input('Press any key to continue')
@@ -82,14 +85,11 @@ async def on_message(message):
             author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"'
             print(author); logging.info(author)
 
-            await message.channel.send(readme)
-        
-botKeyTxt = open('botKey.txt')
 botKey = botKeyTxt.read()
 string = input("Show key?"); logging.info('Show key?')
-if string == 'y':print('botkey: "' + botKey + '"'); logging.info(string +': BotKey Shown')
-if string == 'n':print('Not Showing key!'); logging.info('not showing key!')
-if not string == 'n' and not string == 'y':print('INVALID ANSWER: "' + string + '", not showing key!'); logging.warning('INVALID ANSWER:' + string + ', not showing key!')
+            await message.channel.send(readme, suppress_embeds=(True))
+            
+            
 try:client.run(botKey)
 except:
     logging.critical('Invalid Bot Key!! got: ' + botKey); print('CRITICAL: Invalid key! got: ' + botKey)
