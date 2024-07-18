@@ -4,3 +4,4 @@ export/*
 pyinstaller/*
 __pycache__/*
 .vscode/*
+botKey.txt
