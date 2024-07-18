@@ -125,7 +125,7 @@ async def on_message(message):
 
         if lowercaseMessage.startswith('?krill version'):
 
-            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"'
+            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill version command | Full command ran: "' + message.content + '"'
             print(author); logging.info(author)
 
             try:await message.delete()
