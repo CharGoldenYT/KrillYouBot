@@ -16,7 +16,7 @@ except OSError as e:
     message = 'Error Creating Dir! ' + str(e)
     print(message); logging.error(message)
 
-readme = "# Krill you bot (V1.2) - A Wacky simple Discord bot for krilling your friends!\n\n### Usage:\n`/krill <@userID>/@user` Krill any user (Requires send messages permission and read messages permission)\n`?krill help` Tells you how to use the bot\n`?krill about` Displays this message\n### In case the bot goes offline contact: @annyconducter on Discord.\n\n[GitHub](https://github.com/gameygu-0213/KrillYouBot)"
+readme = "# Krill you bot (V1.2 HotFix) - A Wacky simple Discord bot for krilling your friends!\n\n### Usage:\n`/krill <@userID>/@user` Krill any user\n`?krill help` Tells you how to use the bot\n`?krill about` Displays this message\n### In case the bot goes offline contact: @annyconducter on Discord.\n\n[GitHub](https://github.com/gameygu-0213/KrillYouBot)"
 
 def cleanup():
     var = input('Press any key to continue')
