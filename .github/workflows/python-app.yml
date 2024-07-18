@@ -30,5 +30,10 @@ jobs:
         pip install pyinstaller
       shell: cmd
     - name: Complie as EXE
-      run: pyinstaller krillyou.py
+      run: pyinstaller -F --workpath ./export/build/ --distpath ./export/ --icon=icon.ico krillyou.py
+    - name: Upload Artifact
+      uses: actions/Upload-Artifact@v4
+      with: |
+            export/krillyou.exe
+    
     
