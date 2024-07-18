@@ -47,6 +47,9 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
+    gitVer = get_gitVer()
+    if not str(gitVer).strip() == ver:
+        if not gitVer == None:print('Update Available! Check the github!'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
     print(f'Ready to receive and send messages as: {client.user}')
 
 @client.event
@@ -58,9 +61,6 @@ async def on_message(message):
     lowercaseMessage = message.content.lower()
 
     if lowercaseMessage.startswith('/krill'):
-        gitVer = get_gitVer()
-        if not str(gitVer).strip() == ver:
-            if not gitVer == None:print('Update Available! Check the github! (This Runs every command)'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
         author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content + '"'
         print(author); logging.info(author)
 
@@ -90,9 +90,6 @@ async def on_message(message):
         except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
     if lowercaseMessage.startswith('?krill'):
-        gitVer = get_gitVer()
-        if not str(gitVer).strip() == ver:
-            if not gitVer == None:print('Update Available! Check the github! (This Runs every command)'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + readme
         if lowercaseMessage.startswith('?krill help'):
