@@ -12,7 +12,7 @@ from readme import get_tos
 from readme import get_gitVer
 from krillcommand import getKrillMessage
 
-ver = '1.3h'
+ver = '1.3.1'
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
@@ -50,15 +50,16 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    gitVer = get_gitVer()
-    if not str(gitVer).strip() == ver:
-        if not gitVer == None:print('Update Available! Check the github!')
     if message.author == client.user:
         return
+    
 
     lowercaseMessage = message.content.lower()
 
     if lowercaseMessage.startswith('/krill'):
+        gitVer = get_gitVer()
+        if not str(gitVer).strip() == ver:
+            if not gitVer == None:print('Update Available! Check the github! (This Runs every command)'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
         author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content + '"'
         print(author); logging.info(author)
 
@@ -88,6 +89,9 @@ async def on_message(message):
         except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
     if lowercaseMessage.startswith('?krill'):
+        gitVer = get_gitVer()
+        if not str(gitVer).strip() == ver:
+            if not gitVer == None:print('Update Available! Check the github! (This Runs every command)'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + readme
         if lowercaseMessage.startswith('?krill help'):
