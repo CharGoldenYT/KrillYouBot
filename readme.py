@@ -13,7 +13,7 @@ def get_readme():
 
     if os.path.exists('discord_readme.md'): readme = open('discord_readme.md'); readme = 'This was generated with the [GitHub "discord_readme"](https://github.com/gameygu-0213/KrillYouBot/blob/main/discord_readme.md):\n\n' + readme.read()
     
-    if not os.path.exists('discord_readme.md'): print('discord_readme.md not found!'); error = "Couldn't find 'discord_readme.md'"; readme = "# Krill you bot (V1.2.1) - A Wacky simple Discord bot for krilling your friends!\n\n### Usage:\n`/krill <@userID>/@user` Krill any user\n`?krill help` Tells you how to use the bot\n`?krill about` Displays this message\n### In case the bot goes offline contact: @annyconducter on Discord.\n\n[GitHub](https://github.com/gameygu-0213/KrillYouBot)"
+    if not os.path.exists('discord_readme.md'): print('discord_readme.md not found!'); error = "Couldn't find 'discord_readme.md'"; readme = "Message @annyconducter, the readme broke lmao.\n`/krill <@userID>/@user` Krill someone\n`?Krill help` tells you how to use /krill\n`?krill about` Shows this message"
 
     print('get_readme returned: ' + readme)
     return readme
