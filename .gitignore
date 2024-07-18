@@ -2,3 +2,5 @@ bot-env/*
 logs/*
 export/*
 pyinstaller/*
+__pycache__/*
+.vscode/*

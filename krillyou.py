@@ -6,19 +6,20 @@ import atexit
 from datetime import datetime
 import os
 
-botkeyfile = open('botKey.txt')
-botkey = botkeyfile.read()
+time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
+
+logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
+
 try:
     os.mkdir('logs/')
 except OSError as e:
     message = 'Error Creating Dir! ' + str(e)
     print(message); logging.error(message)
 
-time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
-
+readme = "# Krill you bot (V1.2) - A Wacky simple Discord bot for krilling your friends!\n\n### Usage:\n`/krill <@userID>/@user` Krill any user (Requires send messages permission and read messages permission)\n`?krill help` Tells you how to use the bot\n`?krill about` Displays this message\n### In case the bot goes offline contact: @annyconducter on Discord.\n\n[GitHub](https://github.com/gameygu-0213/KrillYouBot)"
 
 def cleanup():
-    logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
+    var = input('Press any key to continue')
     print("closing!"); logging.info('closing!')
 
 atexit.register(cleanup)
@@ -36,12 +37,14 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    
-    if message.content.startswith('/krill'):
-        author = str(message.author) + ' ran the krill command'
+
+    lowercaseMessage = message.content.lower()
+
+    if lowercaseMessage.startswith('/krill'):
+        author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content + '"'
         print(author); logging.info(author)
 
-        messageContent = message.content.strip()
+        messageContent = lowercaseMessage.strip()
 
         userID = ''
 
@@ -54,7 +57,7 @@ async def on_message(message):
         noUser = ''
         if strippedUserID.startswith(' ') or strippedUserID.startswith('/krill'):strippedUserID = 'Null'
 
-        if strippedUserID == 'Null':print('is null'); logging.warning('is null');finalMessage = 'Incorrect Useage! Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)'; isNull = 'true'
+        if strippedUserID == 'Null':print('no option specified!'); logging.warning('no option specified!');finalMessage = 'Incorrect Useage! Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)'; isNull = 'true'
 
         if not strippedUserID.startswith('<') and not isNull == 'true':print('has no user'); logging.warning('has no user');finalMessage = 'No User Specified!\nHow am i supposed to krill an unknown target?\n(Try /krill <@userID>/@user (e.g. <@300020084808744962>))'; noUser = 'true'
 
@@ -62,14 +65,31 @@ async def on_message(message):
 
         #print('userID:"' + strippedUserID + '"')
         #print('messageContent:' + messageContent)
-        if not messageContent.strip() == '/krill' and messageContent.startswith('/krill <'):await message.delete()
-        await message.channel.send(finalMessage)
+        if not messageContent == '/krill' and messageContent.startswith('/krill <'):
+            try:await message.delete()
+            except:logging.critical("Can't Delete Message! Does the bot have sufficient permissions?"); print("Can't Delete Message! Does the bot have sufficient permissions?")
+        try:await message.channel.send(finalMessage)
+        except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
-    if message.content.startswith('?krill help'):
-        author = str(message.author) + ' ran the krill help command'
-        print(author); logging.info(author)
+    if lowercaseMessage.startswith('?krill'):
+        if lowercaseMessage.startswith('?krill help'):
+            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
+            print(author); logging.info(author)
 
-        await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)')
+            await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)')
+
+        if lowercaseMessage.startswith('?krill about'):
+            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"'
+            print(author); logging.info(author)
+
+            await message.channel.send(readme)
         
-
-client.run(botkey)
+botKeyTxt = open('botKey.txt')
+botKey = botKeyTxt.read()
+string = input("Show key?"); logging.info('Show key?')
+if string == 'y':print('botkey: "' + botKey + '"'); logging.info(string +': BotKey Shown')
+if string == 'n':print('Not Showing key!'); logging.info('not showing key!')
+if not string == 'n' and not string == 'y':print('INVALID ANSWER: "' + string + '", not showing key!'); logging.warning('INVALID ANSWER:' + string + ', not showing key!')
+try:client.run(botKey)
+except:
+    logging.critical('Invalid Bot Key!!'); print('CRITICAL: Invalid key!')
