@@ -1,0 +1,36 @@
+name: Bug report
+description: Is something not exactly right? or just completely broken? then it goes here!
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Describe your bug here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: terminal
+    attributes:
+      label: "Command Prompt/Terminal logs (if existing)"
+      render: bash
+    validations:
+      required: false
+
+  - type: dropdown
+    id: btarget
+    attributes:
+      label: "What is your target?"
+      options:
+        - "Windows (Via PyInstaller's produced krillyou.exe)"
+        - "Native Python (Via krillyou.py)"
+    validations:
+      required: true
+
+  - type: input
+    id: buildsummary
+    attributes:
+      label: "Did you edit anything? If so, mention or summarize your changes."
+      placeholder: "Yes, I edited your mom."
+    validations:
+      required: true
