@@ -128,6 +128,8 @@ async def on_message(message):
             author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"'
             print(author); logging.info(author)
 
+            try:await message.delete()
+            except:logging.critical("Can't Delete Message! Does the bot have sufficient permissions?"); print("Can't Delete Message! Does the bot have sufficient permissions?")
             await message.channel.send('The current version is' + ver + '\n the current version\'s changelog is:' + changelog + ' \nSee the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)', suppress_embeds=(True))
             
             
