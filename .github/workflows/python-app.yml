@@ -31,9 +31,9 @@ jobs:
       shell: cmd
     - name: Complie as EXE
       run: pyinstaller -F --workpath ./export/build/ --distpath ./export/ --icon=icon.ico krillyou.py
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4
-        with:
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v4
+      with:
           name: windowsBuild
           path: export/krillyou.exe
     
