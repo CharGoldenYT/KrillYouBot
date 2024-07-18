@@ -1,4 +1,4 @@
-# Krill you bot (V1.2.1) - A Wacky simple Discord bot for krilling your friends!
+# Krill you bot (V1.2.2) - A Wacky simple Discord bot for krilling your friends!
 
 ### Usage:
 `/krill <@userID>/@user` Krill any user
