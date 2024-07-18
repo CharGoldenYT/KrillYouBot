@@ -96,13 +96,17 @@ async def on_message(message):
             print(author); logging.info(author)
 
             await message.channel.send(readme, suppress_embeds=(True))
-
+        
+        addReadme = ''
+        if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + privacyPolicy
         if lowercaseMessage.startswith('?krill privacypolicy'):
             author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill privacypolicy command | Full command ran: "' + message.content + '"' + addReadme
             print(author); logging.info(author)
 
             await message.channel.send(privacyPolicy, suppress_embeds=(True))
 
+        addReadme = ''
+        if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + tos
         if lowercaseMessage.startswith('?krill tos'):
             author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"' + addReadme
             print(author); logging.info(author)
