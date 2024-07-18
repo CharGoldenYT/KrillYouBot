@@ -1,0 +1,20 @@
+name: Help Me!
+description: Are you confused about something?
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "What do you need help with?"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: btarget
+    attributes:
+      label: "What is your target?"
+      options:
+        - "Windows (Via PyInstaller's produced krillyou.exe)"
+        - "Native Python (Via krillyou.py)"
+    validations:
+      required: true
