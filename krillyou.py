@@ -38,7 +38,7 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-    print(f'Ready to recieve and send messages as: {client.user}')
+    print(f'Ready to receive and send messages as: {client.user}')
 
 @client.event
 async def on_message(message):
