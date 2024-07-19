@@ -13,7 +13,7 @@ from readme import get_gitVer
 from krillcommand import getKrillMessage
 
 ver = '1.3.2'
-changelog = '\n# [1.3.1h]\n\n### Added\n\n- A changelog\n- A Version command\n\n### Changed\n- Removed accidental leftover import from readme.py'
+changelog = '\n# [1.3.2] 7/19/24 7:11 PM\n\n### Changed\n\n- Fixed a bug where due to where the makedir function was placed, the log file creator fails to make a log file due to a nonexistant folder.\n- Made the update checker only run when the bot is ready to go'
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
