@@ -22,13 +22,16 @@ readme = get_readme()
 privacyPolicy = get_privacy_policy()
 tos = get_tos()
 error = get_error()
-logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
-
 try:
     os.mkdir('logs/')
 except OSError as e:
     message = 'Error Creating Dir! ' + str(e)
     print(message); logging.error(message)
+
+try:
+    logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
+except Exception as e:
+    print('Error Creating log file! "' + str(e) + '"')
 
 botKeyTxt = open('botKey.txt')
 botKey = botKeyTxt.read()
