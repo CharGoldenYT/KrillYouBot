@@ -12,7 +12,7 @@ from readme import get_tos
 from readme import get_gitVer
 from krillcommand import getKrillMessage
 
-ver = '1.3.1h'
+ver = '1.3.2'
 changelog = '\n# [1.3.1h]\n\n### Added\n\n- A changelog\n- A Version command\n\n### Changed\n- Removed accidental leftover import from readme.py'
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
