@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.3.2h] - 7/20/24 1:00 AM
+
+### Changed
+
+- Made a log event for if the bot gets rate limited
+- Fixed the version string being accidentally done like "text(VersionString)"
+- Slightly changed the formatting of the "?krill version" command to make it look a little nicer
+- Fixed the changelog's timestamps
+- Made the changelog easier to type by making it a multiline string
+- added an input message that asks if the changelog looks right.
+
 # [1.3.2] 7/19/24 7:11 PM
 
 ### Changed

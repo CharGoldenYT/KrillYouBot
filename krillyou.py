@@ -12,8 +12,25 @@ from readme import get_tos
 from readme import get_gitVer
 from krillcommand import getKrillMessage
 
-ver = '1.3.2'
-changelog = '\n# [1.3.2] 7/19/24 7:11 PM\n\n### Changed\n\n- Fixed a bug where due to where the makedir function was placed, the log file creator fails to make a log file due to a nonexistant folder.\n- Made the update checker only run when the bot is ready to go'
+ver = '1.3.2h'
+changelog = '''# [1.3.2h] - 7/20/24 1:00 AM
+
+### Changed
+
+- Made a log event for if the bot gets rate limited
+- Fixed the version string being accidentally done like "text(VersionString)"
+- Slightly changed the formatting of the "?krill version" command to make it look a little nicer
+- Fixed the changelog's timestamps
+- Made the changelog easier to type by making it a multiline string
+- added an input message that asks if the changelog looks right.'''
+
+print('the cur_changelog is: \n' + changelog + '\nIf something looks off, or is not the right version, you probably need to edit "cur_changelog.py')
+
+confirm = input('does something look off?')
+
+if confirm == 'y' or confirm == 'yes':changelog = changelog + '\n\n-# This changelog might be off!'; logging.warning('changelog might be inaccurate!')
+
+print('Continuing...')
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
@@ -56,6 +73,10 @@ async def on_ready():
     print(f'Ready to receive and send messages as: {client.user}')
 
 @client.event
+async def is_ws_ratelimited():
+    logging.warn('Rate Limited!! SHIT') # Because it's useful to know if this bot gets rate limited for troubleshooting
+
+@client.event
 async def on_message(message):
     if message.author == client.user:
         return
@@ -82,7 +103,7 @@ async def on_message(message):
 
         if strippedUserID == None:print('no option specified!'); logging.warning('no option specified!');finalMessage = 'Unknown Command! Got: Null\nuse ?krill about for a list of commands.'
 
-        if not strippedUserID == None:finalMessage = getKrillMessage(strippedUserID)
+        if not strippedUserID == None and strippedUserID.startswith('<@'):finalMessage = getKrillMessage(strippedUserID)
 
         #print('userID:"' + strippedUserID + '"')
         #print('messageContent:' + messageContent)
@@ -130,7 +151,7 @@ async def on_message(message):
 
             try:await message.delete()
             except:logging.critical("Can't Delete Message! Does the bot have sufficient permissions?"); print("Can't Delete Message! Does the bot have sufficient permissions?")
-            await message.channel.send('The current version is' + ver + '\n the current version\'s changelog is:' + changelog + ' \nSee the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)', suppress_embeds=(True))
+            await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog + ' \n\n\nSee the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)', suppress_embeds=(True))
             
             
 try:client.run(botKey)
