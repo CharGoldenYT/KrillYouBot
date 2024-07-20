@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.3.3] - 7/20/24 12:15 PM
+
+### Changed
+
+- Made the logs show which channel, and from what server it was sent, for better troubleshooting
+- Added a make author string function in readme.py, so i don't have to keep manually typing it out every new command added
+- Made the end of the version command revert to only having 2 newlines, cause it looks weird with 3
+- Made the end of the version command change based on if the changelog was set as being off
+- Added contact info to "?krill help"
+- Added a pause command to "setup.bat"
+- Made the github update checker disable if the current version is a test version
+
 # [1.3.2h] - 7/20/24 1:00 AM
 
 ### Changed

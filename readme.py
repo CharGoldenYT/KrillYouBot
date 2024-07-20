@@ -7,6 +7,16 @@ error = None
 privacyPolicy = ''
 tos = ''
 
+# author: Username of who ran the command
+# userID: User ID of who ran the command
+# command: which specific command was run (i.e. ?krill about)
+# message_content: Self explanatory
+# channelID: ID of the channel it ran from
+# serverName: Self explanatory
+def make_author_string(author:str, userID:int, command:str, message_content:str, channelID:int, serverName:str):
+    authorStr = '<@' + str(userID) + '>(' + author + ') Ran the command: "' + command + '" | Full Command Ran: "' + message_content + '" | Channel ID: "' + str(channelID) + '" | Server Ran From: ' + serverName
+    return authorStr
+
 def get_readme():
     showGetReturns = False
     if os.path.exists('toggleShowGetReturns.txt'):

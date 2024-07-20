@@ -10,25 +10,33 @@ from readme import get_error
 from readme import get_privacy_policy
 from readme import get_tos
 from readme import get_gitVer
+from readme import make_author_string
 from krillcommand import getKrillMessage
 
-ver = '1.3.2h'
-changelog = '''# [1.3.2h] - 7/20/24 1:00 AM
+ver = '1.3.3'
+verLower = ver.lower()
+changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/20/24 12:15 PM
 
 ### Changed
 
-- Made a log event for if the bot gets rate limited
-- Fixed the version string being accidentally done like "text(VersionString)"
-- Slightly changed the formatting of the "?krill version" command to make it look a little nicer
-- Fixed the changelog's timestamps
-- Made the changelog easier to type by making it a multiline string
-- added an input message that asks if the changelog looks right.'''
+- Made the logs show which channel, and from what server it was sent, for better troubleshooting
+- Added a make author string function in readme.py, so i don't have to keep manually typing it out every new command added
+- Made the end of the version command revert to only having 2 newlines, cause it looks weird with 3
+- Made the end of the version command change based on if the changelog was set as being off
+- Added contact info to "?krill help"
+- Added a pause command to "setup.bat"
+- Made the github update checker disable if the current version is a test version'''
 
 print('the cur_changelog is: \n' + changelog + '\nIf something looks off, or is not the right version, you probably need to edit "cur_changelog.py')
 
 confirm = input('does something look off?')
 
-if confirm == 'y' or confirm == 'yes':changelog = changelog + '\n\n-# This changelog might be off!'; logging.warning('changelog might be inaccurate!')
+confirm2 = None
+if confirm == 'y' or confirm == 'yes':
+    changelog = changelog + '\n\n-# This changelog might be off! | See the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)'; logging.warning('changelog might be inaccurate!'); confirm2 = ''
+if confirm2 == None:
+    changelog = changelog + '\n\n-# See the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)'
+if verLower.endswith('-testver'): changelog = changelog + ' | This is a test version!'
 
 print('Continuing...')
 
@@ -67,9 +75,10 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-    gitVer = get_gitVer()
-    if not str(gitVer).strip() == ver:
-        if not gitVer == None:print('Update Available! Check the github!'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
+    if not verLower.endswith('-testver'):
+        gitVer = get_gitVer()
+        if not str(gitVer).strip() == ver:
+            if not gitVer == None:print('Update Available! Check the github!'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
     print(f'Ready to receive and send messages as: {client.user}')
 
 @client.event
@@ -85,7 +94,8 @@ async def on_message(message):
     lowercaseMessage = message.content.lower()
 
     if lowercaseMessage.startswith('/krill'):
-        author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content + '"'
+        # author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content
+        author = make_author_string(str(message.author), message.author.id, 'krill', message.content, message.channel.id, message.guild.name)
         print(author); logging.info(author)
 
         messageContent = lowercaseMessage.strip()
@@ -117,13 +127,15 @@ async def on_message(message):
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + readme
         if lowercaseMessage.startswith('?krill help'):
-            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
+            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
+            author = make_author_string(str(message.author), message.author.id, 'krill help', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
-            await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)')
+            await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)\n\n-# For problems with the krill you bot, please dm me at @annyconducter, with your problem, and your server\'s name')
 
         if lowercaseMessage.startswith('?krill about'):
-            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"' + addReadme
+            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"' + addReadme
+            author = make_author_string(str(message.author), message.author.id, 'krill about', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
             await message.channel.send(readme, suppress_embeds=(True))
@@ -131,7 +143,8 @@ async def on_message(message):
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + privacyPolicy
         if lowercaseMessage.startswith('?krill privacypolicy'):
-            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill privacypolicy command | Full command ran: "' + message.content + '"' + addReadme
+            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill privacypolicy command | Full command ran: "' + message.content + '"' + addReadme
+            author = make_author_string(str(message.author), message.author.id, 'krill privacypolicy', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
             await message.channel.send(privacyPolicy, suppress_embeds=(True))
@@ -139,19 +152,21 @@ async def on_message(message):
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + tos
         if lowercaseMessage.startswith('?krill tos'):
-            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"' + addReadme
+            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"' + addReadme
+            author = make_author_string(str(message.author), message.author.id, 'krill tos', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
             await message.channel.send(tos, suppress_embeds=(True))
 
         if lowercaseMessage.startswith('?krill version'):
 
-            author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill version command | Full command ran: "' + message.content + '"'
+            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill version command | Full command ran: "' + message.content + '"'
+            author = make_author_string(str(message.author), message.author.id, 'krill version', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
             try:await message.delete()
             except:logging.critical("Can't Delete Message! Does the bot have sufficient permissions?"); print("Can't Delete Message! Does the bot have sufficient permissions?")
-            await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog + ' \n\n\n-# See the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)', suppress_embeds=(True))
+            await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog, suppress_embeds=(True))
             
             
 try:client.run(botKey)
