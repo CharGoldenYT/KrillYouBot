@@ -13,19 +13,13 @@ from readme import get_gitVer
 from readme import make_author_string
 from krillcommand import getKrillMessage
 
-ver = '1.3.3'
+ver = '1.3.3h'
 verLower = ver.lower()
-changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/20/24 12:15 PM
+changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/20/24 12:50 PM
 
 ### Changed
 
-- Made the logs show which channel, and from what server it was sent, for better troubleshooting
-- Added a make author string function in readme.py, so i don't have to keep manually typing it out every new command added
-- Made the end of the version command revert to only having 2 newlines, cause it looks weird with 3
-- Made the end of the version command change based on if the changelog was set as being off
-- Added contact info to "?krill help"
-- Added a pause command to "setup.bat"
-- Made the github update checker disable if the current version is a test version'''
+- Updated the privacy policy to reflect the accessing of server name and channel ID'''
 
 print('the cur_changelog is: \n' + changelog + '\nIf something looks off, or is not the right version, you probably need to edit "cur_changelog.py')
 
