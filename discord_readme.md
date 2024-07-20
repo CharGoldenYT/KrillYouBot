@@ -10,7 +10,7 @@
 
 `?krill privacypolicy` Tells you the Privacy Policy of the bot.
 
-`?krill termsofservice` Tells you the Terms of Service of the bot.
+`?krill tos` Tells you the Terms of Service of the bot.
 
 `?krill version` Displays Current version and its changelog
 
