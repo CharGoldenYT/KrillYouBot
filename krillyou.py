@@ -125,14 +125,16 @@ async def on_message(message):
             author = make_author_string(str(message.author), message.author.id, 'krill help', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
-            await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)\n\n-# For problems with the krill you bot, please dm me at @annyconducter, with your problem, and your server\'s name')
+            try:await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)\n\n-# For problems with the krill you bot, please dm me at @annyconducter, with your problem, and your server\'s name')
+            except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
         if lowercaseMessage.startswith('?krill about'):
             #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"' + addReadme
             author = make_author_string(str(message.author), message.author.id, 'krill about', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
-            await message.channel.send(readme, suppress_embeds=(True))
+            try:await message.channel.send(readme, suppress_embeds=(True))
+            except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
         
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + privacyPolicy
@@ -141,7 +143,8 @@ async def on_message(message):
             author = make_author_string(str(message.author), message.author.id, 'krill privacypolicy', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
-            await message.channel.send(privacyPolicy, suppress_embeds=(True))
+            try:await message.channel.send(privacyPolicy, suppress_embeds=(True))
+            except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + tos
@@ -150,7 +153,8 @@ async def on_message(message):
             author = make_author_string(str(message.author), message.author.id, 'krill tos', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
-            await message.channel.send(tos, suppress_embeds=(True))
+            try:await message.channel.send(tos, suppress_embeds=(True))
+            except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
         if lowercaseMessage.startswith('?krill version'):
 
@@ -160,7 +164,8 @@ async def on_message(message):
 
             try:await message.delete()
             except:logging.critical("Can't Delete Message! Does the bot have sufficient permissions?"); print("Can't Delete Message! Does the bot have sufficient permissions?")
-            await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog, suppress_embeds=(True))
+            try:await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog, suppress_embeds=(True))
+            except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
             
             
 try:client.run(botKey)
