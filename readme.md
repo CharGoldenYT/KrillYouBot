@@ -16,6 +16,8 @@ in any server this bot is installed:
 
 `?krill version` Displays Current version and its changelog
 
+`pipebomb` pipebomb
+
 ### In case the bot goes offline contact: @annyconducter on Discord.
 
 # Usage
