@@ -5,6 +5,7 @@ import logging
 import atexit
 from datetime import datetime
 import os
+import random
 from readme import get_readme
 from readme import get_error
 from readme import get_privacy_policy
@@ -13,13 +14,15 @@ from readme import get_gitVer
 from readme import make_author_string
 from krillcommand import getKrillMessage
 
-ver = '1.3.3h'
+ver = '1.5'
 verLower = ver.lower()
-changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/20/24 12:50 PM
+changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/22/24 11:29 AM
 
 ### Changed
 
-- Updated the privacy policy to reflect the accessing of server name and channel ID'''
+- Made it possible to pipebomb people
+- Removed Krill Leave
+- Fixed Krill Command potentially not returning a message on april fools'''
 
 print('the cur_changelog is: \n' + changelog + '\nIf something looks off, or is not the right version, you probably need to edit "cur_changelog.py')
 
@@ -86,6 +89,21 @@ async def on_message(message):
     
 
     lowercaseMessage = message.content.lower()
+
+    varRandInt = random.randint(0,4)
+    Finalmessage = ''
+    if varRandInt == 0: Finalmessage = 'KABLOOOEY'
+    if varRandInt == 1: Finalmessage = 'KABOOM'
+    if varRandInt == 2: Finalmessage = 'BLAMMO'
+    if varRandInt == 3: Finalmessage = '***Explodes cutely :3***'
+    if varRandInt == 4: Finalmessage = '***Fsssshhhhh....***'
+
+    if lowercaseMessage.startswith('/pipebomb'):
+        author = make_author_string(str(message.author), message.author.id, 'pipebomb', message.content, message.channel.id, message.guild.name)
+        print(author); logging.info(author)
+
+        try:await message.channel.send(Finalmessage)
+        except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
     if lowercaseMessage.startswith('/krill'):
         # author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content

@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.5] - 7/22/24 11:39 AM
+
+### Changed
+
+- Made it possible to pipebomb people
+- Removed Krill Leave
+- Fixed Krill Command potentially not returning a message on april fools
+
+# [1.4-UNRELEASED] - 7/20/24 8:35 PM
+
+### Changed
+
+- IDK why but the ability to make the bot leave the server lmao
+
 # [1.3.3h] - 7/20/24 12:50 PM
 
 ### Changed
