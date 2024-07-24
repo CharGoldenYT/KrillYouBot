@@ -6,6 +6,7 @@ import atexit
 from datetime import datetime
 import os
 import random
+import shutil
 from readme import get_readme
 from readme import get_error
 from readme import get_privacy_policy
@@ -14,25 +15,30 @@ from readme import get_gitVer
 from readme import make_author_string
 from krillcommand import getKrillMessage
 
-ver = '1.5'
+# Set the current ver
+ver = '1.5h-testver'
+# Make it lowercase if text exists
 verLower = ver.lower()
-changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/22/24 11:29 AM
+# Set accepted file extensions for moving logs
+acceptedFileTypes = ['.txt', '.log']
+# The changelog for the current version
+changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/24/24 6:18 AM
 
 ### Changed
 
-- Made it possible to pipebomb people
-- Removed Krill Leave
-- Fixed Krill Command potentially not returning a message on april fools'''
+- Made it to where old logs get put in a seperate folder to remove clutter and potential issues with widnows being an idiot
+- Added some comments in the code lmao'''
 
 print('the cur_changelog is: \n' + changelog + '\nIf something looks off, or is not the right version, you probably need to edit "cur_changelog.py')
-
+# Ask the user if the changelog looks off
 confirm = input('does something look off?')
-
+# and add text based on that
 confirm2 = None
 if confirm == 'y' or confirm == 'yes':
     changelog = changelog + '\n\n-# This changelog might be off! | See the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)'; logging.warning('changelog might be inaccurate!'); confirm2 = ''
 if confirm2 == None:
     changelog = changelog + '\n\n-# See the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)'
+# Make it clear that a bot is on the test version of the current version
 if verLower.endswith('-testver'): changelog = changelog + ' | This is a test version!'
 
 print('Continuing...')
@@ -43,22 +49,40 @@ showReadme = True
 readme = get_readme()
 privacyPolicy = get_privacy_policy()
 tos = get_tos()
+#in case any part of the process returned an error.
 error = get_error()
+
 try:
     os.mkdir('logs/')
 except OSError as e:
-    message = 'Error Creating Dir! ' + str(e)
+    message = 'Error Creating Dir: "' + str(e) + '"'
     print(message); logging.error(message)
 
 try:
+    os.mkdir('logs/old/')
+except OSError as e:
+    message = 'Error Creating Dir: "' + str(e) + '"'
+    print(message); logging.error(message)
+#move log files we don't need to clutter the main folder
+for file in os.listdir('logs/'):
+    #print('The cur file to move is: ' + file + '\n')
+    for extension in acceptedFileTypes:
+        if file.endswith(extension):
+            try:shutil.move('logs/' + file, 'logs/old/' + file, )
+            except shutil.Error as e:
+                message = 'Error Moving File "' + file + '" Error: ' + str(e)
+                print(message); logging.error(message)
+            
+#set up logging with current time
+try:
     logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
 except Exception as e:
-    print('Error Creating log file! "' + str(e) + '"')
-
+    print('Error Creating log file: "' + str(e) + '"')
+#Grab the botkey from a text file
 botKeyTxt = open('botKey.txt')
 botKey = botKeyTxt.read()
 if not error == None: logging.error(error)
-
+#on exit, do this.
 def cleanup():
     var = input('Press any key to continue')
     print("closing!"); logging.info('closing!')
@@ -90,6 +114,7 @@ async def on_message(message):
 
     lowercaseMessage = message.content.lower()
 
+    #PIPEBOMB COMMAND RANDOMIZER LETS GOOOOOOOOOO
     varRandInt = random.randint(0,4)
     Finalmessage = ''
     if varRandInt == 0: Finalmessage = 'KABLOOOEY'
@@ -105,6 +130,7 @@ async def on_message(message):
         try:await message.channel.send(Finalmessage)
         except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
+    # The command that started it all
     if lowercaseMessage.startswith('/krill'):
         # author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content
         author = make_author_string(str(message.author), message.author.id, 'krill', message.content, message.channel.id, message.guild.name)
@@ -135,6 +161,7 @@ async def on_message(message):
         try:await message.channel.send(finalMessage)
         except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
+#info and help commands
     if lowercaseMessage.startswith('?krill'):
         addReadme = ''
         if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + readme

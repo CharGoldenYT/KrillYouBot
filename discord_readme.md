@@ -1,4 +1,4 @@
-# Krill you bot (1.5) - A Wacky simple Discord bot for krilling your friends!
+# Krill you bot (1.5h) - A Wacky simple Discord bot for krilling your friends!
 
 ### Usage:
 

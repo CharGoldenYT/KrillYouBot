@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.5h] - 7/24/24 6:18 AM
+
+### Changed
+
+- Made it to where old logs get put in a seperate folder to remove clutter and potential issues with widnows being an idiot
+- Added some comments in the code lmao
+
 # [1.5] - 7/22/24 11:39 AM
 
 ### Changed
