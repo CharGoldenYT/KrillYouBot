@@ -16,7 +16,7 @@ from readme import make_author_string
 from krillcommand import getKrillMessage
 
 # Set the current ver
-ver = '1.5h-testver'
+ver = '1.5h'
 # Make it lowercase if text exists
 verLower = ver.lower()
 # Set accepted file extensions for moving logs
