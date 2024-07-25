@@ -50,10 +50,17 @@ for file in os.listdir('logs/'):
                 print(message); logging.error(message)
             
 #set up logging with current time
+filname = "logs/krillYouBotLog-" + time + ".log"
 try:
-    logging.basicConfig(level=logging.INFO, filename="logs/krillYouBotLog-" + time +".log", filemode="a", format="%(asctime)s %(levelname)s %(message)s")
+    logging.basicConfig(level=logging.INFO, filename=filname, filemode="a", format="%(asctime)s %(levelname)s %(message)s")
 except Exception as e:
     print('Error Creating log file: "' + str(e) + '"')
+#test if file can be opened
+try:
+    tester = open(filname, 'r'); tester.close()
+except Exception as e:
+    message = 'Error Opening Log File! Log file might not save this session!!! Error: ' + str(e)
+    print(message); logging.warn(message)
 #Grab the botkey from a text file
 try:
     botKeyTxt = open('botKey.txt')

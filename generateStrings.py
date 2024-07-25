@@ -4,7 +4,7 @@ readme = ''
 privacyPolicy = ''
 tos = ''
 # Set the current ver
-ver = '1.5.1'
+ver = '1.5.1h'
 # Make it lowercase if text exists
 verLower = ver.lower()
 versionString = '# [' + verLower.replace('-testver', '') + ']'
@@ -14,12 +14,7 @@ def make_changelog():
 
 ### Changed
 
-- Made it to where it doesnt crash if it doesnt have read access
-- Fixed the build.bat being specific to how i was using pyinstaller, as that would cause issues for people building this from source
-- Removed the dependency on caching results as files to prevent crashing
-- Renamed readme.py to generateStrings.py to accurately reflect how its used
-- Moved where typing the latest changelog goes
-- Figured out multi imports'''
+- Added a warning for if it cant access the log file that should have just been created'''
     return changelog
 
 # author: Username of who ran the command

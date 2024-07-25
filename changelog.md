@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.5.1h] - 7/24/24 9:34 PM
+
+### Changed
+
+- Added a warning for if it cant access the log file that should have just been created
+
 # [1.5.1] - 7/24/24 8:45 PM
 
 ### Changed
