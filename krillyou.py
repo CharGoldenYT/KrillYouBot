@@ -1,33 +1,15 @@
 # This example requires the 'message_content' intent.
 
-import discord
-import logging
-import atexit
+import discord,logging,atexit,os,random,shutil,maskpass
 from datetime import datetime
-import os
-import random
-import shutil
-from readme import get_readme
-from readme import get_error
-from readme import get_privacy_policy
-from readme import get_tos
-from readme import get_gitVer
-from readme import make_author_string
+from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,verLower,make_changelog
 from krillcommand import getKrillMessage
 
-# Set the current ver
-ver = '1.5h'
-# Make it lowercase if text exists
-verLower = ver.lower()
+
 # Set accepted file extensions for moving logs
 acceptedFileTypes = ['.txt', '.log']
 # The changelog for the current version
-changelog = '''# [''' + verLower.replace('-testver', '') + '''] - 7/24/24 6:18 AM
-
-### Changed
-
-- Made it to where old logs get put in a seperate folder to remove clutter and potential issues with widnows being an idiot
-- Added some comments in the code lmao'''
+changelog = make_changelog()
 
 print('the cur_changelog is: \n' + changelog + '\nIf something looks off, or is not the right version, you probably need to edit "cur_changelog.py')
 # Ask the user if the changelog looks off
@@ -45,12 +27,6 @@ print('Continuing...')
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
-
-readme = get_readme()
-privacyPolicy = get_privacy_policy()
-tos = get_tos()
-#in case any part of the process returned an error.
-error = get_error()
 
 try:
     os.mkdir('logs/')
@@ -79,9 +55,16 @@ try:
 except Exception as e:
     print('Error Creating log file: "' + str(e) + '"')
 #Grab the botkey from a text file
-botKeyTxt = open('botKey.txt')
-botKey = botKeyTxt.read()
-if not error == None: logging.error(error)
+try:
+    botKeyTxt = open('botKey.txt')
+    botKey = botKeyTxt.read()
+except Exception as e:
+    print('ERROR OPENING BOTKEY FILE: ' + str(e)); logging.critical('ERROR OPENING BOTKEY FILE: ' + str(e))
+    botKey = maskpass.askpass('Error opening botkey! Enter/Copy Paste key here!', '#')
+
+printReturns = False
+confirm = input('Show return of url functions for the readme, TOS, etc?')
+if confirm == 'y' or confirm == 'yes': printReturns = True
 #on exit, do this.
 def cleanup():
     var = input('Press any key to continue')
@@ -163,8 +146,6 @@ async def on_message(message):
 
 #info and help commands
     if lowercaseMessage.startswith('?krill'):
-        addReadme = ''
-        if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + readme
         if lowercaseMessage.startswith('?krill help'):
             #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
             author = make_author_string(str(message.author), message.author.id, 'krill help', message.content, message.channel.id, message.guild.name)
@@ -174,27 +155,27 @@ async def on_message(message):
             except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
         if lowercaseMessage.startswith('?krill about'):
-            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill about command | Full command ran: "' + message.content + '"' + addReadme
+            readme = get_readme(True)
+            
             author = make_author_string(str(message.author), message.author.id, 'krill about', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
             try:await message.channel.send(readme, suppress_embeds=(True))
             except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
         
-        addReadme = ''
-        if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + privacyPolicy
+        
         if lowercaseMessage.startswith('?krill privacypolicy'):
-            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill privacypolicy command | Full command ran: "' + message.content + '"' + addReadme
+            privacyPolicy = get_privacy_policy(True)
+            
             author = make_author_string(str(message.author), message.author.id, 'krill privacypolicy', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
             try:await message.channel.send(privacyPolicy, suppress_embeds=(True))
             except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
-        addReadme = ''
-        if showReadme == True:addReadme = ' Imma leave the full readme in the logs lmao\n' + tos
         if lowercaseMessage.startswith('?krill tos'):
-            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill tos command | Full command ran: "' + message.content + '"' + addReadme
+            tos = get_tos(True)
+            
             author = make_author_string(str(message.author), message.author.id, 'krill tos', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
@@ -202,8 +183,6 @@ async def on_message(message):
             except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
         if lowercaseMessage.startswith('?krill version'):
-
-            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill version command | Full command ran: "' + message.content + '"'
             author = make_author_string(str(message.author), message.author.id, 'krill version', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 

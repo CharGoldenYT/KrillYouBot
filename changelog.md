@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.5.1] - 7/24/24 8:45 PM
+
+### Changed
+
+- Made it to where it doesnt crash if it doesnt have read access
+- Fixed the build.bat being specific to how i was using pyinstaller, as that would cause issues for people building this from source
+- Removed the dependency on caching results as files to prevent crashing
+- Renamed readme.py to generateStrings.py to accurately reflect how its used
+- Moved where typing the latest changelog goes
+- Figured out multi imports
+
 # [1.5h] - 7/24/24 6:18 AM
 
 ### Changed
