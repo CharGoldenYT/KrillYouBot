@@ -100,8 +100,18 @@ async def is_ws_ratelimited():
 async def on_message(message):
     if message.author == client.user:
         return
-    
+    if not message.author == client.user:await checkMessage(message)
 
+@client.event
+async def on_message_edit(before, after):
+    #print('MESSAGE EDITED, OLDMESSAGE: "' + oldMessage.content + '" NEWMESSAGE: "' + message.content + '"')
+    if not before.content == after.content:
+        if message.author == client.user:
+            return
+        if not message.author == client.user:await checkMessage(message)
+    
+async def checkMessage(message):
+    #print('checkMessage ran! got' + message.content)
     lowercaseMessage = message.content.lower()
 
     #PIPEBOMB COMMAND RANDOMIZER LETS GOOOOOOOOOO

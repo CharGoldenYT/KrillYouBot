@@ -4,7 +4,7 @@ readme = ''
 privacyPolicy = ''
 tos = ''
 # Set the current ver
-ver = '1.5.1h'
+ver = '2.0'
 # Make it lowercase if text exists
 verLower = ver.lower()
 versionString = '# [' + verLower.replace('-testver', '') + ']'
@@ -14,7 +14,7 @@ def make_changelog():
 
 ### Changed
 
-- Added a warning for if it cant access the log file that should have just been created'''
+- Made it possible to run commands on edit'''
     return changelog
 
 # author: Username of who ran the command
