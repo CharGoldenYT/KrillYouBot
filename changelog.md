@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.0] - 7/25/24 6:21 PM
+
+### Changed
+
+- Made it possible to run commands on edit
+
 # [1.5.1h] - 7/24/24 9:34 PM
 
 ### Changed
