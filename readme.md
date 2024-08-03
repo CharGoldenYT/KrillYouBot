@@ -21,4 +21,4 @@ then simply run `build.bat` from the root of the repo with everything downloaded
 
 # Randomly common issues:
 
-For some reason it'll occasionally fail to create a logs folder and crash, just simple make a logs folder where you put the EXE and it'll stop crashing as long as the main requirement of having a valid bot key is satisfied.
+For some reason it'll occasionally fail to create a logs folder and crash, just simple make a logs folder where you put the EXE and it'll stop crashing as long as the main requirement of having a valid bot key is satisfied. (THIS HAS BEEN FIXED, BUT OLDER VERSIONS OF THE KRILL YOU BOT MIGHT HAVE THIS ISSUE, BEWARE!)
