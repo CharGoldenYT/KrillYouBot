@@ -4,17 +4,19 @@ readme = ''
 privacyPolicy = ''
 tos = ''
 # Set the current ver
-ver = '2.0'
+ver = '2.1'
 # Make it lowercase if text exists
 verLower = ver.lower()
 versionString = '# [' + verLower.replace('-testver', '') + ']'
 
 def make_changelog():
-    changelog = versionString + ''' - 7/25/24 6:21 PM
+    changelog = versionString + ''' - 8/3/24 1:58 AM
 
 ### Changed
 
-- Made it possible to run commands on edit'''
+- Added ?levelup
+- Fixed a typo making the tos command print the readme lmao. (This caused incorrect logging.)
+- Added a secret Message (That isnt so secret because the code is public)'''
     return changelog
 
 # author: Username of who ran the command
@@ -52,7 +54,7 @@ def get_tos(showGetReturns:bool):
     except urllib.HTTPError as e: print('shit the tos url handler died lmao: ' + str(e)); logging.error('shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     tos = 'This was generated with the [GitHub "tos"](https://github.com/gameygu-0213/KrillYouBot/blob/main/tos.md):\n\n' + url
 
-    if showGetReturns:print('get_readme returned: ' + readme)
+    if showGetReturns:print('get_readme returned: ' + tos)
     return tos
 
 def get_gitVer():

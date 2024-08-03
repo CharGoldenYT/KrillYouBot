@@ -1,5 +1,6 @@
 @echo off
-echo Installing Discord and PyInstaller
-python -m pip install discord
-python -m pip install pyinstaller
+echo Installing Prerequisites
+pip install -U discord
+pip install -U pyinstaller
+pip install -U maskpass
 pause

@@ -2,21 +2,7 @@
 
 ### Usage ([My Discord Bot](https://discord.com/oauth2/authorize?client_id=1262532595770589214&permissions=292057852928&integration_type=0&scope=bot))
 
-in any server this bot is installed:
-
-`/krill <@userID>/@user` Krill any user (Requires send messages permission and read messages permission)
-
-`?krill help` Tells you how to use the bot
-
-`?krill about` Displays this message.
-
-`?krill privacypolicy` Tells you the Privacy Policy of the bot.
-
-`?krill termsofservice` Tells you the Terms of Service of the bot.
-
-`?krill version` Displays Current version and its changelog
-
-`pipebomb` pipebomb
+See [The Readme](discord_readme.md)
 
 ### In case the bot goes offline contact: @annyconducter on Discord.
 
@@ -27,11 +13,9 @@ like `XXXxxXXXXXXXXXXXxxxxxxxxXXXXXXXXX.xxxxxxxXXxxxXXXXXXXxxxxxxxXXXXxxXXxxxx` 
 
 # Compiling:
 
-you need the [latest version of Python (Python 3.12.4 as of writing this)](https://www.python.org/downloads/) and 2 libraries
+you need the [latest version of Python (Python 3.12.4 as of writing this)](https://www.python.org/downloads/) and 3 libraries Found in [Setup.bat](setup.bat)
 
-`python -m pip install discord`
-
-`python -m pip install pyinstaller`
+MAKE SURE TO SET THIS WHEN YOU INSTALL PYTHON!! ![](docs/IMPORTANT.png)
 
 then simply run `build.bat` from the root of the repo with everything downloaded.
 

@@ -39,15 +39,6 @@ try:
 except OSError as e:
     message = 'Error Creating Dir: "' + str(e) + '"'
     print(message); logging.error(message)
-#move log files we don't need to clutter the main folder
-for file in os.listdir('logs/'):
-    #print('The cur file to move is: ' + file + '\n')
-    for extension in acceptedFileTypes:
-        if file.endswith(extension):
-            try:shutil.move('logs/' + file, 'logs/old/' + file, )
-            except shutil.Error as e:
-                message = 'Error Moving File "' + file + '" Error: ' + str(e)
-                print(message); logging.error(message)
             
 #set up logging with current time
 filname = "logs/krillYouBotLog-" + time + ".log"
@@ -74,6 +65,15 @@ confirm = input('Show return of url functions for the readme, TOS, etc?')
 if confirm == 'y' or confirm == 'yes': printReturns = True
 #on exit, do this.
 def cleanup():
+    #move log files we don't need to clutter the main folder
+    for file in os.listdir('logs/'):
+        #print('The cur file to move is: ' + file + '\n')
+        for extension in acceptedFileTypes:
+            if file.endswith(extension):
+                try:shutil.move('logs/' + file, 'logs/old/' + file, )
+                except shutil.Error as e:
+                    message = 'Error Moving File "' + file + '" Error: ' + str(e)
+                    print(message); logging.error(message)
     var = input('Press any key to continue')
     print("closing!"); logging.info('closing!')
 
@@ -161,8 +161,24 @@ async def checkMessage(message):
         try:await message.channel.send(finalMessage)
         except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
 
+#Funny Command
+    if lowercaseMessage.startswith('?levelup'):
+            #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
+            author = make_author_string(str(message.author), message.author.id, 'levelup', message.content, message.channel.id, message.guild.name)
+            print(author); logging.info(author)
+
+            try:await message.channel.send('Uh Whats that? I dunno what you\'re talking about :shrug:\n-# You Level up by simply talking :3c')
+            except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
+        
+
 #info and help commands
     if lowercaseMessage.startswith('?krill'):
+
+        #Check the date, and if its my birthday, add a subtext formatted message!
+        birthdaymsg = ''
+        dateNow = str(datetime.today().strftime('%m/%d'))
+        if dateNow == '08/18':birthdaymsg = '\n-# Today is Char\'s Birthday (The guy who coded this bot.)'
+
         if lowercaseMessage.startswith('?krill help'):
             #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
             author = make_author_string(str(message.author), message.author.id, 'krill help', message.content, message.channel.id, message.guild.name)
@@ -174,10 +190,11 @@ async def checkMessage(message):
         if lowercaseMessage.startswith('?krill about'):
             readme = get_readme(True)
             
+            
             author = make_author_string(str(message.author), message.author.id, 'krill about', message.content, message.channel.id, message.guild.name)
             print(author); logging.info(author)
 
-            try:await message.channel.send(readme, suppress_embeds=(True))
+            try:await message.channel.send(readme + birthdaymsg, suppress_embeds=(True))
             except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
         
         
@@ -205,7 +222,7 @@ async def checkMessage(message):
 
             try:await message.delete()
             except:logging.critical("Can't Delete Message! Does the bot have sufficient permissions?"); print("Can't Delete Message! Does the bot have sufficient permissions?")
-            try:await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog, suppress_embeds=(True))
+            try:await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog + birthdaymsg, suppress_embeds=(True))
             except:logging.critical("Can't Send Message! Does the bot have sufficient permissions?"); print("Can't Send Message! Does the bot have sufficient permissions?")
             
             

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.1] - 8/3/24 1:58 AM
+
+### Changed
+
+- Added ?levelup
+- Fixed a typo making the tos command print the readme lmao. (This caused incorrect logging.)
+- Added a secret Message (That isnt so secret because the code is public)
+
 # [2.0] - 7/25/24 6:21 PM
 
 ### Changed

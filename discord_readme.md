@@ -14,7 +14,9 @@
 
 `?krill version` Displays Current version and its changelog
 
-`pipebomb` pipebomb
+`/pipebomb` pipebomb
+
+`?levelup` Funny message for people who wanna know how to level up (Not Configurable yet!!!!)
 
 ### In case the bot goes offline contact: @annyconducter on Discord.
 
