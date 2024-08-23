@@ -52,8 +52,8 @@ def get_readme(showGetReturns:bool):
     url = ''
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/readmes/discord_readme.md').read().decode('utf-8'))
     except urllib.HTTPError as e: 
-        log_err(filname, 'shit the readme url handler died lmao: ' + str(e))
-        print('shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
+        frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + ']shit the readme url handler died lmao: ' + str(e))
+        frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     readme = 'This was generated with the [GitHub "discord_readme"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/discord_readme.md):\n\n' + '# Krill You Bot' + versionString + ' ' + url
 
     if showGetReturns:print('get_readme returned: ' + readme)
@@ -63,8 +63,8 @@ def get_privacy_policy(showGetReturns:bool):
     url = ''
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/CharGoldenYT/KrillYouBot/main/readmes/Privacy%20Policy.md').read().decode('utf-8'))
     except urllib.HTTPError as e: 
-        log_err(filname, 'shit the readme url handler died lmao: ' + str(e))
-        print('shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
+        frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + ']shit the readme url handler died lmao: ' + str(e))
+        frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     privacyPolicy = 'This was generated with the [GitHub "Privacy Policy"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/Privacy%20Policy.md):\n\n' + url
 
     if showGetReturns:print('get_privacy_policy returned: ' + privacyPolicy)
@@ -74,8 +74,8 @@ def get_tos(showGetReturns:bool):
     url = ''
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/readmes/tos.md').read().decode('utf-8'))
     except urllib.HTTPError as e: 
-        log_err(filname, 'shit the readme url handler died lmao: ' + str(e))
-        print('shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
+        frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + ']shit the readme url handler died lmao: ' + str(e))
+        frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     tos = 'This was generated with the [GitHub "tos"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/tos.md):\n\n' + url
 
     if showGetReturns:print('get_readme returned: ' + tos)
@@ -84,9 +84,9 @@ def get_tos(showGetReturns:bool):
 def get_gitVer():
     url = ''
     versionToReturn = None
-    try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/readmes/gitVer.txt').read().decode('utf-8'))
+    try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/gitVer.txt').read().decode('utf-8'))
     except urllib.HTTPError as e: 
-        log_err(filname, 'shit the readme url handler died lmao: ' + str(e))
-        print('shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
+        frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + ']shit the readme url handler died lmao: ' + str(e))
+        frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     if not url == None:versionToReturn = url
     return versionToReturn
