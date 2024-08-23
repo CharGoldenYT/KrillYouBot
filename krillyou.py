@@ -29,22 +29,6 @@ except OSError as e:
     if message != None:
         if errfile != None: errfile.write('\n[STARTUP]: ' + message)
 
-try:
-    os.mkdir('tmp/')
-except OSError as e:
-    message = 'Error Creating Dir: "' + str(e) + '"'
-    if message.endswith("file already exists: 'tmp/'\""): message = None
-    if message != None:print(message); 
-    if message != None:
-        if errfile != None: errfile.write('\n[STARTUP]: ' + message)
-
-try:
-    temp = open('tmp/fileName.txt', 'w')
-except OSError as e:
-    message = 'Error Creating filename text: "' + str(e) + '"'
-    print(message); 
-    if errfile != None: errfile.write('\n[STARTUP]: ' + message)
-
 
 from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,verLower,make_changelog,writeEndLog
 

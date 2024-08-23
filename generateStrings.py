@@ -11,11 +11,6 @@ ver = '2.2'
 verLower = ver.lower()
 versionString = '# [' + verLower.replace('-testver', '') + ']'
 
-temp = None
-try:temp = open('tmp/fileName.txt')
-except OSError as e:
-    print('Error getting filename! "' + str(e) + '"')
-
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = 'logs/generateStringslog-' + time + '.log'
 errfile = open(filname, 'a')
