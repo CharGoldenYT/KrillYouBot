@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.2] - 8/23/24 2:37 PM
+
+### Changed
+
+- Implementing a true fix for logging.
+- Added a log for when failing to move logs to logs/old.
+- Fixed moving logs into logs/old
+
+# [2.1h] -  8/23/24 10:58 AM
+
+### Changed
+
+- Fixed an error that happened due to me being an idiot and using the wrong variable for on_message_edit
+- Tried to fix logging not being able to make log files.
+
 # [2.1] - 8/3/24 1:58 AM
 
 ### Changed

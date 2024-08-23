@@ -10,3 +10,5 @@ if /i "%answer:~,1%" EQU "N" echo not enabling
 if /i "%answer:~,1%" EQU "N" del "export/toggleShowGetReturns.txt"
 echo DONE
 pause
+cd export
+start krillyou.exe
