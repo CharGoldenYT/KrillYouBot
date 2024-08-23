@@ -6,7 +6,7 @@ privacyPolicy = ''
 tos = ''
 errfile = None
 # Set the current ver
-ver = '2.2'
+ver = '2.2h'
 # Make it lowercase if text exists
 verLower = ver.lower()
 versionString = '# [' + verLower.replace('-testver', '') + ']'
@@ -18,15 +18,11 @@ errfile.write('<!-- START OF LOG -->')
 errfile.close()
 
 def make_changelog():
-    changelog = versionString + ''' - 8/23/24 2:58 PM
+    changelog = versionString + ''' - 8/23/24 3:23 PM
 
 ### Changed
 
-- Implementing a true fix for logging.
-- Added a log for when failing to move logs to logs/old.
-- Fixed moving logs into logs/old
-- Better Looking Logs/Log Files
-- Seperated generateStrings.py logs from main logs'''
+- Fixed an old filename being used for generateStrings.py from before it was called that.'''
     return changelog
 
 # author: Username of who ran the command

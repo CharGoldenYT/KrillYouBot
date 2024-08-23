@@ -37,7 +37,7 @@ acceptedFileTypes = ['.txt', '.log']
 # The changelog for the current version
 changelog = make_changelog()
 
-print('the cur_changelog is: \n' + changelog + '\n\nIf something looks off, or is not the right version, you probably need to edit "cur_changelog.py')
+print('the cur_changelog is: \n' + changelog + '\n\nIf something looks off, or is not the right version, you probably need to edit "generateStrings.py"')
 # Ask the user if the changelog looks off
 confirm = input('does something look off?')
 # and add text based on that
