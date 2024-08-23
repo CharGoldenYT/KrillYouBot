@@ -5,3 +5,6 @@ pyinstaller/*
 __pycache__/*
 .vscode/*
 botKey.txt
+src/botKey.txt
+src/logs
+src/__pycache__

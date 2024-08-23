@@ -3,10 +3,10 @@
 import discord,atexit,os,random,shutil,maskpass
 from datetime import datetime
 from krillcommand import getKrillMessage
-#set up logging with current time
-time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
-filname = "logs/krillYouBotLog-" + time + ".log"
-errfile = None
+from getCurVersion import getCurVersion, get_filname
+from betterLogs import *
+#set up logging
+filname = get_filname()
 
 try:
     os.mkdir('logs/')
@@ -15,10 +15,7 @@ except OSError as e:
     if message.endswith("file already exists: 'logs/'\""): message = None
     if message != None:print(message)
 
-try:errfile = open(filname, "a"); errfile.write('<!-- START OF LOG -->')
-except OSError as e:
-    message = 'Error Creating LogFile: "' + str(e) + '"'
-    print(message)
+create_logFile(filname, '<!-- Log created with Krill You Bot v' + getCurVersion() + ' -->')
 
 try:
     os.mkdir('logs/old/')
@@ -26,11 +23,10 @@ except OSError as e:
     message = 'Error Creating Dir: "' + str(e) + '"'
     if message.endswith("file already exists: 'logs/old/'\""): message = None
     if message != None:print(message); 
-    if message != None:
-        if errfile != None: errfile.write('\n[STARTUP]: ' + message)
+    if message != None:log(filname, '[STARTUP]: ' + message, '[ERROR]:', False)
 
 
-from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,verLower,make_changelog,writeEndLog
+from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,make_changelog
 
 # Set accepted file extensions for moving logs
 acceptedFileTypes = ['.txt', '.log']
@@ -44,14 +40,13 @@ confirm = input('does something look off?')
 confirm2 = None
 if confirm == 'y' or confirm == 'yes':
     changelog = changelog + '\n\n-# This changelog might be off! | See the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)';  
-    if errfile != None: errfile.write('[STARTUP]: changelog might be inaccurate!'); confirm2 = ''
+    log(filname, '[STARTUP]: changelog might be inaccurate!', '[INFO]:', False); confirm2 = ''
 if confirm2 == None:
     changelog = changelog + '\n\n-# See the full changelog [here](https://github.com/gameygu-0213/KrillYouBot/blob/main/changelog.md)'
 # Make it clear that a bot is on the test version of the current version
-if verLower.endswith('-testver'): changelog = changelog + ' | This is a test version!'
+if ver.endswith('-testver'): changelog = changelog + ' | This is a test version!'
 
 print('Continuing...')
-errfile.close()
 
 showReadme = True
 #Grab the botkey from a text file
@@ -59,8 +54,8 @@ try:
     botKeyTxt = open('botKey.txt')
     botKey = botKeyTxt.read()
 except Exception as e:
-    print('ERROR OPENING BOTKEY FILE: ' + str(e));  
-    if errfile != None: errfile.write('ERROR OPENING BOTKEY FILE: ' + str(e))
+    print('ERROR OPENING BOTKEY FILE: ' + str(e))
+    log_err(filname, 'ERROR OPENING BOTKEY FILE: ' + str(e))
     botKey = maskpass.askpass('Error opening botkey! Enter/Copy Paste key here!', '#')
 
 printReturns = False
@@ -70,39 +65,33 @@ if confirm == 'y' or confirm == 'yes': printReturns = True
 
 def cleanup():
     import time
-    try:errfile = open(filname, "a"); errfile.write('\n')
-    except OSError as e:
-        message = 'Error opening LogFile: "' + str(e) + '"'
-        print(message)
-    #move log files we don't need to clutter the main folder
+    log(filname, '[EXIT]: CLEANING UP', '', False)
+    end_log(filname)
+    print('Closing in 5 Seconds!')
+    doLogMove()
+    time.sleep(5)
+    print("closing!")
+atexit.register(cleanup)
+
+#move log files, we don't need to clutter the main folder
+def doLogMove():
     try:
         for file in os.listdir('logs/'):
             for extension in acceptedFileTypes:
-                if file.endswith(extension):
-                    print('Moving file: "' + file + '"')
+                if file.endswith(extension) and file != filname:
+                    success = True
                     try:shutil.move('logs/' + file, 'logs/old/' + file, )
                     except shutil.Error as e:
                         message = '[EXIT]: Error Moving File "' + file + '" Error: ' + str(e)
                         print(message)
-                        if errfile != None: errfile.write(message)
+                        log(filname, message, '[ERROR]:', False)
+                        success = False
+                    if success:print('Moved file: "' + file + '"')
     except OSError as e:
         message = '[EXIT]: Error Moving logs! "' + str(e) + '"'
         if str(e).endswith("'" + filname + "'"): message = None
         if message != None:print(message)
-        if message != None:
-            if errfile != None: errfile.write(message)
-
-    if errfile != None: errfile.write('[EXIT]: CLEANING UP\n<--  END OF LOG  -->')
-    if errfile != None: errfile.close()
-
-    writeEndLog()
-
-    print('Closing in 5 Seconds!')
-    time.sleep(5)
-
-    print("closing!")
-
-atexit.register(cleanup)
+        if message != None:log(filname, message, '[ERROR]:', False)
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -111,27 +100,19 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-    try:errfile = open(filname, "a"); errfile.write('\n')
-    except OSError as e:
-        message = 'Error opening LogFile: "' + str(e) + '"'
-        print(message)
-    if not verLower.endswith('-testver'):
+    if not ver.endswith('-testver'):
         gitVer = get_gitVer()
         if not str(gitVer).strip() == ver:
-            if not gitVer == None:print('Update Available! Check the github!'); 
-            if errfile != None: errfile.write('[STARTUP]: Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
+            if not gitVer == None:print('Update Available! Check the github!'); log(filname, '[STARTUP]: Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer, '[INFO]:', False)
     print(f'Ready to receive and send messages as: {client.user}');  
-    if errfile != None: errfile.write('[STARTUP]: CLIENT READY!'); errfile.close()
+    log(filname, '[STARTUP]: CLIENT READY!', '[INFO]:', False)
 
 @client.event
-async def is_ws_ratelimited(): 
-    try:errfile = open(filname, "a"); errfile.write('\n')
-    except OSError as e:
-        message = 'Error opening LogFile: "' + str(e) + '"'
-        print(message)
+async def is_ws_ratelimited():
     time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
     timeString = '[' + time + ']: '
-    if errfile != None: errfile.write(timeString + 'Rate Limited!! SHIT'); errfile.close()# Because it's useful to know if this bot gets rate limited for troubleshooting
+    log_warn(timeString + 'Rate Limited!! SHIT');# Because it's useful to know if this bot gets rate limited for troubleshooting
+    print(timeString + 'Rate Limited!! SHIT')
 
 @client.event
 async def on_message(message):
@@ -148,10 +129,6 @@ async def on_message_edit(before, after):
         if not after.author == client.user:await checkMessage(after)
     
 async def checkMessage(message):
-    try:errfile = open(filname, "a")
-    except OSError as e:
-        message = 'Error opening LogFile: "' + str(e) + '"'
-        print(message)
     time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
     timeString = '[' + time + ']: '
     #print('checkMessage ran! got' + message.content)
@@ -167,23 +144,20 @@ async def checkMessage(message):
     if varRandInt == 4: Finalmessage = '***Fsssshhhhh....***'
 
     if lowercaseMessage.startswith('/pipebomb'):
-        if errfile != None:errfile.write('\n')
         author = make_author_string(str(message.author), message.author.id, 'pipebomb', message.content, message.channel.id, message.guild.name)
         print(author); 
-        if errfile != None: errfile.write(timeString + author)
+        log_info(filname, timeString + author)
 
         success = True
         try:await message.channel.send(Finalmessage)
-        except: print("Can't Send Message! Does the bot have sufficient permissions?"); success = False
-        if errfile != None and success == False:errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?") 
+        except: print("Can't Send Message! Does the bot have sufficient permissions?"); log_critical(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
 
     # The command that started it all
     if lowercaseMessage.startswith('/krill'):
-        if errfile != None:errfile.write('\n')
         # author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill command | Full command ran: "' + message.content
         author = make_author_string(str(message.author), message.author.id, 'krill', message.content, message.channel.id, message.guild.name)
         print(author); 
-        if errfile != None: errfile.write(author)
+        log_info(filname, timeString + author)
 
         messageContent = lowercaseMessage.strip()
 
@@ -207,30 +181,28 @@ async def checkMessage(message):
         if lowercaseMessage.startswith('/krill <@'):
             try:await message.delete()
             except:
-                if errfile != None: errfile.write(timeString + "Can't Delete Message! Does the bot have sufficient permissions?"); 
+                log_critical(filname, "Can't Delete Message! Does the bot have sufficient permissions?"); 
                 print("Can't Delete Message! Does the bot have sufficient permissions?")
         try:await message.channel.send(finalMessage)
         except:
-            if errfile != None: errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?") 
+            log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?") 
             print("Can't Send Message! Does the bot have sufficient permissions?")
 
 #Funny Command
     if lowercaseMessage.startswith('?levelup'):
-        if errfile != None:errfile.write('\n')
         #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
         author = make_author_string(str(message.author), message.author.id, 'levelup', message.content, message.channel.id, message.guild.name)
         print(author); 
-        if errfile != None:errfile.write(timeString + author)
+        log_info(filname, timeString + author)
 
-        try:await message.channel.send('Uh Whats that? I dunno what you\'re talking about :shrug:\n-# You Level up by simply talking :3c')
+        try:await message.channel.send('I dunno\n-# You Level up by simply talking :3c')
         except:
-            if errfile != None: errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
+            log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?")
             print(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
         
 
 #info and help commands
     if lowercaseMessage.startswith('?krill'):
-        if errfile != None:errfile.write('\n')
         #Check the date, and if its my birthday, add a subtext formatted message!
         birthdaymsg = ''
         dateNow = str(datetime.today().strftime('%m/%d'))
@@ -240,11 +212,11 @@ async def checkMessage(message):
             #author = '<@' + str(message.author.id) + '>(@' + str(message.author) + ') ran the krill help command | Full command ran: "' + message.content + '"'
             author = make_author_string(str(message.author), message.author.id, 'krill help', message.content, message.channel.id, message.guild.name)
             print(author); 
-            if errfile != None: errfile.write(timeString + author)
+            log_info(filname, author)
 
             try:await message.channel.send('Krill Command Useage:\n/krill <@userID>/@user (e.g. <@300020084808744962>)\n\n-# For problems with the krill you bot, please dm me at @annyconducter, with your problem, and your server\'s name')
             except:
-                if errfile != None: errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?") 
+                log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?") 
                 print("Can't Send Message! Does the bot have sufficient permissions?")
 
         if lowercaseMessage.startswith('?krill about'):
@@ -252,11 +224,12 @@ async def checkMessage(message):
             
             
             author = make_author_string(str(message.author), message.author.id, 'krill about', message.content, message.channel.id, message.guild.name)
-            print(author); errfile.write(timeString + author)
+            print(author); 
+            log_info(filname, author)
 
             try:await message.channel.send(readme + birthdaymsg, suppress_embeds=(True))
             except:
-                if errfile != None: errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
+                log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?")
                 print(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
         
         
@@ -265,11 +238,11 @@ async def checkMessage(message):
             
             author = make_author_string(str(message.author), message.author.id, 'krill privacypolicy', message.content, message.channel.id, message.guild.name)
             print(author); 
-            if errfile != None: errfile.write(timeString + author)
+            log_info(filname, author)
 
             try:await message.channel.send(privacyPolicy, suppress_embeds=(True))
             except:
-                if errfile != None: errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
+                log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?")
                 print(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
 
         if lowercaseMessage.startswith('?krill tos'):
@@ -277,31 +250,42 @@ async def checkMessage(message):
             
             author = make_author_string(str(message.author), message.author.id, 'krill tos', message.content, message.channel.id, message.guild.name)
             print(author); 
-            if errfile != None: errfile.write(timeString + author)
+            log_info(filname, author)
 
             try:await message.channel.send(tos, suppress_embeds=(True))
             except:
-                if errfile != None: errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
+                log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?")
                 print(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
 
         if lowercaseMessage.startswith('?krill version'):
+            isOutdated = False
+            if not ver.endswith('-testver'):
+                gitVer = get_gitVer()
+                if not str(gitVer).strip() == ver:
+                    if not gitVer == None:print('Update Available! Check the github!'); 
+                    log_info(filname, 'Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
+                    isOutdated = True
+
             author = make_author_string(str(message.author), message.author.id, 'krill version', message.content, message.channel.id, message.guild.name)
             print(author); 
-            if errfile != None: errfile.write(timeString + author)
+            log_info(filname, author)
+
+            isOutdatedString = ''
+            if isOutdated:isOutdatedString = '\n-# This Version may be outdated, a testing version, or github is being annoying and not properly updating'
+
+            print('isOutdated? ' + str(isOutdated))
 
             try:await message.delete()
             except:
-                if errfile != None: errfile.write(timeString + "Can't Delete Message! Does the bot have sufficient permissions?")
+                log_critical(filname, "Can't Delete Message! Does the bot have sufficient permissions?")
                 print(timeString + "Can't Delete Message! Does the bot have sufficient permissions?")
-            try:await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog + birthdaymsg, suppress_embeds=(True))
+            try:await message.channel.send('The current version is: v' + ver + '\n\n the current version\'s changelog is:\n\n' + changelog + birthdaymsg + isOutdatedString, suppress_embeds=(True))
             except:
-                if errfile != None: errfile.write(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
+                log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?")
                 print(timeString + "Can't Send Message! Does the bot have sufficient permissions?")
-
-        if errfile != None:errfile.close()
             
             
 try:client.run(botKey)
 except:
-    if errfile != None: errfile.write('[STARTUP]: Invalid Bot Key!! got: ' + botKey)
-    print('[STARTUP]: CRITICAL: Invalid key! got: ' + botKey)
+    log(filname, '[STARTUP]: Invalid Bot Key!! got: ' + botKey, '[FATAL]:', False)
+    print('[STARTUP]: FATAL: Invalid key! got: ' + botKey)

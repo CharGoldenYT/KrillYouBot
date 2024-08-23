@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['krillyou.py'],
+    ['src\\krillyou.py'],
     pathex=[],
     binaries=[],
     datas=[],

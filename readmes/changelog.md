@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.2 Hotfix 2] - 8/23/24 6:45 PM
+
+### Changed
+
+- Added what krill bot version made a log file.
+- Changed How i label Hotfixes
+- Made it so Hotfix doesnt get changed to hotfix
+- Reconsolidated generateStrings.py and main logs
+- New "betterLogs.py" script
+
 # [2.2h] - 8/23/24 3:23 PM
 
 ### Changed
