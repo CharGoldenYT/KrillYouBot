@@ -1,5 +1,7 @@
 # Krill you bot - A Wacky simple Discord bot for krilling your friends!
 
+[![Python application](https://github.com/CharGoldenYT/KrillYouBot/actions/workflows/python-app.yml/badge.svg)](https://github.com/CharGoldenYT/KrillYouBot/actions/workflows/python-app.yml)
+
 ### Usage ([My Discord Bot](https://discord.com/oauth2/authorize?client_id=1262532595770589214&permissions=292057852928&integration_type=0&scope=bot))
 
 See [The Readme](discord_readme.md)
