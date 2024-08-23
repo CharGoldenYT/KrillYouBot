@@ -169,7 +169,7 @@ async def checkMessage(message):
     if lowercaseMessage.startswith('/pipebomb'):
         if errfile != None:errfile.write('\n')
         author = make_author_string(str(message.author), message.author.id, 'pipebomb', message.content, message.channel.id, message.guild.name)
-        +print(author); 
+        print(author); 
         if errfile != None: errfile.write(timeString + author)
 
         success = True
