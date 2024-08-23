@@ -6,7 +6,7 @@ privacyPolicy = ''
 tos = ''
 errfile = None
 # Set the current ver
-ver = '2.2-TestVer'
+ver = '2.2'
 # Make it lowercase if text exists
 verLower = ver.lower()
 versionString = '# [' + verLower.replace('-testver', '') + ']'
