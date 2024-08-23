@@ -5,13 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [2.2] - 8/23/24 2:37 PM
+# [2.2] - 8/23/24 2:58 PM
 
 ### Changed
 
 - Implementing a true fix for logging.
 - Added a log for when failing to move logs to logs/old.
 - Fixed moving logs into logs/old
+- Better Looking Logs/Log Files
+- Seperated generateStrings.py logs from main logs
 
 # [2.1h] -  8/23/24 10:58 AM
 

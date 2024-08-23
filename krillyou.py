@@ -46,7 +46,7 @@ except OSError as e:
     if errfile != None: errfile.write('\n[STARTUP]: ' + message)
 
 
-from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,verLower,make_changelog
+from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,verLower,make_changelog,writeEndLog
 
 # Set accepted file extensions for moving logs
 acceptedFileTypes = ['.txt', '.log']
@@ -110,6 +110,8 @@ def cleanup():
 
     if errfile != None: errfile.write('[EXIT]: CLEANING UP\n<--  END OF LOG  -->')
     if errfile != None: errfile.close()
+
+    writeEndLog()
 
     print('Closing in 5 Seconds!')
     time.sleep(5)

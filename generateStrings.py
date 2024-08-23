@@ -16,18 +16,22 @@ try:temp = open('tmp/fileName.txt')
 except OSError as e:
     print('Error getting filename! "' + str(e) + '"')
 
-if temp != None: temp = temp.read()
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
-if temp == None: temp = 'logs/generateStringslog-' + time + '.log'
+filname = 'logs/generateStringslog-' + time + '.log'
+errfile = open(filname, 'a')
+errfile.write('<!-- START OF LOG -->')
+errfile.close()
 
 def make_changelog():
-    changelog = versionString + ''' - 8/23/24 2:37 PM
+    changelog = versionString + ''' - 8/23/24 2:58 PM
 
 ### Changed
 
 - Implementing a true fix for logging.
 - Added a log for when failing to move logs to logs/old.
-- Fixed moving logs into logs/old'''
+- Fixed moving logs into logs/old
+- Better Looking Logs/Log Files
+- Seperated generateStrings.py logs from main logs'''
     return changelog
 
 # author: Username of who ran the command
@@ -41,7 +45,8 @@ def make_author_string(author:str, userID:int, command:str, message_content:str,
     return authorStr
 
 def get_readme(showGetReturns:bool):
-    if temp != None:errfile = open(temp, 'a')
+    errfile = open(filname, 'a')
+    errfile.write('\n')
     time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
     timeString = '[' + time + ']: '
     versionString = ' (' + verLower.replace('-testver', '') + ')'
@@ -57,7 +62,8 @@ def get_readme(showGetReturns:bool):
     return readme
 
 def get_privacy_policy(showGetReturns:bool):
-    if temp != None:errfile = open(temp, 'a')
+    errfile = open(filname, 'a')
+    errfile.write('\n')
     time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
     timeString = '[' + time + '] '
     url = ''
@@ -72,7 +78,8 @@ def get_privacy_policy(showGetReturns:bool):
     return privacyPolicy
 
 def get_tos(showGetReturns:bool):
-    if temp != None:errfile = open(temp, 'a')
+    errfile = open(filname, 'a')
+    errfile.write('\n')
     time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
     timeString = '[' + time + '] '
     url = ''
@@ -87,7 +94,8 @@ def get_tos(showGetReturns:bool):
     return tos
 
 def get_gitVer():
-    if temp != None:errfile = open(temp, 'a')
+    errfile = open(filname, 'a')
+    errfile.write('\n')
     time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
     timeString = '[' + time + '] '
     url = ''
@@ -99,3 +107,8 @@ def get_gitVer():
     if not url == None:versionToReturn = url
     if errfile != None:errfile.close()
     return versionToReturn
+
+def writeEndLog():
+    errfile = open(filname, 'a')
+    errfile.write('\n')
+    errfile.write('[EXIT]: CLEANING UP\n<!--  END OF LOG  -->')
