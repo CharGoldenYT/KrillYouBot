@@ -1,10 +1,37 @@
 # This example requires the 'message_content' intent.
 
-import discord,logging,atexit,os,random,shutil,maskpass
+import discord,atexit,os,random,shutil,maskpass
 from datetime import datetime
 from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,verLower,make_changelog
 from krillcommand import getKrillMessage
+import logging
 
+for handler in logging.root.handlers[:]:
+    logging.root.removeHandler(handler)
+try:
+    os.mkdir('logs/')
+except OSError as e:
+    message = 'Error Creating Dir: "' + str(e) + '"'
+    print(message); logging.error(message)
+
+try:
+    os.mkdir('logs/old/')
+except OSError as e:
+    message = 'Error Creating Dir: "' + str(e) + '"'
+    print(message); logging.error(message)
+
+#set up logging with current time
+time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
+filname = "logs/krillYouBotLog-" + time + ".log"
+tempfile = None
+try:tempfile = open(filname, "w"); tempfile.write('<!-- START OF LOG -->'); tempfile.close()
+except OSError as e:
+    message = 'Error Creating LogFile: "' + str(e) + '"'
+    print(message); logging.error(message)
+try:
+    logging.basicConfig(level=logging.INFO, filename=filname, filemode="a", format="%(asctime)s %(levelname)s %(message)s")
+except Exception as e:
+    print('Error Creating log file: "' + str(e) + '"')
 
 # Set accepted file extensions for moving logs
 acceptedFileTypes = ['.txt', '.log']
@@ -25,27 +52,9 @@ if verLower.endswith('-testver'): changelog = changelog + ' | This is a test ver
 
 print('Continuing...')
 
-time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 showReadme = True
 
-try:
-    os.mkdir('logs/')
-except OSError as e:
-    message = 'Error Creating Dir: "' + str(e) + '"'
-    print(message); logging.error(message)
-
-try:
-    os.mkdir('logs/old/')
-except OSError as e:
-    message = 'Error Creating Dir: "' + str(e) + '"'
-    print(message); logging.error(message)
             
-#set up logging with current time
-filname = "logs/krillYouBotLog-" + time + ".log"
-try:
-    logging.basicConfig(level=logging.INFO, filename=filname, filemode="a", format="%(asctime)s %(levelname)s %(message)s")
-except Exception as e:
-    print('Error Creating log file: "' + str(e) + '"')
 #test if file can be opened
 try:
     tester = open(filname, 'r'); tester.close()
@@ -90,7 +99,7 @@ async def on_ready():
         gitVer = get_gitVer()
         if not str(gitVer).strip() == ver:
             if not gitVer == None:print('Update Available! Check the github!'); logging.info('Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer)
-    print(f'Ready to receive and send messages as: {client.user}')
+    print(f'Ready to receive and send messages as: {client.user}'); logging.info('CLIENT READY!')
 
 @client.event
 async def is_ws_ratelimited():
@@ -106,9 +115,9 @@ async def on_message(message):
 async def on_message_edit(before, after):
     #print('MESSAGE EDITED, OLDMESSAGE: "' + oldMessage.content + '" NEWMESSAGE: "' + message.content + '"')
     if not before.content == after.content:
-        if message.author == client.user:
+        if after.author == client.user:
             return
-        if not message.author == client.user:await checkMessage(message)
+        if not after.author == client.user:await checkMessage(after)
     
 async def checkMessage(message):
     #print('checkMessage ran! got' + message.content)

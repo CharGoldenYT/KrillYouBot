@@ -4,19 +4,18 @@ readme = ''
 privacyPolicy = ''
 tos = ''
 # Set the current ver
-ver = '2.1'
+ver = '2.1h'
 # Make it lowercase if text exists
 verLower = ver.lower()
 versionString = '# [' + verLower.replace('-testver', '') + ']'
 
 def make_changelog():
-    changelog = versionString + ''' - 8/3/24 1:58 AM
+    changelog = versionString + ''' - 8/23/24 10:58 AM
 
 ### Changed
 
-- Added ?levelup
-- Fixed a typo making the tos command print the readme lmao. (This caused incorrect logging.)
-- Added a secret Message (That isnt so secret because the code is public)'''
+- Fixed an error that happened due to me being an idiot and using the wrong variable for on_message_edit
+- Tried to fix logging not being able to make log files.'''
     return changelog
 
 # author: Username of who ran the command
