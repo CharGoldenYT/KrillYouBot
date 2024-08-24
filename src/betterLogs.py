@@ -13,7 +13,7 @@ def create_logFile(filename:str, beforeBeginning:str = ''):
        frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] Error with file"' + filename + '": "' + str(e) + '"')
 
 def log(filename:str, log:str, level:str = '', showTime:bool = True):
-    time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
+    time = str(datetime.today().strftime('%d-%m-%Y %H:%M:%S'))
     timeString = '[' + time + ']: '
     if not showTime: timeString = ''
     try:

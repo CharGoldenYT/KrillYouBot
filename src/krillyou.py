@@ -1,7 +1,6 @@
 # This example requires the 'message_content' intent.
 
 import discord,atexit,os,random,shutil,maskpass
-from datetime import datetime
 from krillcommand import getKrillMessage
 from getCurVersion import getCurVersion, get_filname
 from betterLogs import *
@@ -108,11 +107,9 @@ async def on_ready():
     log(filname, '[STARTUP]: CLIENT READY!', '[INFO]:', False)
 
 @client.event
-async def is_ws_ratelimited():
-    time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
-    timeString = '[' + time + ']: '
-    log_warn(timeString + 'Rate Limited!! SHIT');# Because it's useful to know if this bot gets rate limited for troubleshooting
-    print(timeString + 'Rate Limited!! SHIT')
+def is_ws_ratelimited():
+    log_warn(filname, 'Rate Limited!! SHIT');# Because it's useful to know if this bot gets rate limited for troubleshooting
+    print('Rate Limited!! SHIT')
 
 @client.event
 async def on_message(message):
