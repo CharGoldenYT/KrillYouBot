@@ -3,7 +3,8 @@ import urllib.request as urllib
 from datetime import datetime
 import time as PyTime
 from getCurVersion import getCurVersion
-from betterLogs import *
+from betterLogs.betterLogs import *
+from inspect import currentframe, getframeinfo
 readme = ''
 privacyPolicy = ''
 tos = ''
@@ -26,13 +27,16 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 8/26/24 12:33 PM
+    changelog = versionString + ''' - 8/26/24 3:55 PM
 
 ### Changed
 
-- funny window title
-- Changed the name of the built executable from Pyinstaller
-- Got rid of useless rate limited check'''
+- Added crude python version check
+- Added colors to printed messages
+- Made the logging function also print out messages with the ability to toggle off printing.
+- Fixed some logs potentially having 2 datetime strings
+- Removed unneccasary import from "krillCommand.py"
+- Made it easier for troubleshooting by also grabbing the server ID'''
     return changelog
 
 # author: Username of who ran the command
@@ -41,8 +45,8 @@ def make_changelog():
 # message_content: Self explanatory
 # channelID: ID of the channel it ran from
 # serverName: Self explanatory
-def make_author_string(author:str, userID:int, command:str, message_content:str, channelID:int, serverName:str):
-    authorStr = '<@' + str(userID) + '>(' + author + ') Ran the command: "' + command + '" | Full Command Ran: "' + message_content + '" | Channel ID: "' + str(channelID) + '" | Server Ran From: ' + serverName
+def make_author_string(author:str, userID:int, command:str, message_content:str, channelID:int, serverName:str, serverID:int):
+    authorStr = '<@' + str(userID) + '>(' + author + ') Ran the command: "' + command + '" | Full Command Ran: "' + message_content + '" | Channel ID: "' + str(channelID) + '" | Server Ran From: "' + serverName + '" | Server ID: "' + str(serverID) + '"'
     return authorStr
 
 def get_readme(showGetReturns:bool):

@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 import random
 
 def getKrillMessage(userID:str):

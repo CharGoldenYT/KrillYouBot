@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [2.2 Hotfix 3] - 8/26/24 12:33 PM
+# [2.3] - 8/26/24 3:55 PM
+
+### Changed
+
+- Added crude python version check
+- Added colors to printed messages
+- Made the logging function also print out messages with the ability to toggle off printing.
+- Fixed some logs potentially having 2 datetime strings
+- Removed unneccasary import from "krillCommand.py"
+- Made it easier for troubleshooting by also grabbing the server ID
+
+# [2.2-Hotfix-3] - 8/26/24 12:33 PM
 
 ### Changed
 
@@ -13,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed the name of the built executable from Pyinstaller
 - Got rid of useless rate limited check
 
-# [2.2 Hotfix 2] - 8/23/24 6:45 PM
+# [2.2-Hotfix-2] - 8/23/24 6:45 PM
 
 ### Changed
 

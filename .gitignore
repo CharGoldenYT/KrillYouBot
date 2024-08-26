@@ -8,3 +8,4 @@ botKey.txt
 src/botKey.txt
 src/logs
 src/__pycache__
+*.spec
