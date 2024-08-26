@@ -1,0 +1,3 @@
+[submodule "src/Better-Logs"]
+	path = src/Better-Logs
+	url = https://github.com/CharGoldenYT/Better-Logs
