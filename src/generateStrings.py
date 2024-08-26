@@ -26,15 +26,13 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 8/23/24 6:45 PM
+    changelog = versionString + ''' - 8/26/24 12:33 PM
 
 ### Changed
 
-- Added what krill bot version made a log file.
-- Changed How i label Hotfixes
-- Made it so Hotfix doesnt get changed to hotfix
-- Reconsolidated generateStrings.py and main logs
-- New "betterLogs.py" script'''
+- funny window title
+- Changed the name of the built executable from Pyinstaller
+- Got rid of useless rate limited check'''
     return changelog
 
 # author: Username of who ran the command

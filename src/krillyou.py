@@ -1,6 +1,8 @@
 # This example requires the 'message_content' intent.
 
 import discord,atexit,os,random,shutil,maskpass
+from os import system
+system('title Krill You Bot')
 from krillcommand import getKrillMessage
 from getCurVersion import getCurVersion, get_filname
 from betterLogs import *
@@ -105,11 +107,6 @@ async def on_ready():
             if not gitVer == None:print('Update Available! Check the github!'); log(filname, '[STARTUP]: Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer, '[INFO]:', False)
     print(f'Ready to receive and send messages as: {client.user}');  
     log(filname, '[STARTUP]: CLIENT READY!', '[INFO]:', False)
-
-@client.event
-def is_ws_ratelimited():
-    log_warn(filname, 'Rate Limited!! SHIT');# Because it's useful to know if this bot gets rate limited for troubleshooting
-    print('Rate Limited!! SHIT')
 
 @client.event
 async def on_message(message):
