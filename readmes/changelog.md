@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.4] - 9/1/24 7:18 PM
+
+### Changed
+
+- Added a message that gets sent to my server when the bot is ready, and when it gets closed
+
 # [2.3] - 8/26/24 3:55 PM
 
 ### Changed

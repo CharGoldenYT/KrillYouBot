@@ -4,8 +4,9 @@ from datetime import datetime
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = "logs/krillYouBotLog-" + time + ".log"
 
+# REMINDER TO KEEP THIS ALL LOWERCASE!
 def getCurVersion():
-    return '2.3'
+    return '2.4'
 
 def get_filname():
     return filname

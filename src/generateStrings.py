@@ -27,16 +27,11 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 8/26/24 3:55 PM
+    changelog = versionString + ''' - 9/1/24 7:18 PM
 
 ### Changed
 
-- Added crude python version check
-- Added colors to printed messages
-- Made the logging function also print out messages with the ability to toggle off printing.
-- Fixed some logs potentially having 2 datetime strings
-- Removed unneccasary import from "krillCommand.py"
-- Made it easier for troubleshooting by also grabbing the server ID'''
+- Added a message that gets sent to my server when the bot is ready, and when it gets closed'''
     return changelog
 
 # author: Username of who ran the command

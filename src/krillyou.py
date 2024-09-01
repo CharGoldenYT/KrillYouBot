@@ -71,6 +71,12 @@ if confirm2 == None:
 # Make it clear that a bot is on the test version of the current version
 if ver.endswith('-testver'): changelog = changelog + ' | This is a test version!'
 
+channelID = None
+if ver.endswith('-testver'): 
+    channelID = 1264258998933262336
+if not ver.endswith('-testver'): 
+    channelID = 1279923362923151401
+
 print(f'{bcolors.OKBLUE}Continuing...')
 
 showReadme = True
@@ -97,9 +103,6 @@ def cleanup():
     print("closing!" + bcolors.ENDC)
 atexit.register(cleanup)
 
-async def doCloseMessage():
-    channel = client.get_channel(1279923362923151401); await channel.send('Krill You Bot is now closing!')
-
 #move log files, we don't need to clutter the main folder
 def doLogMove():
     try:
@@ -120,6 +123,17 @@ def doLogMove():
         #if message != None:print(bcolors.FAIL + message + bcolors.ENDC)
         if message != None:log(filname, message, '[ERROR]:', False)
 
+
+async def doMessage(channelID:int = 0, message:str = 'default'):
+    if channelID == 0:log_critical(filname, 'ERROR CHANNELID NULL!', True, True)
+    if not channelID == None:
+        channel = client.get_channel(channelID); 
+        try:
+            await channel.send(message)
+        except Exception as e:
+            log_err(filname, f'ERROR SENDING MESSAGE "{str(e)}"', True, True)
+
+
 @client.event
 async def on_ready():
     if not ver.endswith('-testver'):
@@ -129,11 +143,11 @@ async def on_ready():
             log_info(filname, '[STARTUP]: Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer, False)
     #print(f'{bcolors.OKBLUE}Ready to receive and send messages as: {client.user} {bcolors.ENDC}');  
     log(filname, f'[STARTUP]: CLIENT READY: Ready to receive and send messages as: {client.user}{bcolors.ENDC}', '[INFO]:', False)
-    channel = client.get_channel(1279923362923151401); await channel.send('Krill You Bot is now live!')
+    await doMessage(channelID, 'Krill You Bot Online!')
 
 @client.event
 async def close():
-    channel = client.get_channel(1279923362923151401); await channel.send('Krill You Bot is no longer live!')
+    await doMessage(channelID, 'Krill You Bot Offline!')
 
 
 @client.event
