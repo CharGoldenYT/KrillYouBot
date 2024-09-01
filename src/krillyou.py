@@ -8,6 +8,12 @@ from krillcommand import getKrillMessage
 from getCurVersion import getCurVersion, get_filname
 from betterLogs.betterLogs import *
 from platform import python_version
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -81,7 +87,6 @@ printReturns = False
 confirm = input(f'Show return of url functions for the readme, TOS, etc?')
 if confirm == 'y' or confirm == 'yes': printReturns = True
 #on exit, do this.
-
 def cleanup():
     import time
     log_info(filname, '[EXIT]: CLEANING UP', False)
@@ -91,6 +96,9 @@ def cleanup():
     time.sleep(5)
     print("closing!" + bcolors.ENDC)
 atexit.register(cleanup)
+
+async def doCloseMessage():
+    channel = client.get_channel(1279923362923151401); await channel.send('Krill You Bot is now closing!')
 
 #move log files, we don't need to clutter the main folder
 def doLogMove():
@@ -112,11 +120,6 @@ def doLogMove():
         #if message != None:print(bcolors.FAIL + message + bcolors.ENDC)
         if message != None:log(filname, message, '[ERROR]:', False)
 
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
-
 @client.event
 async def on_ready():
     if not ver.endswith('-testver'):
@@ -126,6 +129,12 @@ async def on_ready():
             log_info(filname, '[STARTUP]: Update available! CurVersion: v' + ver + ' | gitVer: v' + gitVer, False)
     #print(f'{bcolors.OKBLUE}Ready to receive and send messages as: {client.user} {bcolors.ENDC}');  
     log(filname, f'[STARTUP]: CLIENT READY: Ready to receive and send messages as: {client.user}{bcolors.ENDC}', '[INFO]:', False)
+    channel = client.get_channel(1279923362923151401); await channel.send('Krill You Bot is now live!')
+
+@client.event
+async def close():
+    channel = client.get_channel(1279923362923151401); await channel.send('Krill You Bot is no longer live!')
+
 
 @client.event
 async def on_message(message):
