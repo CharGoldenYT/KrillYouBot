@@ -9,11 +9,6 @@ from getCurVersion import getCurVersion, get_filname
 from betterLogs.betterLogs import *
 from platform import python_version
 
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -49,6 +44,14 @@ except OSError as e:
     if message.endswith("file already exists: 'logs/old/'\""): message = None
     #if message != None:print(bcolors.FAIL + message + bcolors.ENDC); 
     if message != None:log(filname, '[STARTUP]: ' + message, '[ERROR]:', False)
+
+#so i can make all the logs mine lmao
+from client import Client
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = Client(intents=intents)
 
 
 from generateStrings import get_readme,get_privacy_policy,get_tos,get_gitVer,make_author_string,ver,make_changelog

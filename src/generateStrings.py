@@ -27,11 +27,11 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 9/1/24 7:18 PM
+    changelog = versionString + ''' - 9/2/24 10:59 AM
 
 ### Changed
 
-- Added a message that gets sent to my server when the bot is ready, and when it gets closed'''
+- Added local versions of discord.client and discord.gateway to keep the logs consistent'''
     return changelog
 
 # author: Username of who ran the command
