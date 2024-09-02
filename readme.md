@@ -15,7 +15,7 @@ like `XXXxxXXXXXXXXXXXxxxxxxxxXXXXXXXXX.xxxxxxxXXxxxXXXXXXXxxxxxxxXXXXxxXXxxxx` 
 
 # Compiling:
 
-you need the [latest version of Python (Python 3.12.4 as of writing this)](https://www.python.org/downloads/) and 3 libraries Found in [Setup.bat](setup.bat)
+you need [Python (3.12.4-3.12.5 have been tested and confirmed as working properly)](https://www.python.org/downloads/) and 3 libraries Found in [Setup.bat](setup.bat)
 
 MAKE SURE TO SET THIS WHEN YOU INSTALL PYTHON!! ![](docs/IMPORTANT.png)
 
