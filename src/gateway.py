@@ -567,7 +567,7 @@ class DiscordWebSocket:
         elif event == 'RESUMED':
             # pass back the shard ID to the resumed handler
             data['__shard_id__'] = self.shard_id
-            log_info(get_filname(), 'Shard ID ' + str(self.shard_id) + ' has successfully RESUMED session' + self.session_id + ').', True, True)
+            log_info(get_filname(), 'Shard ID ' + str(self.shard_id) + ' has successfully RESUMED session (' + self.session_id + ').', True, True)
 
         try:
             func = self._discord_parsers[event]
