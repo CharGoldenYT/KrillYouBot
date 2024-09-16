@@ -5,7 +5,7 @@ pyinstaller/*
 __pycache__/*
 .vscode/*
 botKey.txt
-src/botKey.txt
-src/logs
-src/__pycache__
+src/
+!src/*.py
+!src/betterLogs
 *.spec

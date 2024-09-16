@@ -327,5 +327,5 @@ async def checkMessage(message):
             
 try:client.run(botKey)
 except:
-    log_fatal(filname, '[STARTUP]: Invalid Bot Key!! got: ' + botKey, False)
+    log_fatal(filname, '[STARTUP]: Invalid Bot Key!! got: "' + botKey + '"', False) # added quotes to make it more obvious what went wrong in the case of a resume session failing
     #print('[STARTUP]: FATAL: Invalid key! got: ' + botKey)
