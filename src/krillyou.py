@@ -31,10 +31,10 @@ except OSError as e:
 create_logFile(filname, '<!-- Log created with Krill You Bot v' + getCurVersion() + ' -->')
 
 # Because a long string of "version and version and version and version etc." for each new release tested is HORRIBLE to type out.
-testedVersions = ['3.12.4', '3.12.5']
+testedVersions = ['3.12.4', '3.12.5', '3.12.6']
 
 if python_version() not in testedVersions:
-    print(bcolors.WARNING + f'[WARN]:[STARTUP]: This was built and tested with Python 3.12.4 - 3.12.5 your version is {python_version()}, It has an unlikely chance to break!' + bcolors.ENDC)
+    print(bcolors.WARNING + f'[WARN]:[STARTUP]: This was built and tested with Python 3.12.4 - 3.12.6 your version is {python_version()}, It has an unlikely chance to break!' + bcolors.ENDC)
     log_warn(filname, f'[STARTUP]: User\'s Python version is {python_version()} which is not any tested version!', False)
 
 try:
