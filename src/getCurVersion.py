@@ -6,7 +6,7 @@ filname = "logs/krillYouBotLog-" + time + ".log"
 
 # REMINDER TO KEEP THIS ALL LOWERCASE!
 def getCurVersion():
-    return '2.5'
+    return '2.5h'
 
 def get_filname():
     return filname
