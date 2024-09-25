@@ -61,7 +61,7 @@ from discord.mentions import AllowedMentions
 from discord.errors import *
 from discord.enums import Status
 from discord.flags import ApplicationFlags, Intents
-from gateway import *
+from discordpy.gateway import *
 from discord.activity import ActivityTypes, BaseActivity, create_activity
 from discord.voice_client import VoiceClient
 from discord.http import HTTPClient

@@ -46,7 +46,7 @@ except OSError as e:
     if message != None:log(filname, '[STARTUP]: ' + message, '[ERROR]:', False)
 
 #so i can make all the logs mine lmao
-from client import Client
+from discordpy.client import Client
 
 intents = discord.Intents.default()
 intents.message_content = True
