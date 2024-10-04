@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.6] - 10/4/24 11:24 AM
+
+### Changed
+
+- Made it possible to make a custom krilled message by adding a replace fucntion to remove "<@ " from the final message
+
 # [2.5h] - 9/25/24 12:23 PM
 
 ### Changed

@@ -27,12 +27,11 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 9/25/24 12:23 PM
+    changelog = versionString + ''' - 10/4/24 11:24 AM
 
 ### Changed
 
-- Replaced more default discord.py logs with betterLogs to make sure every warning/error gets logged
-- Moved client.py and gateway.py to their own folder to keep it from getting confusing'''
+- Made it possible to make a custom krilled message by adding a replace fucntion to remove "<@ " from the final message'''
     return changelog
 
 # author: Username of who ran the command

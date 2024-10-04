@@ -200,7 +200,7 @@ async def checkMessage(message):
         #print(author); 
         log_info(filname, author)
 
-        messageContent = lowercaseMessage.strip()
+        messageContent = message.content.strip()
 
         userID = ''
 
@@ -224,7 +224,7 @@ async def checkMessage(message):
             except:
                 log_critical(filname, "Can't Delete Message! Does the bot have sufficient permissions?"); 
                 #print("Can't Delete Message! Does the bot have sufficient permissions?")
-        try:await message.channel.send(finalMessage)
+        try:await message.channel.send(finalMessage.replace('<@ ', ''))
         except:
             log_critical(filname, "Can't Send Message! Does the bot have sufficient permissions?") 
             #print("Can't Send Message! Does the bot have sufficient permissions?")
@@ -327,5 +327,11 @@ async def checkMessage(message):
             
 try:client.run(botKey)
 except:
-    log_fatal(filname, '[STARTUP]: Invalid Bot Key!! got: "' + botKey + '"', False) # added quotes to make it more obvious what went wrong in the case of a resume session failing
+    if not hasStarted:log_fatal(filname, '[STARTUP]: Invalid Bot Key!! got: "' + botKey + '"', False) # added quotes to make it more obvious what went wrong in the case of a resume session failing
     #print('[STARTUP]: FATAL: Invalid key! got: ' + botKey)
+    if hasStarted:
+        intents = discord.Intents.default()
+        intents.message_content = True
+
+        client = Client(intents=intents)
+        #keep trying to reconnect if already started
