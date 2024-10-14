@@ -139,7 +139,7 @@ async def checkMessage(message:Message, client:Client):
 
         if command == 'krill about':
             cmd = '?krill about'
-            finalMessage = get_readme(check_allowReturns())
+            finalMessage = get_readme(check_allowReturns()).replace('`?', f'`{settingsPrefix}')
 
         if command == 'krill tos':
             cmd = '?krill tos'
