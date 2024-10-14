@@ -2,7 +2,7 @@
 
 ### Usage ([My Discord Bot](https://discord.com/oauth2/authorize?client_id=1262532595770589214&permissions=292057852928&integration_type=0&scope=bot))
 
-See [The Readme](discord_readme.md)
+See [The Readme](readmes/discord_readme.md)
 
 ### In case the bot goes offline contact: @annyconducter on Discord.
 
