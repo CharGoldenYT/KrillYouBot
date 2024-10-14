@@ -18,6 +18,8 @@
 
 `?levelup` Funny message for people who wanna know how to level up (Not Configurable yet!!!!)
 
+***(Since 3.0)*** `?krill configure` Configure server specific settings use `?krill configure help` to see available settings!
+
 ### In case the bot goes offline contact: @annyconducter on Discord.
 
 [GitHub](https://github.com/gameygu-0213/KrillYouBot)

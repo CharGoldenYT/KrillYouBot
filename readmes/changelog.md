@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [3.0]  - 10/14/24 12:50 PM
+
+### Changed
+
+- Recoded a buncha shit!
+- Added local server settings
+- Added a config command that allows you to change a servers settings!
+- Slightly changed how the changelog looks.
+
 # [2.6] - 10/4/24 11:24 AM
 
 ### Changed

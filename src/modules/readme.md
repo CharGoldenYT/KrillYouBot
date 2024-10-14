@@ -1,0 +1,1 @@
+External functions the bot uses that would look better if it werent in the main file

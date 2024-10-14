@@ -43,8 +43,8 @@ from discord import utils
 from discord.activity import BaseActivity
 from discord.enums import SpeakingState
 from discord.errors import ConnectionClosed
-from betterLogs.betterLogs import *
-from getCurVersion import get_filname
+from modules.backend.betterLogs.betterLogs import *
+from modules.commands.krillVersion import get_filname
 
 _log = logging.getLogger(__name__)
 
