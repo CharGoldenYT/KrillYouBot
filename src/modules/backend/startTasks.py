@@ -42,16 +42,24 @@ def create_logsFolders():
 
 
 def grab_serverSettings(servers:list[Guild]):
+    import os
     for server in servers:
         path = f'serverSettings/serverID-{str(server.id)}_Settings.json'
         ftp = initializeFTP()
+        ftp.cwd('htdocs/krillYouBot_ServerSettings')
         file = open(path, 'rb')
         fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'wb')
-        ftp.retrbinary(f'RETR {path}', fileCompare.write); fileCompare.close()
-        fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'rb')
-        if not fileCompare == file:
-            print('Files are different, replacing with upstream ver')
-            file = open(path, 'wb'); file.writelines(fileCompare.readlines()); file.close(); fileCompare.close()
+        try:
+            ftp.retrbinary(f'RETR {path}', fileCompare.write); fileCompare.close()
+            fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'rb')
+            if not fileCompare == file:
+                print('Files are different, replacing with upstream ver')
+                file = open(path, 'wb'); file.writelines(fileCompare.readlines()); file.close(); fileCompare.close()
+        except Exception as e:
+            fileCompare.close()
+            file.close()
+            log_err(get_filname(), f'There was an error trying to grab server settings for {str(server.id)}: "{str(e)}"')
+        os.remove(f'serverID-{str(server.id)}_Settings.temp')
 
 def run_startTasks():
     var = get_latestChangelog().lower()
