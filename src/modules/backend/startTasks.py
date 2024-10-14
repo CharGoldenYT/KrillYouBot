@@ -43,6 +43,7 @@ def create_logsFolders():
 
 def grab_serverSettings(servers:list[Guild]):
     import os
+    isGrabbed = None
     for server in servers:
         path = f'serverSettings/serverID-{str(server.id)}_Settings.json'
         ftp = initializeFTP()
@@ -54,12 +55,14 @@ def grab_serverSettings(servers:list[Guild]):
             fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'rb')
             if not fileCompare == file:
                 print('Files are different, replacing with upstream ver')
+                isGrabbed = True
                 file = open(path, 'wb'); file.writelines(fileCompare.readlines()); file.close(); fileCompare.close()
         except Exception as e:
             fileCompare.close()
             file.close()
             log_err(get_filname(), f'There was an error trying to grab server settings for {str(server.id)}: "{str(e)}"')
         os.remove(f'serverID-{str(server.id)}_Settings.temp')
+    return isGrabbed
 
 def run_startTasks():
     var = get_latestChangelog().lower()

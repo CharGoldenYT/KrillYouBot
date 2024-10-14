@@ -27,14 +27,13 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 10/14/24 12:50 PM
+    changelog = versionString + ''' - 10/14/24 1:24 PM
 
-### Changed
+### Chaged
 
-- Recoded a buncha shit!
-- Added local server settings
-- Added a config command that allows you to change a servers settings!
-- Slightly changed how the changelog looks.'''
+- Made it to where server setting backups actually work.
+- Made it to where it wont crash due to missing the `serverSettings` folder.
+- Made it to where if the files are regrabbed from upstream it reupdates the list of available channels to send into'''
     return changelog
 
 # author: Username of who ran the command

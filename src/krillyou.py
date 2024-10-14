@@ -51,7 +51,8 @@ async def on_ready():
     log_info(filename, f'[STARTUP]: CLIENT READY: Ready to receive and send messages as: {client.user}{bcolors.ENDC}', False)
     from modules.backend.startTasks import grab_serverSettings
     yuh = get_permittedServers(client, None)
-    grab_serverSettings(yuh[0])
+    yuh2 = grab_serverSettings(yuh[0])
+    if not yuh2 == None:get_permittedServers(client, None)
     await broadcast_readyMessage(yuh[0], yuh[1])
 
 @client.event
