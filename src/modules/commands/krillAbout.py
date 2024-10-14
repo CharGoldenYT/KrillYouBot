@@ -2,8 +2,8 @@
 import urllib.request as urllib
 from datetime import datetime
 import time as PyTime
-from getCurVersion import getCurVersion
-from betterLogs.betterLogs import *
+from modules.commands.krillVersion import getCurVersion
+from modules.backend.betterLogs.betterLogs import *
 from inspect import currentframe, getframeinfo
 readme = ''
 privacyPolicy = ''
@@ -20,18 +20,21 @@ versionString = '# [' + ver.replace(replace, '') + ']'
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = 'logs/generateStringslog-' + time + '.log'
 
-from getCurVersion import get_filname
+from modules.commands.krillVersion import get_filname
 
 try: filname = get_filname()
 except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 10/4/24 11:24 AM
+    changelog = versionString + ''' - 10/14/24 12:50 PM
 
 ### Changed
 
-- Made it possible to make a custom krilled message by adding a replace fucntion to remove "<@ " from the final message'''
+- Recoded a buncha shit!
+- Added local server settings
+- Added a config command that allows you to change a servers settings!
+- Slightly changed how the changelog looks.'''
     return changelog
 
 # author: Username of who ran the command

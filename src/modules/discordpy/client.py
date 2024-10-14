@@ -61,7 +61,7 @@ from discord.mentions import AllowedMentions
 from discord.errors import *
 from discord.enums import Status
 from discord.flags import ApplicationFlags, Intents
-from discordpy.gateway import *
+from modules.discordpy.gateway import *
 from discord.activity import ActivityTypes, BaseActivity, create_activity
 from discord.voice_client import VoiceClient
 from discord.http import HTTPClient
@@ -77,8 +77,8 @@ from discord.ui.dynamic import DynamicItem
 from discord.stage_instance import StageInstance
 from discord.threads import Thread
 from discord.sticker import GuildSticker, StandardSticker, StickerPack, _sticker_factory
-from betterLogs.betterLogs import *
-from getCurVersion import get_filname
+from modules.backend.betterLogs.betterLogs import *
+from modules.commands.krillVersion import get_filname
 
 if TYPE_CHECKING:
     from types import TracebackType
