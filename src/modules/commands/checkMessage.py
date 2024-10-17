@@ -62,6 +62,12 @@ def set_setting(setting:str, v:str, gID:int, globalSettings:list):
             return change_setting(gID, globalSettings[0], True, globalSettings[2])
         if v == 'false':
             return change_setting(gID, globalSettings[0], False, globalSettings[2])
+        
+
+def replace_krillBroadcast(string:str):
+    import re
+    finalString = re.sub('krill broadcast ', '', string, flags=re.I)
+    return finalString
 
 
 
@@ -188,7 +194,7 @@ async def checkMessage(message:Message, client:Client):
                 finalMessage = 'No permissions!'
             if message.author.id in permittedUserIDs:
                 yuh = get_permittedServers(client, message)
-                await broadcast_announcement(yuh[0], yuh[1], command.replace('krill broadcast ', ''))
+                await broadcast_announcement(yuh[0], yuh[1], replace_krillBroadcast(message.content.replace('?', '')))
 
         if finalMessage != None:
             await message.channel.send(str(finalMessage), suppress_embeds=(suppressEmbeds))
@@ -196,4 +202,3 @@ async def checkMessage(message:Message, client:Client):
     
         author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
         log_info(get_filname(), author)
-
