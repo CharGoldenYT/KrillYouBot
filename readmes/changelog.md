@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [3.1h] 10/17/24 - 11:22 AM
+
+### Changed
+
+- Fixed the changelog link finally.
+- Added a seperate link to the specific version's Github release
+- From here on out the versions will be denoted as `version`h-`hotfix num(if applicable)` with the first hotfix having no number.
+
 # [3.1] 10/17/24 - 11:14 AM
     
 ### Changed

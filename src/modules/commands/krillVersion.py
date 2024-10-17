@@ -7,7 +7,7 @@ acceptedVers = ['3.12.6']
 
 # REMINDER TO KEEP THIS ALL LOWERCASE!
 def getCurVersion():
-    return '3.1'
+    return '3.1h'
 
 def compareVersions() -> bool:
     import urllib.request as urllib

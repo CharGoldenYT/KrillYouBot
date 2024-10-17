@@ -161,7 +161,7 @@ async def checkMessage(message:Message, client:Client):
             except:
                 log_err(get_filname(), "Couldn't delete that message, does the bot have sufficient permissions?")
             cmd = '?krill version'
-            finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/changelog.md)'
+            finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
 
         if command.startswith('krill configure'):
             if message.channel.permissions_for(message.author).manage_channels or message.channel.permissions_for(message.author).manage_messages:
