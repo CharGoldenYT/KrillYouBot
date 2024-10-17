@@ -27,7 +27,7 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + '''10/16/24 - 8:30 PM
+    changelog = versionString + ''' 10/16/24 - 8:30 PM
     
 ### Changed
 

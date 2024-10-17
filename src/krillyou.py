@@ -69,7 +69,7 @@ async def on_message_edit(before:discord.Message, after:discord.Message):
         if after.author == client.user:
             return
         if not after.author == client.user:
-            await checkMessage(after)
+            await checkMessage(after, client)
 
 from discord.guild import Guild
 @client.event
