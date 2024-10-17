@@ -27,11 +27,12 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' - 10/14/24 1:52 PM
-
+    changelog = versionString + '''10/16/24 - 8:30 PM
+    
 ### Changed
 
-- Fixed the about command not showing the proper prefix.'''
+- Fixed an error involving the handler for editing messages not being properly updated to match the new check messages code
+- Fixed logs ending after being moved making it entirely useless to keep a log, as it gets overwritten by the end of the log afterwards.'''
     return changelog
 
 # author: Username of who ran the command

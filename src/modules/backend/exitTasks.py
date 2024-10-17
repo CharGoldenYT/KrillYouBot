@@ -37,8 +37,8 @@ def doLogMove():
 
 def doExitTasks():
     log_info(filename, '[EXIT]: CLEANING UP', False)
-    doLogMove()
     end_log(filename)
     print('\033[94mClosing in 5 Seconds!')
+    doLogMove()
     time.sleep(5)
     print("closing!" + bcolors.ENDC)
