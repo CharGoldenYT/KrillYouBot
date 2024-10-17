@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [3.2] 10/17/24 - 12:48 PM
+
+### Chaged
+
+- Made a variable for recieving server broadcasts so you can have it to where you can receive announcements even if you dont want a message everytime krill you bot starts.
+- Sorted the "change_setting()" function to be easier to read
+- Made it possible to check a server's setting by using the configure command
+- Made it to where the help page displays regardless of permission
+
 # [3.1h] 10/17/24 - 11:22 AM
 
 ### Changed

@@ -21,7 +21,7 @@ def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
                 foundChannel = True
                 return cID
 
-def get_permittedServers(client:Client, message:Message) -> list[list]:
+def get_permittedServers(client:Client, message:Message, isBroadcastCommand:bool = False) -> list[list]:
     allowedServers :list[Guild] = []
     serverChannels:list[int] = []
     channelID:int = 0
@@ -32,20 +32,39 @@ def get_permittedServers(client:Client, message:Message) -> list[list]:
             channelID = get_firstAvailableChannel(guild, client)
         guildID = guild.id
         serverSettings = parse_krillJson(idToPath(guildID), guildID, channelID)
-        if serverSettings[1]:
-            allowedServers.append(guild)
-            serverChannels.append(serverSettings[0])
-
+        if not isBroadcastCommand:
+            if serverSettings[1]:
+                allowedServers.append(guild)
+                serverChannels.append(serverSettings[0])
+        if isBroadcastCommand:
+            if serverSettings[3]:
+                allowedServers.append(guild)
+                serverChannels.append(serverSettings[0])
+                
     return [allowedServers, serverChannels]
 
 
 def idToPath(gID:int) -> str:
     return f'serverSettings/serverID-{str(gID)}_Settings.json'
 
+def get_setting(setting:str, path:str, gID:int, cID:int) -> (str | list[str]):
+    try:
+        settings = parse_krillJson(path, gID, cID)
+        if setting == 'configprefix':
+            return settings[2]
+        if setting == 'logschannel':
+            return str(settings[0])
+        if setting == 'sendonreadymessage':
+            return str(settings[1])
+        if setting == 'allowbroadcasts':
+            return str(settings[3])
+    except Exception as e:
+        return [f'Could not get setting `{setting}`: "`', str(e), '`"']
+
 def set_setting(setting:str, v:str, gID:int, globalSettings:list):
     from modules.backend.krillJson import change_setting
     if setting == 'configprefix':
-        return change_setting(gID, globalSettings[0], globalSettings[1], v)
+        return change_setting(gID, globalSettings[0], globalSettings[1], v, globalSettings[3])
         
     if setting == 'logschannel':
         try:
@@ -53,15 +72,23 @@ def set_setting(setting:str, v:str, gID:int, globalSettings:list):
         except Exception as e:
             return f'Had an error! "{str(e)}"'
         
-        return change_setting(gID, int(v), globalSettings[1], globalSettings[2])
+        return change_setting(gID, int(v), globalSettings[1], globalSettings[2], globalSettings[3])
         
     if setting == 'sendonreadymessage':
         if not v == 'true' and not v == 'false':
             return f'Only valid options for sendOnReadyMessage are "true" or "false"! got {v}'
         if v == 'true':
-            return change_setting(gID, globalSettings[0], True, globalSettings[2])
+            return change_setting(gID, globalSettings[0], True, globalSettings[2], globalSettings[3])
         if v == 'false':
-            return change_setting(gID, globalSettings[0], False, globalSettings[2])
+            return change_setting(gID, globalSettings[0], False, globalSettings[2], globalSettings[3])
+        
+    if setting == 'allowbroadcasts':
+        if not v == 'true' and not v == 'false':
+            return f'Only valid options for sendOnReadyMessage are "true" or "false"! got {v}'
+        if v == 'true':
+            return change_setting(gID, globalSettings[0], globalSettings[1], globalSettings[2], True)
+        if v == 'false':
+            return change_setting(gID, globalSettings[0], globalSettings[1], globalSettings[2], False)
         
 
 def replace_krillBroadcast(string:str):
@@ -80,7 +107,7 @@ async def checkMessage(message:Message, client:Client):
 
     messageLower = message.content.lower()
 
-    cmd = ''
+    cmd = None
 
     if messageLower.startswith('/'):
 
@@ -134,7 +161,7 @@ async def checkMessage(message:Message, client:Client):
     if messageLower.startswith(settingsPrefix):
         suppressEmbeds = True
 
-        command = messageLower.replace(settingsPrefix, '')
+        command = messageLower.replace(settingsPrefix, '', 1)
         print(command)
 
         finalMessage = None
@@ -163,18 +190,20 @@ async def checkMessage(message:Message, client:Client):
             cmd = '?krill version'
             finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
 
+        permission = message.channel.permissions_for(message.author).manage_channels or message.channel.permissions_for(message.author).manage_messages
+
         if command.startswith('krill configure'):
-            if message.channel.permissions_for(message.author).manage_channels or message.channel.permissions_for(message.author).manage_messages:
-                cmd = '?krill configure'
-                commandList = command.replace('krill configure', '').rstrip().lstrip().split(' ')
-                print(commandList)
-                if not commandList[0] == 'help':
-                    finalMessage = set_setting(commandList[0], commandList[1], message.guild.id, serverSettings)
-                    if finalMessage == None:
-                        finalMessage = f'Set setting `{commandList[0]}` to "{commandList[1].lower()}"!'
-                if commandList[0] == 'help':
-                    suppressEmbeds = False
-                    finalMessage = f'''# Krill Options
+                    
+            if not message.channel.permissions_for(message.author).manage_channels and not message.channel.permissions_for(message.author).manage_messages:
+                finalMessage = 'You must have manage channels or manage messages to mess with these settings'
+
+            cmd = '?krill configure'
+            commandList = command.replace('krill configure', '').rstrip().lstrip().split(' ')
+            print(commandList)
+
+            if commandList[0] == 'help':
+                suppressEmbeds = False
+                finalMessage = f'''# Krill Options
                 
 `logsChannel` changes the channel where broadcasted messages (Like on ready messages for example) go! 
 -# ***MUST BE THE CHANNEL'S ID NUMBER*** https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID
@@ -182,23 +211,39 @@ async def checkMessage(message:Message, client:Client):
 `sendOnReadyMessage` Whether to allow sending a message when the krill you bot goes online!
                 
 `configPrefix` Change the system command's prefix (such as how right now this very command is `{settingsPrefix}krill configure help`)
+
+`allowBroadcasts` Whether you want to receive broadcasted messages.
+
+# These settings (and this help page) are able to be viewed by anyone in the server! just add a ? or help to the end (e.g. `{settingsPrefix}krill configure logsChannel ?`)
                 
 -# If you need help, or settings dont seem to actually work, contact @annyconducter on discord! or visit https://github.com/CharGoldenYT/KrillYouBot/issues'''
-                    
-            if not message.channel.permissions_for(message.author).manage_channels and not message.channel.permissions_for(message.author).manage_messages:
-                finalMessage = 'You must have manage channels or manage messages to mess with these settings'
+                
+            if not commandList[0] == 'help':
+                if commandList[1] == '?' or commandList[1] == 'help':
+                            var = get_setting(commandList[0], idToPath(message.guild.id), message.guild.id, message.channel.id)
+                            if isinstance(var, str):
+                                finalMessage = f'`{commandList[0]}` is "`' + var + '`"'
+                            if not isinstance(var, str):
+                                finalMessage = var[0] + var[1] + var[2]
+
+                                
+                if permission and not commandList[0] == 'help' and not (commandList[1] == '?' or commandList[1] == 'help'):
+                    if not commandList[1] == '?' and not commandList[1] == 'help':
+                            finalMessage = set_setting(commandList[0], commandList[1], message.guild.id, serverSettings)
+                            if finalMessage == None:
+                                finalMessage = f'Set setting `{commandList[0]}` to `{commandList[1]}`!'
 
         if command.startswith('krill broadcast'):
             cmd = '?krill broadcast'
             if message.author.id not in permittedUserIDs:
                 finalMessage = 'No permissions!'
             if message.author.id in permittedUserIDs:
-                yuh = get_permittedServers(client, message)
+                yuh = get_permittedServers(client, message, True)
                 await broadcast_announcement(yuh[0], yuh[1], replace_krillBroadcast(message.content.replace('?', '')))
 
         if finalMessage != None:
             await message.channel.send(str(finalMessage), suppress_embeds=(suppressEmbeds))
 
-    
-        author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
-        log_info(get_filname(), author)
+        if not cmd == None:
+            author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
+            log_info(get_filname(), author)

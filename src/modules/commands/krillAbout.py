@@ -27,13 +27,14 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' 10/17/24 - 11:22 AM
+    changelog = versionString + ''' 10/17/24 - 12:48 PM
 
-### Changed
+### Chaged
 
-- Fixed the changelog link finally.
-- Added a seperate link to the specific version's Github release
-- From here on out the versions will be denoted as `version`h-`hotfix num(if applicable)` with the first hotfix having no number.'''
+- Made a variable for recieving server broadcasts so you can have it to where you can receive announcements even if you dont want a message everytime krill you bot starts.
+- Sorted the "change_setting()" function to be easier to read
+- Made it possible to check a server's setting by using the configure command
+- Made it to where the help page displays regardless of permission'''
     return changelog
 
 # author: Username of who ran the command

@@ -25,9 +25,9 @@ def initializeFTP():
 from discord.guild import Guild
 def initializeSettings(gID:int, cID:int) -> str:
     file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
-    file.write('''{\n   "serverSettings": {\n       "logsChannel": ''' + str(cID) +''',\n       "sendOnReadyMessage": true,\n       "configPrefix": "?"\n   }\n}''')
+    file.write('''{\n   "serverSettings": {\n       "logsChannel": ''' + str(cID) +''',\n       "sendOnReadyMessage": true,\n       "allowBroadcasts": true,\n       "configPrefix": "?"\n   }\n}''')
     file.close()
-    return '''{\n   "serverSettings": {\n       "logsChannel": ''' + str(cID) +''',\n       "sendOnReadyMessage": true,\n       "configPrefix": "?"\n   }\n}'''
+    return '''{\n   "serverSettings": {\n       "logsChannel": ''' + str(cID) +''',\n       "sendOnReadyMessage": true,\n       "allowBroadcasts": true,\n       "configPrefix": "?"\n   }\n}'''
 
 
 def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
@@ -39,16 +39,47 @@ def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
             if permissions.send_messages:
                 foundChannel = True
                 return cID
+            
+            
+# The following are ran when using "?krill settings" or "?krill config"
 
+def new_Json(gID:int, cID:int, bool:bool, prefix:str, allowBroadcasts:bool) -> bool:
+    r'''ok so basically, tries to write to a path determined by the gID, if it cant, it returns False, else True.'''
+    try:
+        file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
+        file.write('''{\n   "serverSettings": {''' +
+                   '''\n       "logsChannel": ''' + str(cID) +
+                   ''',\n       "sendOnReadyMessage": ''' + str(bool).lower() + 
+                   ''',\n       "allowBroadcasts": ''' + str(allowBroadcasts).lower() + 
+                   ''',\n       "configPrefix": "''' + prefix +
+                   '''"\n   }\n}''')
+        file.close()
+        return True
+    except Exception as e:
+        print(f'ERROR! "{str(e)}"')
+        return False
+            
+def checkFor_outdatedJsons(path:str, gID:int) -> list[str]:
+    rawJson = open(path, 'r').read()
+    json = pyJson.loads(rawJson)
+    json = json['serverSettings']
+    try:
+        var = json['allowBroadcasts']
+        print(f'{path} is up to date!')
+    except Exception as e:
+        if str(e).__contains__('allowBroadcasts'):
+            print(f'{path} is malformed or outdated!')
+            change_setting(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["sendOnReadyMessage"])
 
 def parse_krillJson(path:str, gID:int, cID:int, client:(None | Client) = None) -> list:
     r'''This makes it possible to read stored server data.'''
 
+    checkFor_outdatedJsons(path, gID)
     try:
         file = open(path, 'r').read()
         json = pyJson.loads(file)
         json = json['serverSettings']
-        return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"]]
+        return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts']]
     except Exception as e:
         print(f'Cant parse {path}! "{e}"')
         if client == None:
@@ -58,25 +89,7 @@ def parse_krillJson(path:str, gID:int, cID:int, client:(None | Client) = None) -
         if not client == None:
             rawJson = initializeSettings(gID, get_firstAvailableChannel(client.get_guild(gID), client))
             json = pyJson.loads(rawJson); json = json['serverSettings']
-            return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"]]
-
-
-
-# The following are ran when using "?krill settings" or "?krill config"
-
-def new_Json(gID:int, cID:int, bool:bool, prefix:str) -> bool:
-    r'''ok so basically, tries to write to a path determined by the gID, if it cant, it returns False, else True.'''
-    try:
-        file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
-        file.write('''{\n   "serverSettings": {\n       "logsChannel": ''' 
-                   + str(cID) +''',\n       "sendOnReadyMessage": ''' 
-                   + str(bool).lower() + ''',\n       "configPrefix": "''' 
-                   + prefix +'''"\n   }\n}''')
-        file.close()
-        return True
-    except Exception as e:
-        print(f'ERROR! "{str(e)}"')
-        return False
+            return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts']]
 
 def write_cloudSettings(gID:int):
     path = f'serverSettings/serverID-{str(gID)}_Settings.json'
@@ -88,10 +101,10 @@ def write_cloudSettings(gID:int):
         return f'SHIT HAD AN ERROR {str(e)}'
 
 
-def change_setting(gID:int, logsChannel:int, sendOnReadyMessage:bool, prefix:str):
+def change_setting(gID:int, logsChannel:int, sendOnReadyMessage:bool, prefix:str, allowBroadcasts:bool):
     path = f'serverSettings/serverID-{str(gID)}_Settings.json'
     print(f'Overwriting "{path}"!')
-    if new_Json(gID, logsChannel, sendOnReadyMessage, prefix):
+    if new_Json(gID, logsChannel, sendOnReadyMessage, prefix, allowBroadcasts):
         print('Uploading to FTP!')
         var = write_cloudSettings(gID)
         return var
