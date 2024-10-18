@@ -200,8 +200,10 @@ async def checkMessage(message:Message, client:Client):
                         await member.send(f'You dont have permission to broadcast `{settingsPrefix}krill version`')
                     except Exception as e:
                         log_err(get_filname(), f'User {str(message.author.id)}({message.author.name}) tried to broadcast "{settingsPrefix}krill version"!')
-
-            finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
+            if not getCurVersion().__contains__('b'):
+                finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
+            if getCurVersion().__contains__('b'):
+                finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md)'
 
         permission = message.channel.permissions_for(message.author).manage_channels or message.channel.permissions_for(message.author).manage_messages
 

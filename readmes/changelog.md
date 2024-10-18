@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made it possible to retrieve the current changelog from gihub.
 - Further fixed the moving logs issue, by putting it into a seperate logs folder.
 - Added an auto announcement for testing versios
+- Added a case for beta releases so it doesnt link to a non-existant page.
 
 ## [3.2h-2] 10/18/24 - 2:29 AM
 
