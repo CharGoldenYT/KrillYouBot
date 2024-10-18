@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+> [!NOTE]
+> Making bigger, but slower produced updates here on out. So i dont rush it out the door a buggy mess lmao.
+
 ### Changed
 
 - Made it to where the PyNaCl error doesn't come before the official start of the log, if it occurs (due to user not having it installed).
@@ -18,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made the version command suppress embeds on broadcast, similarly to how it works normally when not broadcasted.
 - Further fixed me forgetting to add required function arguments.
 - Made Better Logs handle only having one argument
-- Making bigger, but slower produced updates here on out. So i dont rush it out the door a buggy mess lmao.
 - Fixed the fact that the changelog is actually slightly incorrect.
 - Made it not print so much unneccassary data.
 - Removed old code from `src/modules/backend/exitTasks.py`
