@@ -65,7 +65,7 @@ def checkFor_outdatedJsons(path:str, gID:int) -> list[str]:
     json = json['serverSettings']
     try:
         var = json['allowBroadcasts']
-        print(f'{path} is up to date!')
+        #print(f'{path} is up to date!')
     except Exception as e:
         if str(e).__contains__('allowBroadcasts'):
             print(f'{path} is malformed or outdated!')

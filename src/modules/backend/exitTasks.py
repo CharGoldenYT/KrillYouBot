@@ -3,17 +3,6 @@ import time, shutil, os
 filename = get_filname()
 filname = filename # So i dont have to rename shit
 
-'''
-def cleanup():
-    import time
-    log_info(filname, '[EXIT]: CLEANING UP', False)
-    end_log(filname)
-    print(bcolors.OKBLUE + 'Closing in 5 Seconds!')
-    doLogMove()
-    time.sleep(5)
-    print("closing!" + bcolors.ENDC)
-atexit.register(cleanup)
-'''
 #move log files, we don't need to clutter the main folder
 def doLogMove():
     try:

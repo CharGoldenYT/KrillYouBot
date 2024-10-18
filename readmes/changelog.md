@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made Better Logs handle only having one argument
 - Making bigger, but slower produced updates here on out. So i dont rush it out the door a buggy mess lmao.
 - Fixed the fact that the changelog is actually slightly incorrect.
+- Made it not print so much unneccassary data.
+- Removed old code from `src/modules/backend/exitTasks.py`
+- Removed printing returns of grabbed github files (e.g. the Readme.)
 
 ## [3.2h-2] 10/18/24 - 2:29 AM
 

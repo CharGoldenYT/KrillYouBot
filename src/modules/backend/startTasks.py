@@ -54,7 +54,7 @@ def grab_serverSettings(servers:list[Guild]):
             ftp.retrbinary(f'RETR {path}', fileCompare.write); fileCompare.close()
             fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'rb')
             if not fileCompare == file:
-                print('Files are different, replacing with upstream ver')
+                #print('Files are different, replacing with upstream ver')
                 isGrabbed = True
                 file = open(path, 'wb'); file.writelines(fileCompare.readlines()); file.close(); fileCompare.close()
         except Exception as e:
@@ -72,6 +72,6 @@ def run_startTasks():
     create_logFile(get_filname(), f'<!-- Created by Krill You Bot v{getCurVersion()}-->')
     if compareVersions() == False:
         log_warn(get_filname(), '[STARTUP]: New Update available! Check the github!', False, True)
-    var = input('Allow showing returns of get functions?')
-    if var.lower() == 'y':
-        allowReturns = True
+    #var = input('Allow showing returns of get functions?')
+    #if var.lower() == 'y':
+    #    allowReturns = True

@@ -54,7 +54,7 @@ def get_readme(showGetReturns:bool):
         frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     readme = 'This was generated with the [GitHub "discord_readme"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/discord_readme.md):\n\n' + '# Krill You Bot' + versionString + ' ' + url
 
-    if showGetReturns:print('get_readme returned: ' + readme)
+    #if showGetReturns:print('get_readme returned: ' + readme)
     return readme
 
 def get_privacy_policy(showGetReturns:bool):
@@ -65,7 +65,7 @@ def get_privacy_policy(showGetReturns:bool):
         frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     privacyPolicy = 'This was generated with the [GitHub "Privacy Policy"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/Privacy%20Policy.md):\n\n' + url
 
-    if showGetReturns:print('get_privacy_policy returned: ' + privacyPolicy)
+    #if showGetReturns:print('get_privacy_policy returned: ' + privacyPolicy)
     return privacyPolicy
 
 def get_tos(showGetReturns:bool):
@@ -76,7 +76,7 @@ def get_tos(showGetReturns:bool):
         frameinfo = getframeinfo(currentframe()); print('[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     tos = 'This was generated with the [GitHub "tos"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/tos.md):\n\n' + url
 
-    if showGetReturns:print('get_readme returned: ' + tos)
+    #if showGetReturns:print('get_readme returned: ' + tos)
     return tos
 
 def get_gitVer():

@@ -14,11 +14,12 @@ def compareVersions() -> bool:
     from inspect import currentframe, getframeinfo
     from modules.backend.betterLogs.betterLogs import log_err
     url = ''
-    versionToReturn = None
-    try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/gitVer.txt').read().decode('utf-8'))
-    except urllib.HTTPError as e: 
-        frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + ']shit the readme url handler died lmao: ' + str(e))
-    if not url == None:versionToReturn = url
+    versionToReturn = getCurVersion()
+    if not getCurVersion().lower() == 'unreleased':
+        try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/gitVer.txt').read().decode('utf-8'))
+        except urllib.HTTPError as e: 
+            frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + ']shit the readme url handler died lmao: ' + str(e))
+        if not url == None:versionToReturn = url
     return getCurVersion() == versionToReturn
 
 def get_filname():
