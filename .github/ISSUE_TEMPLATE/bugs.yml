@@ -1,6 +1,8 @@
 name: Bug report
 description: Is something not exactly right? or just completely broken? then it goes here!
-labels: [FIX IT FIX IT FIX IT]
+labels: [FIX IT FIX IT FIX IT, Pending Review]
+assignees:
+  - CharGoldenYT
 body:
   - type: textarea
     id: description
