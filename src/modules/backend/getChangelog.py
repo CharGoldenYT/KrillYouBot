@@ -26,4 +26,4 @@ def get_changelog() -> str:
         log_err(get_filname(), f'SHIT HAD AN ERROR GETTING THAT! {str(e)}')
         url = f'-# Failed to retrieve changelog! {str(e)}'
 
-    return url.rstrip().lstrip().replace('> [!NOTE]\n', '').replace('> ', '-#')
+    return url.rstrip().lstrip().replace('> [!NOTE]\n', '').replace('> ', '-# ')

@@ -21,7 +21,7 @@ def replace_annoncementString(string:str)->str:
         version = f'v{search_betweenDelimiters(string, '[', ']')}'.replace('[', '')
         if search_betweenDelimiters(string, '[', ']') == None:
             version = 'Not Specified'
-        newString = f'Testing has begun for a new version, {version}! make sure to report bugs to the [Github](https://github.com/CharGoldenYT/KrillYouBot/issues)\n-# This message was generated with `?krill broadcast {string}`'
+        newString = f'Testing has begun for a new version, {version}! make sure to report bugs to the [Github](https://github.com/CharGoldenYT/KrillYouBot/issues)\n-# This message was generated with `?krill broadcast {string}` | Beta releases will not have a date on the changelog.'
 
     return newString
 
