@@ -186,7 +186,7 @@ class KeepAliveHandler(threading.Thread):
                         else:
                             stack = ''.join(traceback.format_stack(frame))
                             msg = f'Shard ID {self.shard_id} heartbeat blocked for more than {total}s seconds. \nLoop thread traceback (most recent call last):\n{stack}'
-                            log_warning(msg)
+                            log_warning(get_filname(), msg)
 
             except Exception:
                 self.stop()
@@ -210,7 +210,7 @@ class KeepAliveHandler(threading.Thread):
         self._last_ack = ack_time
         self.latency = ack_time - self._last_send
         if self.latency > 10:
-            log_warn(f"Can\'t keep up, shard ID {self.shard_id} websocket is {self.latency}s behind.")
+            log_warn(get_filname(), f"Can\'t keep up, shard ID {self.shard_id} websocket is {self.latency}s behind.")
 
 
 class VoiceKeepAliveHandler(KeepAliveHandler):
