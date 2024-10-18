@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+{
 ## [Unreleased]
 
 > [!NOTE]
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed printing returns of grabbed github files (e.g. the Readme.)
 - Fixed the title not being able to be renamed.
 - Fixed the colors of the readme check.
+}
 
 ## [3.2h-2] 10/18/24 - 2:29 AM
 
