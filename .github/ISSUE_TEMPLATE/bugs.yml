@@ -1,6 +1,6 @@
 name: Bug report
 description: Is something not exactly right? or just completely broken? then it goes here!
-labels: [bug]
+labels: [FIX IT FIX IT FIX IT]
 body:
   - type: textarea
     id: description

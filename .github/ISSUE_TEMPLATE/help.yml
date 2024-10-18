@@ -1,6 +1,6 @@
 name: Help Me!
-description: Are you confused about something?
-labels: [bug]
+description: Are you confused about something? refer [here](https://github.com/CharGoldenYT/KrillYouBot/issues/4) for what NOT to request
+labels: [HELP ME. HELP. ME.]
 body:
   - type: textarea
     id: description
@@ -16,5 +16,16 @@ body:
       options:
         - "Windows (Via PyInstaller's produced krillyou.exe)"
         - "Native Python (Via krillyou.py)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: btarget
+    attributes:
+      label: "(Sight Test) What shouldn't you request?"
+      options:
+        - "A nice flower."
+        - "Fixing your damn documentation, its stupid."
+        - "Make the server settings an embed."
     validations:
       required: true
