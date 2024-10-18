@@ -5,6 +5,8 @@ time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = "logs/krillYouBotLog-" + time + ".log"
 acceptedVers = ['3.12.6']
 
+lastVersion = '3.2h-2'
+
 # REMINDER TO KEEP THIS ALL LOWERCASE!
 def getCurVersion():
     return 'Unreleased'
