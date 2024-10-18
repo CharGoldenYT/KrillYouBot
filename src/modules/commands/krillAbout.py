@@ -27,14 +27,11 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' 10/18/24 - 2:14 AM
+    changelog = versionString + ''' 10/18/24 - 2:29 AM
 
 ### Changed
 
-- Fixed a weird crash involving being unable to re-connect to discord due to forgetting to properly setup a logging command.
-- CORRECTLY implemented the fix in [3.0 Hotfix 3](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md#30-hotfix-3-101624---830-pm) regarding incorrect order of ending logging operations.
--# Pretty dumb lmao
-- Changed it to where `batchFiles/build.bat` no longer launches krill you bot at the end, and moved that functionality to `batchFiles/test.bat` which also builds the bot, but immediately launches when done.'''
+- Added the ability to use the announcements system for announcing a new version of krill you bot (ONLY IF YOU ARE ME.)'''
     return changelog
 
 # author: Username of who ran the command

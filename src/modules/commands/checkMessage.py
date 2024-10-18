@@ -182,13 +182,18 @@ async def checkMessage(message:Message, client:Client):
             cmd = '?krill privacypolicy'
             finalMessage = get_privacy_policy(check_allowReturns())
 
-        if command == 'krill version':
+        if command.startswith('krill version'):
             try:
                 await message.delete()
             except:
                 log_err(get_filname(), "Couldn't delete that message, does the bot have sufficient permissions?")
             cmd = '?krill version'
-            finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
+            if command == 'krill version true':
+                if message.author.id in permittedUserIDs:
+                    yuh = get_permittedServers(client, message, True)
+                    await broadcast_announcement(yuh[0], yuh[1], f'Krill You Bot has a new update! v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})')
+            if not command == 'krill version true':
+                finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
 
         permission = message.channel.permissions_for(message.author).manage_channels or message.channel.permissions_for(message.author).manage_messages
 
