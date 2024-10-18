@@ -13,7 +13,7 @@ from modules.backend.broadcastTools import *
 from modules.commands.checkMessage import checkMessage, get_permittedServers, get_firstAvailableChannel
 
 # Setup
-system('title Krill You Bot | A discord bot to krill your friends!')
+system('title Krill You Bot "A discord bot to krill your friends!"')
 
 botKey = None
 try:

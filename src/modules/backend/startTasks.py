@@ -4,13 +4,21 @@ from modules.commands.krillVersion import get_filname, compareVersions, getCurVe
 from discord.guild import Guild
 from modules.backend.krillJson import initializeFTP
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
 allowReturns = False
 def check_allowReturns() -> bool:
     return allowReturns
 
 
 def get_latestChangelog() -> str:
-    print(f'''The current changelog is:\n{make_changelog()}\n\n''')
+    print(f'''{bcolors.OKBLUE}The current changelog is:\n{make_changelog()}\n\n''')
     return input('Does this look like the correct changelog?')
 
 def create_logsFolders():
