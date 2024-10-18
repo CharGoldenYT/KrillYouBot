@@ -39,6 +39,14 @@ def create_logsFolders():
             print('Old logs folder already exists, doing nothing!')
         if not str(e).endswith("file already exists: 'logs/old'"):
             log_error(get_filname(), f'SHIT THERE WAS AN ERROR "{str(e)}"')
+            
+    try:
+        os.makedirs('logs/movingLogs')
+    except OSError as e:
+        if str(e).endswith("file already exists: 'logs/movingLogs'"):
+            print('Old logs folder already exists, doing nothing!')
+        if not str(e).endswith("file already exists: 'logs/movingLogs'"):
+            log_error(get_filname(), f'SHIT THERE WAS AN ERROR "{str(e)}"')
 
     try:
         os.makedirs('serverSettings/')

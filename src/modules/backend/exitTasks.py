@@ -1,11 +1,15 @@
-from modules.backend.betterLogs.betterLogs import *; from modules.commands.krillAbout import get_filname
+from modules.backend.betterLogs.betterLogs import *; from modules.commands.krillAbout import get_filname; from modules.commands.krillVersion import getCurVersion
 import time, shutil, os
-filename = get_filname()
-filname = filename # So i dont have to rename shit
+from datetime import datetime
+filname = get_filname()
+
 
 #move log files, we don't need to clutter the main folder
 def doLogMove():
+    dtime = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
+    filename = f'logs/movingLogs/moveLogs-{dtime}.log'
     try:
+        create_logFile(filename, f'<!-- Created by Krill You Bot v{getCurVersion()}-->')
         for file in os.listdir('logs/'):
             for extension in ['.txt', '.log']:
                 if file.endswith(extension) and file != filname:
@@ -14,10 +18,11 @@ def doLogMove():
                     except shutil.Error as e:
                         message = '[EXIT]: Error Moving File "' + file + '" Error: ' + str(e)
                         #print(message)
-                        log(filname, message, '[ERROR]:', False)
+                        log(filename, message, '[ERROR]:', False)
                         success = False
                     if success:
                         log_info(filename, f'[EXIT]: Moved File "{file}" successfully!', False, True)
+        end_log(filename)
     except OSError as e:
         message = '[EXIT]: Error Moving logs! "' + str(e) + '"'
         if str(e).endswith("'" + filname + "'"): message = None
@@ -25,9 +30,9 @@ def doLogMove():
         if message != None:log(filname, message, '[ERROR]:', False)
 
 def doExitTasks():
-    log_info(filename, '[EXIT]: CLEANING UP', False)
+    log_info(filname, '[EXIT]: CLEANING UP', False)
+    end_log(filname)
     doLogMove()
-    end_log(filename)
     print('\033[94mClosing in 5 Seconds!')
     time.sleep(5)
     print("closing!" + bcolors.ENDC)
