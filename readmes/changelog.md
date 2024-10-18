@@ -9,8 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Made it to where the PyNaCl error doesn't come before the official start of the log.
+- Made it to where there isnt a weird space between `<!-- Created by Krill You Bot v3.2h-2-->` and `<!-- Log Generator: "Better Logs V2" | Better Logs by Char @annyconducter on Discord | https://github.com/CharGoldenYT/betterLogs -->` in the log file.
 - Added a little check to make sure the channel i use doesn't recieve update announcements.
-- Made it DM the user that tries to broadcast `?krill version`.
+- Made the update command DM the user if they try to broadcast `?krill version`.
+- Made the version command suppress embeds on broadcast, similarly to how it works normally when not broadcasted.
+- Making bigger, but slower updates here on out.
 
 # [3.2h-2] 10/18/24 - 2:29 AM
 

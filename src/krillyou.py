@@ -24,6 +24,9 @@ except:
 
 filename = get_filname()
 
+from modules.backend.startTasks import run_startTasks
+run_startTasks()
+
 from modules.discordpy.client import Client
 
 intents = discord.Intents.default()
@@ -80,8 +83,6 @@ async def on_guild_join(guild:Guild):
 
 def initialize_bot():
     check_pythonVersion()
-    from modules.backend.startTasks import run_startTasks
-    run_startTasks()
     try:
         client.run(botKey)
     except Exception as e:

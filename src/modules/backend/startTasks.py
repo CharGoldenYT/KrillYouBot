@@ -69,7 +69,7 @@ def run_startTasks():
     if var == 'n':
         log_warn(get_filname(), '[STARTUP]: Changelog potentially out of date! Make sure "modules.commands.krillAbout" was properly updated!', False)
     create_logsFolders()
-    create_logFile(get_filname(), f'<!-- Created by Krill You Bot v{getCurVersion()}-->\n')
+    create_logFile(get_filname(), f'<!-- Created by Krill You Bot v{getCurVersion()}-->')
     if compareVersions() == False:
         log_warn(get_filname(), '[STARTUP]: New Update available! Check the github!', False, True)
     var = input('Allow showing returns of get functions?')
