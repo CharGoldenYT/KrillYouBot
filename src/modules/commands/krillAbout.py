@@ -31,8 +31,20 @@ def make_changelog():
 
 ### Changed
 
-- Added a little check to make sure the channel i use doesn't recieve update announcements.
-- Made it DM the user that tries to broadcast `?krill version`.'''
+- Made it to where the PyNaCl error doesn't come before the official start of the log, if it occurs (due to user not having it installed).
+- Made it to where there isnt a weird space between `<!-- Created by Krill You Bot v(Version)-->` and `<!-- Log Generator: "Better Logs V2" | Better Logs by Char @annyconducter on Discord | https://github.com/CharGoldenYT/betterLogs -->` in the log file.
+- Added a little check to make sure the channel i use doesn't receive update announcements.
+- Made the update command DM the user if they try to broadcast `?krill version`.
+- Made the version command suppress embeds on broadcast, similarly to how it works normally when not broadcasted.
+- Further fixed me forgetting to add required function arguments.
+- Made Better Logs handle only having one argument
+- Making bigger, but slower produced updates here on out. So i dont rush it out the door a buggy mess lmao.
+- Fixed the fact that the changelog is actually slightly incorrect.
+- Made it not print so much unneccassary data.
+- Removed old code from `src/modules/backend/exitTasks.py`
+- Removed printing returns of grabbed github files (e.g. the Readme.)
+- Fixed the title not being able to be renamed.
+- Fixed the colors of the readme check.'''
     return changelog
 
 # author: Username of who ran the command
