@@ -251,8 +251,15 @@ async def checkMessage(message:Message, client:Client):
             if message.author.id not in permittedUserIDs:
                 finalMessage = 'No permissions!'
             if message.author.id in permittedUserIDs:
+
+                if replace_krillBroadcast(message.content.replace(settingsPrefix, '')).startswith('{&news:newVersion'):
+                    try:
+                        await message.delete()
+                    except:
+                        log_err(get_filname(), "Couldn't delete that message, does the bot have sufficient permissions?")
+
                 yuh = get_permittedServers(client, message, True)
-                await broadcast_announcement(yuh[0], yuh[1], replace_krillBroadcast(message.content.replace('?', '')), False)
+                await broadcast_announcement(yuh[0], yuh[1], replace_krillBroadcast(message.content.replace(settingsPrefix, '')), False)
 
         if finalMessage != None:
             await message.channel.send(str(finalMessage), suppress_embeds=(suppressEmbeds))
