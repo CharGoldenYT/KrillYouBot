@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed duplicate prints in `src/modules/commands/krillAbout.py`
 - Made it possible to retrieve the current changelog from gihub.
 - Further fixed the moving logs issue, by putting it into a seperate logs folder.
+- Added an auto announcement for testing versios
 
 ## [3.2h-2] 10/18/24 - 2:29 AM
 

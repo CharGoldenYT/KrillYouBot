@@ -2,6 +2,7 @@ import urllib.request as urllib
 from inspect import currentframe, getframeinfo
 from modules.backend.betterLogs.betterLogs import *
 from modules.commands.krillVersion import get_filname, getCurVersion, lastVersion
+from modules.backend.broadcastTools import search_betweenDelimiters
 
 def get_formattedVersion():
     r'''So i dont get circular import errors, i've basically ported the functionality'''
@@ -9,22 +10,7 @@ def get_formattedVersion():
     if getCurVersion().endswith('-testver'): replace = '-testver'
     if getCurVersion().endswith('-TestVer'): replace = '-TestVer'
     versionString = f'## [{getCurVersion().replace(replace, '')}]'
-    return versionString
-
-def search_betweenDelimiters(string:str, start:str, end:str):
-    print(f'"{start}" in "{string}"')
-    start_index = string.find(start)
-    print(start_index)
-    if start_index == -1:
-        return None
-
-    end_index = string.find(end, start_index)
-    print(end_index)
-    if end_index == -1:
-        return None
-
-    print(string[start_index:end_index])
-    return string[start_index:end_index]    
+    return versionString  
 
 def get_changelog() -> str:
     url = ''
