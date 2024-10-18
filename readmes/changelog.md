@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a little check to make sure the channel i use doesn't recieve update announcements.
 - Made the update command DM the user if they try to broadcast `?krill version`.
 - Made the version command suppress embeds on broadcast, similarly to how it works normally when not broadcasted.
-- Making bigger, but slower updates here on out.
+- Making bigger, but slower produced updates here on out.
 
 # [3.2h-2] 10/18/24 - 2:29 AM
 
