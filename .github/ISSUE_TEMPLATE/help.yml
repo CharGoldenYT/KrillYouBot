@@ -20,7 +20,7 @@ body:
       required: true
 
   - type: dropdown
-    id: btarget
+    id: sighttest
     attributes:
       label: "(Sight Test) What shouldn't you request?"
       options:
