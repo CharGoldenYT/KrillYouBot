@@ -16,10 +16,31 @@ body:
     attributes:
       label: "What is your target?"
       options:
+        - "Windows (Via PyInstaller's produced krillyou.exe) Pre 3.0"
+        - "Native Python (Via krillyou.py) Pre 3.0"
         - "Windows (Via PyInstaller's produced krillyou.exe)"
         - "Native Python (Via krillyou.py)"
     validations:
       required: true
+
+  - type: dropdown
+    id: ptarget
+    attributes:
+      label: "What is your python version (If running native)?"
+      options:
+        - 3.12.4
+        - 3.12.5
+        - 3.12.6
+        - Other (Specify Below)
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "If other, what version"
+    validations:
+      required: false
 
   - type: dropdown
     id: sighttest
