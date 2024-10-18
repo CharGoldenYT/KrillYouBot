@@ -27,11 +27,12 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' 10/18/24 - 2:29 AM
+    changelog = versionString + '''
 
 ### Changed
 
-- Added the ability to use the announcements system for announcing a new version of krill you bot (ONLY IF YOU ARE ME.)'''
+- Added a little check to make sure the channel i use doesn't recieve update announcements.
+- Made it DM the user that tries to broadcast `?krill version`.'''
     return changelog
 
 # author: Username of who ran the command

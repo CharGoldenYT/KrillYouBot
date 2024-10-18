@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [Unreleased]
+
+### Changed
+
+- Added a little check to make sure the channel i use doesn't recieve update announcements.
+- Made it DM the user that tries to broadcast `?krill version`.
+
 # [3.2h-2] 10/18/24 - 2:29 AM
 
 ### Changed

@@ -7,7 +7,7 @@ acceptedVers = ['3.12.6']
 
 # REMINDER TO KEEP THIS ALL LOWERCASE!
 def getCurVersion():
-    return '3.2h-2'
+    return '3.2h-2 (Unreleased Modified Post Release Build)'
 
 def compareVersions() -> bool:
     import urllib.request as urllib
