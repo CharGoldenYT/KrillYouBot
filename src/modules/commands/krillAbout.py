@@ -15,7 +15,7 @@ ver = getCurVersion()
 replace = ''
 if ver.endswith('-testver'): replace = '-testver'
 if ver.endswith('-TestVer'): replace = '-TestVer'
-versionString = '# [' + ver.replace(replace, '') + ']'
+versionString = '## [' + ver.replace(replace, '') + ']'
 
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = 'logs/generateStringslog-' + time + '.log'
