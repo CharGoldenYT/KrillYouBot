@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Made it to where the PyNaCl error doesn't come before the official start of the log.
+- Made it to where the PyNaCl error doesn't come before the official start of the log, if it occurs (due to user not having it installed).
 - Made it to where there isnt a weird space between `<!-- Created by Krill You Bot v3.2h-2-->` and `<!-- Log Generator: "Better Logs V2" | Better Logs by Char @annyconducter on Discord | https://github.com/CharGoldenYT/betterLogs -->` in the log file.
 - Added a little check to make sure the channel i use doesn't receive update announcements.
 - Made the update command DM the user if they try to broadcast `?krill version`.
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chaged
 
-- Made a variable for recieving server broadcasts so you can have it to where you can receive announcements even if you dont want a message everytime krill you bot starts.
+- Made a variable for receiving server broadcasts so you can have it to where you can receive announcements even if you dont want a message everytime krill you bot starts.
 - Sorted the "change_setting()" function to be easier to read
 - Made it possible to check a server's setting by using the configure command
 - Made it to where the help page displays regardless of permission
