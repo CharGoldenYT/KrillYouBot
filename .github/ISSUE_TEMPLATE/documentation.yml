@@ -1,0 +1,13 @@
+name: Documentation Suggestion
+description: Got an idea to better the documentation? Report it here!
+title: "Documentation Suggestion: "
+labels: [Documentation Suggestion, Pending Review]
+assignees:
+  - CharGoldenYT
+body:
+  - type: markdown
+    id: description
+    attributes:
+      label: "Describe your suggestion here."
+    validations:
+      required: true
