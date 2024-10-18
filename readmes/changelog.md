@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [3.2h] 10/18/24 - 2:14 AM
+
+### Changed
+
+- Fixed a weird crash involving being unable to re-connect to discord due to forgetting to properly setup a logging command.
+- CORRECTLY implemented the fix in [3.0 Hotfix 3](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md#30-hotfix-3-101624---830-pm) regarding incorrect order of ending logging operations.
+
 # [3.2] 10/17/24 - 12:48 PM
 
 ### Chaged

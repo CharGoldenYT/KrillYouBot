@@ -716,7 +716,7 @@ class Client:
                         raise
 
                 retry = backoff.delay()
-                log_err("Attempting a reconnect in %.2fs" + str(retry))
+                log_err(get_filname(), "Attempting a reconnect in %.2fs" + str(retry))
                 await asyncio.sleep(retry)
                 # Always try to RESUME the connection
                 # If the connection is not RESUME-able then the gateway will invalidate the session.

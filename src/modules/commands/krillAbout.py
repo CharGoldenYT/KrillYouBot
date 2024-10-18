@@ -27,14 +27,13 @@ except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
 PyTime.sleep(1)
 
 def make_changelog():
-    changelog = versionString + ''' 10/17/24 - 12:48 PM
+    changelog = versionString + ''' 10/18/24 - 2:14 AM
 
-### Chaged
+### Changed
 
-- Made a variable for recieving server broadcasts so you can have it to where you can receive announcements even if you dont want a message everytime krill you bot starts.
-- Sorted the "change_setting()" function to be easier to read
-- Made it possible to check a server's setting by using the configure command
-- Made it to where the help page displays regardless of permission'''
+- Fixed a weird crash involving being unable to re-connect to discord due to forgetting to properly setup a logging command.
+- CORRECTLY implemented the fix in [3.0 Hotfix 3](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md#30-hotfix-3-101624---830-pm) regarding incorrect order of ending logging operations.
+-# Pretty dumb lmao'''
     return changelog
 
 # author: Username of who ran the command
