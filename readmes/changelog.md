@@ -18,9 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made the update command DM the user if they try to broadcast `?krill version`.
 - Made the version command suppress embeds on broadcast, similarly to how it works normally when not broadcasted.
 - Further fixed me forgetting to add required function arguments.
-- Made Better Logs handle only having one argument
+- Made Better Logs functions handle only having one argument
 - Fixed the fact that the changelog is actually slightly incorrect.
-- Made it not print so much unneccassary data.
+- Made it not print so much unnecessary data.
 - Removed old code from `src/modules/backend/exitTasks.py`
 - Removed printing returns of grabbed github files (e.g. the Readme.)
 - Fixed the title not being able to be renamed.
