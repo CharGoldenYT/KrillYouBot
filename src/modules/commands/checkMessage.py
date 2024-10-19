@@ -138,6 +138,7 @@ async def checkMessage(message:Message, client:Client):
             log_info(get_filname(), author)
 
         if messageLower.startswith('/pipebomb'):
+            cmd = '/pipebomb'
             import random
             varRandInt = random.randint(0,4)
             Finalmessage = ''
