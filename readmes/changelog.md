@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broadcast command improperly replacing ALL instances of the server's set command prefix.
 - Fixed settings configuration showing the wrong setting error for allowBroadcasts.
 - Made the logsChannel error return more specific.
+- Fixed the fact that the logs don't reflect the current server setting prefix.
 
 ## [3.2h-2] 10/18/24 - 2:29 AM
 

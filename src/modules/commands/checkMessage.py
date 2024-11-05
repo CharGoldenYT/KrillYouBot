@@ -168,19 +168,19 @@ async def checkMessage(message:Message, client:Client):
         finalMessage = None
 
         if command == 'levelUp':
-            cmd = '?levelup'
+            cmd = settingsPrefix + 'levelup'
             finalMessage = 'I dunno :3c=L\n-# You Level up by simply talking'
 
         if command == 'krill about':
-            cmd = '?krill about'
+            cmd = settingsPrefix + 'krill about'
             finalMessage = get_readme(check_allowReturns()).replace('`?', f'`{settingsPrefix}')
 
         if command == 'krill tos':
-            cmd = '?krill tos'
+            cmd = settingsPrefix + 'krill tos'
             finalMessage = get_tos(check_allowReturns())
 
         if command == 'krill privacypolicy':
-            cmd = '?krill privacypolicy'
+            cmd = settingsPrefix + 'krill privacypolicy'
             finalMessage = get_privacy_policy(check_allowReturns())
 
         if command.startswith('krill version'):
@@ -188,7 +188,7 @@ async def checkMessage(message:Message, client:Client):
                 await message.delete()
             except:
                 log_err(get_filname(), "Couldn't delete that message, does the bot have sufficient permissions?")
-            cmd = '?krill version'
+            cmd = settingsPrefix + 'krill version'
             if command == 'krill version true':
                 
                 if message.author.id in permittedUserIDs and not message.channel.id == 1279923362923151401:
@@ -213,7 +213,7 @@ async def checkMessage(message:Message, client:Client):
             if not message.channel.permissions_for(message.author).manage_channels and not message.channel.permissions_for(message.author).manage_messages:
                 finalMessage = 'You must have manage channels or manage messages to mess with these settings'
 
-            cmd = '?krill configure'
+            cmd = settingsPrefix + 'krill configure'
             commandList = command.replace('krill configure', '').rstrip().lstrip().split(' ')
             print(commandList)
 
@@ -250,7 +250,7 @@ async def checkMessage(message:Message, client:Client):
                                 finalMessage = f'Set setting `{commandList[0]}` to `{commandList[1]}`!'
 
         if command.startswith('krill broadcast'):
-            cmd = '?krill broadcast'
+            cmd = settingsPrefix + 'krill broadcast'
             if message.author.id not in permittedUserIDs:
                 finalMessage = 'No permissions!'
             if message.author.id in permittedUserIDs:
