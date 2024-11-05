@@ -264,8 +264,14 @@ async def checkMessage(message:Message, client:Client):
                 yuh = get_permittedServers(client, message, True)
                 await broadcast_announcement(yuh[0], yuh[1], replace_krillBroadcast(message.content.replace(settingsPrefix, '', 1)), False)
 
-        if finalMessage != None:
+        if finalMessage != None and finalMessage.__len__() < 2000:
             await message.channel.send(str(finalMessage), suppress_embeds=(suppressEmbeds))
+        else:
+            message2 = 'The message that was made is over 2000 characters!'
+            if not cmd == None and cmd == settingsPrefix + 'krill version':
+                message2 += '\nThere was a new version though! check [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) for the new version'
+            await message.channel.send(message2, suppress_embeds=(suppressEmbeds))
+
 
         if not cmd == None:
             author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3h] 11/4/24 - 7:36 PM
+
+### Changed
+
+- The last changelog was so big, it made me realize there wasn't a check for that. Now there's a check for that.
+
 ## [3.3] 11/4/24 - 7:22 PM
 
 > [!NOTE]
