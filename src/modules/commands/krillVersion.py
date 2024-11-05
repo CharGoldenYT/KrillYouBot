@@ -9,7 +9,7 @@ lastVersion = '3.2h-2'
 
 # REMINDER TO KEEP THIS ALL LOWERCASE!
 def getCurVersion():
-    return '3.3b'
+    return '3.3'
 
 def compareVersions() -> bool:
     import urllib.request as urllib
