@@ -16,7 +16,7 @@ body:
     attributes:
       label: "What is your target?"
       options:
-        - "Windows (Via PyInstaller's produced krillyou.exe)"
+        - "Windows (Via PyInstaller's produced exe)"
         - "Native Python (Via krillyou.py)"
         - "Pre 3.0 | Windows (Via PyInstaller's produced krillyou.exe)"
         - "Pre 3.0 | Native Python (Via krillyou.py)"
