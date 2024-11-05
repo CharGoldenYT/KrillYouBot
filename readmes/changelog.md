@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added an auto announcement for testing versios
 - Added a case for beta releases so it doesnt link to a non-existant page.
 - Fixed `/pipebomb` giving an error due to not properly setting a variable.
+- Fixed broadcast command improperly replacing ALL instances of the server's set command prefix.
 
 ## [3.2h-2] 10/18/24 - 2:29 AM
 

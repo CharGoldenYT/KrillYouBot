@@ -79,6 +79,7 @@ from discord.threads import Thread
 from discord.sticker import GuildSticker, StandardSticker, StickerPack, _sticker_factory
 from modules.backend.betterLogs.betterLogs import *
 from modules.commands.krillVersion import get_filname
+from inspect import currentframe, getframeinfo
 
 if TYPE_CHECKING:
     from types import TracebackType
@@ -716,7 +717,7 @@ class Client:
                         raise
 
                 retry = backoff.delay()
-                log_err(get_filname(), "Attempting a reconnect in %.2fs" + str(retry))
+                frameinfo = getframeinfo(currentframe()); log_err(get_filname(), f'Attempting a reconnect in {str(retry.__round__())}s', True, False, frameinfo.filename, frameinfo.lineno)
                 await asyncio.sleep(retry)
                 # Always try to RESUME the connection
                 # If the connection is not RESUME-able then the gateway will invalidate the session.
