@@ -3,7 +3,7 @@ from datetime import datetime; from platform import python_version
 #set up logging with current time
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = "logs/krillYouBotLog-" + time + ".log"
-acceptedVers = ['3.12.6']
+acceptedVers:list[str] = ['3.12.6', '3.12.7']
 
 lastVersion = '3.3'
 

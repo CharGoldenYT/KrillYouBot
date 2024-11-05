@@ -31,7 +31,8 @@ body:
         - 3.12.4
         - 3.12.5
         - 3.12.6
-        - Other (Specify Below)
+        - 3.12.7
+        - Other (Specify Below, if above 3.12, may be rejected!)
     validations:
       required: false
 
