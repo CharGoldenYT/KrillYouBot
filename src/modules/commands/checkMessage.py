@@ -70,7 +70,7 @@ def set_setting(setting:str, v:str, gID:int, globalSettings:list):
         try:
             int(v)
         except Exception as e:
-            return f'Had an error! "{str(e)}"'
+            return f'Had an error setting logsChannel! "{str(e)}"'
         
         return change_setting(gID, int(v), globalSettings[1], globalSettings[2], globalSettings[3])
         
@@ -84,7 +84,7 @@ def set_setting(setting:str, v:str, gID:int, globalSettings:list):
         
     if setting == 'allowbroadcasts':
         if not v == 'true' and not v == 'false':
-            return f'Only valid options for sendOnReadyMessage are "true" or "false"! got {v}'
+            return f'Only valid options for allowBroadcasts are "true" or "false"! got {v}'
         if v == 'true':
             return change_setting(gID, globalSettings[0], globalSettings[1], globalSettings[2], True)
         if v == 'false':

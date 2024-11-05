@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a case for beta releases so it doesnt link to a non-existant page.
 - Fixed `/pipebomb` giving an error due to not properly setting a variable.
 - Fixed broadcast command improperly replacing ALL instances of the server's set command prefix.
+- Fixed settings configuration showing the wrong setting error for allowBroadcasts.
+- Made the logsChannel error return more specific.
 
 ## [3.2h-2] 10/18/24 - 2:29 AM
 
