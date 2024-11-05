@@ -23,7 +23,7 @@ like `XXXxxXXXXXXXXXXXxxxxxxxxXXXXXXXXX.xxxxxxxXXxxxXXXXXXXxxxxxxxXXXXxxXXxxxx` 
 >
 > ***Pre 3.0:*** 3.12.4 -3.12.6
 >
-> ***Since 3.0:*** 3.12.6
+> ***Since 3.0:*** 3.12.6, 3.12.7
 
 you need [Python](https://www.python.org/downloads/) and 3 libraries Found in [Setup.bat](setup.bat)
 
