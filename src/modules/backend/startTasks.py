@@ -88,6 +88,3 @@ def run_startTasks():
     create_logFile(get_filname(), f'<!-- Created by Krill You Bot v{getCurVersion()}-->')
     if compareVersions() == False:
         log_warn(get_filname(), '[STARTUP]: New Update available! Check the github!', False, True)
-    #var = input('Allow showing returns of get functions?')
-    #if var.lower() == 'y':
-    #    allowReturns = True
