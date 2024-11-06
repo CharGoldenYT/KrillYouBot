@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3h-2] 11/6/24 - 8:50 AM
+
+### Changed
+
+- Fixed an error where I improperly implemented a fix for discord's default character limit, causing things like `???` to give the same error.
+- Removed the no longer needed print of the command after replacing the server's assigned prefix.
+- Fixed `?levelup` and now it actually properly works.
+
 ## [3.3h] 11/4/24 - 7:36 PM
 
 ### Changed
