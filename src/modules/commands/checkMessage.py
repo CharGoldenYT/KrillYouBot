@@ -163,7 +163,6 @@ async def checkMessage(message:Message, client:Client):
         suppressEmbeds = True
 
         command = messageLower.replace(settingsPrefix, '', 1).rstrip().lstrip()
-        print(command)
 
         finalMessage = None
 
@@ -263,8 +262,6 @@ async def checkMessage(message:Message, client:Client):
 
                 yuh = get_permittedServers(client, message, True)
                 await broadcast_announcement(yuh[0], yuh[1], replace_krillBroadcast(message.content.replace(settingsPrefix, '', 1)), False)
-
-        print(f'"{finalMessage}"')
 
         if finalMessage != None:
             if finalMessage.__len__() < 2000:
