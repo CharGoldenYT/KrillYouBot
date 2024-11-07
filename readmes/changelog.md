@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Fixed an error causing the krill you command no longer being able to make custom messages described [here](#26---10424-1124-am).
+- Removed a print from the krill command.
+
 ## [3.3h-2] 11/6/24 - 8:50 AM
 
 ### Changed
@@ -94,7 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed an error involving the handler for editing messages not being properly updated to match the new check messages code
 - Fixed logs ending after being moved making it entirely useless to keep a log, as it gets overwritten by the end of the log afterwards.
 
-# [3.0 Hotfix 2] - 10/14/24 1:52 PM
+## [3.0 Hotfix 2] - 10/14/24 1:52 PM
 
 ### Changed
 
@@ -121,7 +128,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Made it possible to make a custom krilled message by adding a replace fucntion to remove "<@ " from the final message
+- Made it possible to make a custom krilled message by adding a replace function to remove "<@ " from the final message
 
 ## [2.5h] - 9/25/24 12:23 PM
 
