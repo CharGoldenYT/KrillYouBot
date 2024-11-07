@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Fixed an error causing the krill you command no longer being able to make custom messages described [here](#26---10424-1124-am).
+- Fixed an error causing the krill you command no longer being able to make custom messages described [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md#26---10424-1124-am).
 - Removed a print from the krill command.
 
 ## [3.3h-2] 11/6/24 - 8:50 AM
