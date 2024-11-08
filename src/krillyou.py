@@ -15,6 +15,12 @@ from modules.commands.checkMessage import checkMessage, get_permittedServers, ge
 # Setup
 system('title Krill You Bot "A discord bot to krill your friends!"')
 
+if python_version().startswith('3.13'):
+    print('Python 3.13 removes a library that discord.py requires at this current time. You cannot run this bot with 3.13!')
+    create_logFile(get_filname(), '<!-- The user tried to run this version of the bot with python 3.13! -->')
+    end_log(get_filname())
+    exit()
+
 botKey = None
 try:
     botKey = open('botStuff/botKey.txt').read()
