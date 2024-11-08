@@ -25,11 +25,15 @@ like `XXXxxXXXXXXXXXXXxxxxxxxxXXXXXXXXX.xxxxxxxXXxxxXXXXXXXxxxxxxxXXXXxxXXxxxx` 
 >
 > ***Since 3.0:*** 3.12.6, 3.12.7
 
-you need [Python](https://www.python.org/downloads/) and 3 libraries Found in [Setup.bat](setup.bat)
+you need [Python](https://www.python.org/downloads/) and the libraries Found in [Setup.bat](setup.bat)
 
 MAKE SURE TO SET THIS WHEN YOU INSTALL PYTHON!! ![](docs/IMPORTANT.png)
 
 then simply run `build.bat` from the root of the repo with everything downloaded.
+
+> [!NOTE]
+>
+> discord.py uses a library that is missing in 3.13 and thus cannot be compiled/used with any version 3.13.x atm.
 
 # Randomly common issues:
 
