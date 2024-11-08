@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed an error causing the krill you command no longer being able to make custom messages described [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md#26---10424-1124-am).
 - Removed a print from the krill command.
+- FINALLY removed a leftover print out that would essentially duplicate the changelog (Was driving me crazy trying to figure it out).
 
 ## [3.3h-2] 11/6/24 - 8:50 AM
 

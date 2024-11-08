@@ -12,7 +12,6 @@ def search_betweenDelimiters(string:str, start:str, end:str):
     if end_index == -1:
         return None
 
-    print(string[start_index:end_index])
     return string[start_index:end_index]  
 
 def replace_annoncementString(string:str)->str:
