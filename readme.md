@@ -33,7 +33,7 @@ then simply run `build.bat` from the root of the repo with everything downloaded
 
 > [!NOTE]
 >
-> discord.py uses a library that is missing in 3.13 and thus cannot be compiled/used with any version 3.13.x right now.
+> discord.py uses a library that is missing in 3.13 and thus this bot cannot be compiled/used with any version 3.13.x right now.
 
 # Randomly common issues:
 
