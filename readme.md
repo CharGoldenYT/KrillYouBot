@@ -35,7 +35,7 @@ you need [Python](https://www.python.org/downloads/) and the libraries Found in 
 
 MAKE SURE TO SET THIS WHEN YOU INSTALL PYTHON!! ![](docs/IMPORTANT.png)
 
-If you didn't already do it, check [here](docs/pathSetup/SETTINGPYTHONPATH.md)
+If you didn't already do it, check [here](docs/pathSetup/readme.md)
 
 then simply run `build.bat` from the root of the repo with everything downloaded.
 
