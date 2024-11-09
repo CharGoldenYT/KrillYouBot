@@ -27,7 +27,12 @@ def initializeSettings(gID:int, cID:int) -> str:
     file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
     file.write('''{\n   "serverSettings": {\n       "logsChannel": ''' + str(cID) +''',\n       "sendOnReadyMessage": true,\n       "allowBroadcasts": true,\n       "configPrefix": "?"\n   }\n}''')
     file.close()
-    return '''{\n   "serverSettings": {\n       "logsChannel": ''' + str(cID) +''',\n       "sendOnReadyMessage": true,\n       "allowBroadcasts": true,\n       "configPrefix": "?"\n   }\n}'''
+    return ('''{\n   "serverSettings": {''' + 
+             '''\n       "logsChannel": ''' + str(cID) +
+            ''',\n       "newVersionBroadcastChannel": ''' + str(cID) +
+            ''',\n       "sendOnReadyMessage": true'''+
+            ''',\n       "allowBroadcasts": true'''+
+            ''',\n       "configPrefix": "?"\n   }\n}''')
 
 
 def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
@@ -43,12 +48,13 @@ def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
             
 # The following are ran when using "?krill settings" or "?krill config"
 
-def new_Json(gID:int, cID:int, bool:bool, prefix:str, allowBroadcasts:bool) -> bool:
+def new_Json(gID:int, cID:int, bool:bool, prefix:str, allowBroadcasts:bool, newVersionBroadcastChannel:int) -> bool:
     r'''ok so basically, tries to write to a path determined by the gID, if it cant, it returns False, else True.'''
     try:
         file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
         file.write('''{\n   "serverSettings": {''' +
-                   '''\n       "logsChannel": ''' + str(cID) +
+                    '''\n       "logsChannel": ''' + str(cID) +
+                   ''',\n       "newVersionBroadcastChannel": ''' + str(newVersionBroadcastChannel) +
                    ''',\n       "sendOnReadyMessage": ''' + str(bool).lower() + 
                    ''',\n       "allowBroadcasts": ''' + str(allowBroadcasts).lower() + 
                    ''',\n       "configPrefix": "''' + prefix +
@@ -59,7 +65,7 @@ def new_Json(gID:int, cID:int, bool:bool, prefix:str, allowBroadcasts:bool) -> b
         print(f'ERROR! "{str(e)}"')
         return False
             
-def checkFor_outdatedJsons(path:str, gID:int) -> list[str]:
+def checkFor_outdatedJsons(path:str, gID:int):
     rawJson = open(path, 'r').read()
     json = pyJson.loads(rawJson)
     json = json['serverSettings']
@@ -69,7 +75,18 @@ def checkFor_outdatedJsons(path:str, gID:int) -> list[str]:
     except Exception as e:
         if str(e).__contains__('allowBroadcasts'):
             print(f'{path} is malformed or outdated!')
-            change_setting(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["sendOnReadyMessage"])
+            change_setting(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["sendOnReadyMessage"], json["logsChannel"])
+            return # return since its such an old file it wouldn't have "allowBroadcasts" in it.
+    
+    try:
+        var = json['newVersionBroadcastChannel']
+    except Exception as e:
+        if str(e).__contains__('newVersionBroadcastChannel'):
+            print(f'{path} is malformed or outdated!')
+            change_setting(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["allowBroadcasts"], json["logsChannel"])
+            return # In case of future additions, return since the older file would already be 2 versions behind anyway.
+
+
 
 def parse_krillJson(path:str, gID:int, cID:int, client:(None | Client) = None) -> list:
     r'''This makes it possible to read stored server data.'''
@@ -79,7 +96,7 @@ def parse_krillJson(path:str, gID:int, cID:int, client:(None | Client) = None) -
         file = open(path, 'r').read()
         json = pyJson.loads(file)
         json = json['serverSettings']
-        return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts']]
+        return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts'], json['newVersionBroadcastChannel']]
     except Exception as e:
         print(f'Cant parse {path}! "{e}"')
         if client == None:
@@ -89,7 +106,7 @@ def parse_krillJson(path:str, gID:int, cID:int, client:(None | Client) = None) -
         if not client == None:
             rawJson = initializeSettings(gID, get_firstAvailableChannel(client.get_guild(gID), client))
             json = pyJson.loads(rawJson); json = json['serverSettings']
-            return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts']]
+            return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts'], json['newVersionBroadcastChannel']]
 
 def write_cloudSettings(gID:int):
     path = f'serverSettings/serverID-{str(gID)}_Settings.json'
@@ -101,10 +118,10 @@ def write_cloudSettings(gID:int):
         return f'SHIT HAD AN ERROR {str(e)}'
 
 
-def change_setting(gID:int, logsChannel:int, sendOnReadyMessage:bool, prefix:str, allowBroadcasts:bool):
+def change_setting(gID:int, logsChannel:int, sendOnReadyMessage:bool, prefix:str, allowBroadcasts:bool, newVersionBroadcastChannel:int):
     path = f'serverSettings/serverID-{str(gID)}_Settings.json'
     print(f'Overwriting "{path}"!')
-    if new_Json(gID, logsChannel, sendOnReadyMessage, prefix, allowBroadcasts):
+    if new_Json(gID, logsChannel, sendOnReadyMessage, prefix, allowBroadcasts, newVersionBroadcastChannel):
         print('Uploading to FTP!')
         var = write_cloudSettings(gID)
         return var
