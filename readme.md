@@ -31,7 +31,7 @@ like `XXXxxXXXXXXXXXXXxxxxxxxxXXXXXXXXX.xxxxxxxXXxxxXXXXXXXxxxxxxxXXXXxxXXxxxx` 
 >
 > ***Since 3.0:*** 3.12.6, 3.12.7
 
-you need [Python](https://www.python.org/downloads/) and the libraries Found in [Setup.bat](batchfiles/setup.bat)
+you need [Python](https://www.python.org/downloads/) and the libraries Found in [Setup.bat](batchFiles/setup.bat)
 
 MAKE SURE TO SET THIS WHEN YOU INSTALL PYTHON!! ![](docs/IMPORTANT.png)
 
