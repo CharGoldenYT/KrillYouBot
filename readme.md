@@ -1,3 +1,9 @@
+# IMPORTANT - VERSIONING
+
+If you make a new Krill You Bot release the tag has to be readable to the bot, and set to the same version string as the bot's current version.
+
+(e.g 3.2 Hotfix 2's tag has to be 3.2h-2 both in the bot and the tag)
+
 # Krill you bot - A Wacky simple Discord bot for krilling your friends!
 
 ### Usage ([My Discord Bot](https://discord.com/oauth2/authorize?client_id=1262532595770589214&permissions=292057852928&integration_type=0&scope=bot))
