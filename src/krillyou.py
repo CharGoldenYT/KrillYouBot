@@ -92,7 +92,7 @@ def initialize_bot():
     try:
         client.run(botKey)
     except Exception as e:
-        log_fatal(filename, f'[STARTUP]: Could not start/restart the Bot! "{e}"', False, True)
+        log_fatal(filename, f'[STARTUP]: Could not start/restart the Bot! "{str(e)}"', False, True)
 
 @client.event
 async def close():

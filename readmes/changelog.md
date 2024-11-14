@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a new server setting `newVersionBroadcastChannel` which lets you change where new bot version announcements go (Will default to logs channel location if not previously set.)
 - Moved the krill config help message to a seperate script so that it's easier to add new commands.
 - Made the bot give you an error if a setting does not exist with `krill configure`.
+- Made the bot start exception handler use `str(e)` as opposed to just `e` so it wouldn't potentially error itself.
 
 ## [3.3h-2] 11/6/24 - 8:50 AM
 
