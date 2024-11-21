@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed a print from the krill command.
 - FINALLY removed a leftover print out that would essentially duplicate the changelog (Was driving me crazy trying to figure it out).
 - Made the script exit if you're on 3.13 due to it breaking the script.
-- Added a note in the changelog about the incompatibility with 3.13.
+- Added a note in the readme about the incompatibility with 3.13.
 - Added a new server setting `newVersionBroadcastChannel` which lets you change where new bot version announcements go (Will default to logs channel location if not previously set.)
 - Moved the krill config help message to a seperate script so that it's easier to add new commands.
 - Made the bot give you an error if a setting does not exist with `krill configure`.
