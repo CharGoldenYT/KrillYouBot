@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.3h-3]
 
 ### Changed
 
@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved the krill config help message to a seperate script so that it's easier to add new commands.
 - Made the bot give you an error if a setting does not exist with `krill configure`.
 - Made the bot start exception handler use `str(e)` as opposed to just `e` so it wouldn't potentially error itself.
+- Fixed a bug where non strings attempted being added to strings causing the bot to crash because you can only add a string to another string.
 
 ## [3.3h-2] 11/6/24 - 8:50 AM
 
