@@ -3,7 +3,7 @@ from datetime import datetime; from platform import python_version
 #set up logging with current time
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = "logs/krillYouBotLog-" + time + ".log"
-acceptedVers:list[str] = ['3.12.6', '3.12.7']
+acceptedVers:list[str] = ['3.12.0', '3.12.1', '3.12.2', '3.12.3', '3.12.4', '3.12.5', '3.12.6', '3.12.7']
 
 lastVersion = '3.3h-2'
 
@@ -33,16 +33,6 @@ def get_filname():
 
 
 def check_pythonVersion():
-    if python_version() not in acceptedVers:
-        testedVersions = ''
-        pos = 0
-        if acceptedVers.__len__() > 1:
-            for version in acceptedVers:
-                pos += 1
-                if not pos == acceptedVers.__len__():
-                    testedVersions += f'{version}, '
-                if pos == acceptedVers.__len__():
-                    testedVersions += version
-        if acceptedVers.__len__() <= 1:
-            testedVersions = acceptedVers[0]
-        print(f'Krill you bot\'s rewrite was coded and tested with {testedVersions} you may run into problems or unexpected errors!')
+    # Fun fact it seems all 3.12 versions work lmao
+    if not python_version().__contains__('3.12') and not python_version().__contains__('3.13'):
+        print(f'Krill you bot\'s rewrite was coded and tested with Python 3.12 you may run into problems or unexpected errors!')
