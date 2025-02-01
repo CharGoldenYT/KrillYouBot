@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+> [!NOTE]
+> Wow 4 whole versions of Krill You Bot!
+> That's pretty cool if you ask me.
+
+### Changed
+
+- Made a new `globalStuff.py` module to help prevent circular import errors.
+- Changed how the changelog error displays.
+- Moved most of krillVersion's functions to `globalStuffs.py`
+
 ## [3.3h-3]
 
 ### Changed

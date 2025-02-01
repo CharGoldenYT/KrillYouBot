@@ -78,7 +78,7 @@ from discord.stage_instance import StageInstance
 from discord.threads import Thread
 from discord.sticker import GuildSticker, StandardSticker, StickerPack, _sticker_factory
 from modules.backend.betterLogs.betterLogs import *
-from modules.commands.krillVersion import get_filname
+from globalStuff import get_filname
 from inspect import currentframe, getframeinfo
 
 if TYPE_CHECKING:

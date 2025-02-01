@@ -44,7 +44,7 @@ from discord.activity import BaseActivity
 from discord.enums import SpeakingState
 from discord.errors import ConnectionClosed
 from modules.backend.betterLogs.betterLogs import *
-from modules.commands.krillVersion import get_filname
+from globalStuff import get_filname
 
 _log = logging.getLogger(__name__)
 
@@ -182,10 +182,10 @@ class KeepAliveHandler(threading.Thread):
                         try:
                             frame = sys._current_frames()[self._main_thread_id]
                         except KeyError:
-                            msg = f'Shard ID {self.shard_id} heartbeat blocked for more than {total}s seconds.'
+                            msg = f'Shard ID {str(self.shard_id)} heartbeat blocked for more than {str(total)}s seconds.'
                         else:
                             stack = ''.join(traceback.format_stack(frame))
-                            msg = f'Shard ID {self.shard_id} heartbeat blocked for more than {total}s seconds. \nLoop thread traceback (most recent call last):\n{stack}'
+                            msg = f'Shard ID {str(self.shard_id)} heartbeat blocked for more than {str(total)}s seconds. \nLoop thread traceback (most recent call last):\n{stack}'
                             log_warning(get_filname(), msg)
 
             except Exception:

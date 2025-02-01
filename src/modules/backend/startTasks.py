@@ -1,6 +1,6 @@
 from modules.commands.krillAbout import make_changelog
 from modules.backend.betterLogs.betterLogs import *
-from modules.commands.krillVersion import get_filname, compareVersions, getCurVersion
+from globalStuff import get_filname, compareVersions, curVersion
 from discord.guild import Guild
 from modules.backend.krillJson import initializeFTP
 
@@ -62,22 +62,25 @@ def grab_serverSettings(servers:list[Guild]):
     isGrabbed = None
     for server in servers:
         path = f'serverSettings/serverID-{str(server.id)}_Settings.json'
-        ftp = initializeFTP()
-        ftp.cwd('htdocs/krillYouBot_ServerSettings')
-        file = open(path, 'rb')
-        fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'wb')
         try:
-            ftp.retrbinary(f'RETR {path}', fileCompare.write); fileCompare.close()
-            fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'rb')
-            if not fileCompare == file:
-                #print('Files are different, replacing with upstream ver')
-                isGrabbed = True
-                file = open(path, 'wb'); file.writelines(fileCompare.readlines()); file.close(); fileCompare.close()
+            ftp = initializeFTP()
+            ftp.cwd('htdocs/krillYouBot_ServerSettings')
+            file = open(path, 'rb')
+            fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'wb')
+            try:
+                ftp.retrbinary(f'RETR {path}', fileCompare.write); fileCompare.close()
+                fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'rb')
+                if not fileCompare == file:
+                    #print('Files are different, replacing with upstream ver')
+                    isGrabbed = True
+                    file = open(path, 'wb'); file.writelines(fileCompare.readlines()); file.close(); fileCompare.close()
+            except Exception as e:
+                fileCompare.close()
+                file.close()
+                log_err(get_filname(), f'There was an error trying to grab server settings for {str(server.id)}: "{str(e)}"')
+            os.remove(f'serverID-{str(server.id)}_Settings.temp')
         except Exception as e:
-            fileCompare.close()
-            file.close()
-            log_err(get_filname(), f'There was an error trying to grab server settings for {str(server.id)}: "{str(e)}"')
-        os.remove(f'serverID-{str(server.id)}_Settings.temp')
+            log_err(get_filname(), f'[STARTUP]: There was an error processing server "{server.name}" ID: "{str(server.id)}"! The error was "{str(e)}"', False)
     return isGrabbed
 
 def run_startTasks():
@@ -85,6 +88,6 @@ def run_startTasks():
     if var == 'n':
         log_warn(get_filname(), '[STARTUP]: Changelog potentially out of date! Make sure "modules.commands.krillAbout" was properly updated!', False)
     create_logsFolders()
-    create_logFile(get_filname(), f'<!-- Created by Krill You Bot v{getCurVersion()}-->')
+    create_logFile(get_filname(), f'<!-- Created by Krill You Bot v{curVersion}-->')
     if compareVersions() == False:
         log_warn(get_filname(), '[STARTUP]: New Update available! Check the github!', False, True)

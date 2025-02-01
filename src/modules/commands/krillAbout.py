@@ -2,7 +2,7 @@
 import urllib.request as urllib
 from datetime import datetime
 import time as PyTime
-from modules.commands.krillVersion import getCurVersion
+from globalStuff import curVersion as ver, filname
 from modules.backend.betterLogs.betterLogs import *
 from modules.backend.getChangelog import get_changelog
 from inspect import currentframe, getframeinfo
@@ -12,20 +12,10 @@ tos = ''
 errfile = None
 
 # Set the current ver
-ver = getCurVersion()
-replace = ''
+replace =''
 if ver.endswith('-testver'): replace = '-testver'
 if ver.endswith('-TestVer'): replace = '-TestVer'
 versionString = '## [' + ver.replace(replace, '') + ']'
-
-time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
-filname = 'logs/generateStringslog-' + time + '.log'
-
-from modules.commands.krillVersion import get_filname
-
-try: filname = get_filname()
-except Exception as e: print('COULD NOT GET FILENAME "' + str(e) + '"')
-PyTime.sleep(1)
 
 def make_changelog():
     r'''Redirect function cause im too lazy :3'''
@@ -42,7 +32,7 @@ def make_author_string(author:str, userID:int, command:str, message_content:str,
     authorStr = '<@' + str(userID) + '>(' + author + ') Ran the command: "' + command + '" | Full Command Ran: "' + message_content + '" | Channel ID: "' + str(channelID) + '" | Server Ran From: "' + serverName + '" | Server ID: "' + str(serverID) + '"'
     return authorStr
 
-def get_readme(showGetReturns:bool):
+def get_readme():
     versionString = ' (' + ver + ')'
     url = ''
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/readmes/discord_readme.md').read().decode('utf-8'))
@@ -50,27 +40,24 @@ def get_readme(showGetReturns:bool):
         frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     readme = 'This was generated with the [GitHub "discord_readme"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/discord_readme.md):\n\n' + '# Krill You Bot' + versionString + ' ' + url
 
-    #if showGetReturns:print('get_readme returned: ' + readme)
     return readme
 
-def get_privacy_policy(showGetReturns:bool):
+def get_privacy_policy():
     url = ''
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/CharGoldenYT/KrillYouBot/main/readmes/Privacy%20Policy.md').read().decode('utf-8'))
     except urllib.HTTPError as e: 
         frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     privacyPolicy = 'This was generated with the [GitHub "Privacy Policy"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/Privacy%20Policy.md):\n\n' + url
 
-    #if showGetReturns:print('get_privacy_policy returned: ' + privacyPolicy)
     return privacyPolicy
 
-def get_tos(showGetReturns:bool):
+def get_tos():
     url = ''
     try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/readmes/tos.md').read().decode('utf-8'))
     except urllib.HTTPError as e: 
         frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + '] shit the readme url handler died lmao: ' + str(e)); url = '-# URL Handler died lmao. '
     tos = 'This was generated with the [GitHub "tos"](https://github.com/gameygu-0213/KrillYouBot/blob/main/readmes/tos.md):\n\n' + url
 
-    #if showGetReturns:print('get_readme returned: ' + tos)
     return tos
 
 def get_gitVer():

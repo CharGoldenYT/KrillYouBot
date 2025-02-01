@@ -3,6 +3,8 @@ from ftplib import FTP
 import json as pyJson
 import os
 from discord.client import Client
+from modules.backend.betterLogs.betterLogs import log_err
+from globalStuff import get_filname
 
 def legacy_SettingsCheck(gID:int):
     r'''From earlier testing, i used a different file name format so yknow.'''
@@ -19,7 +21,7 @@ def initializeFTP():
     try:
         ftpSettings = open('botStuff/settings.txt', 'r').read().split('|'); ftp = FTP(ftpSettings[0], ftpSettings[1], ftpSettings[2]); return ftp
     except Exception as e:
-        print(f'SHIT THERE WAS AN ERROR! "{str(e)}"'); return None
+        log_err(get_filname(), f'SHIT THERE WAS AN ERROR! "{str(e)}"'); return None
     
     
 from discord.guild import Guild
@@ -99,12 +101,13 @@ def parse_krillJson(path:str, gID:int, cID:int, client:(None | Client) = None) -
         return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts'], json['newVersionBroadcastChannel']]
     except Exception as e:
         print(f'Cant parse {path}! "{e}"')
+        firstChannel = get_firstAvailableChannel(client.get_guild(gID))
         if client == None:
             rawJson = initializeSettings(gID, cID)
             json = pyJson.loads(rawJson); json = json['serverSettings']
-            return [cID, False, '?']
+            return [cID, False, '?', False, firstChannel]
         if not client == None:
-            rawJson = initializeSettings(gID, get_firstAvailableChannel(client.get_guild(gID), client))
+            rawJson = initializeSettings(gID, firstChannel, client)
             json = pyJson.loads(rawJson); json = json['serverSettings']
             return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts'], json['newVersionBroadcastChannel']]
 
@@ -122,6 +125,6 @@ def change_setting(gID:int, logsChannel:int, sendOnReadyMessage:bool, prefix:str
     path = f'serverSettings/serverID-{str(gID)}_Settings.json'
     print(f'Overwriting "{path}"!')
     if new_Json(gID, logsChannel, sendOnReadyMessage, prefix, allowBroadcasts, newVersionBroadcastChannel):
-        print('Uploading to FTP!')
-        var = write_cloudSettings(gID)
-        return var
+        """ print('Uploading to FTP!')
+        var = write_cloudSettings(gID) """ # FTP SHIT BROKEY.
+        return None

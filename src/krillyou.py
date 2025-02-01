@@ -5,12 +5,12 @@
 from os import system
 import discord,atexit
 from modules.commands.krill import getKrillMessage
-from modules.commands.krillVersion import *
 from modules.backend.betterLogs.betterLogs import *
 from platform import python_version
 from modules.backend.exitTasks import doExitTasks
 from modules.backend.broadcastTools import *
-from modules.commands.checkMessage import checkMessage, get_permittedServers, get_firstAvailableChannel
+from modules.commands.checkMessage import checkMessage
+from globalStuff import get_permittedServers, get_firstAvailableChannel, check_pythonVersion
 
 # Setup
 system('title Krill You Bot "A discord bot to krill your friends!"')

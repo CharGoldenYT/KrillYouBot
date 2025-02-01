@@ -1,16 +1,10 @@
 import urllib.request as urllib
 from inspect import currentframe, getframeinfo
 from modules.backend.betterLogs.betterLogs import *
-from modules.commands.krillVersion import get_filname, getCurVersion, lastVersion
+from globalStuff import get_filname, lastVersion, get_formattedVersion
 from modules.backend.broadcastTools import search_betweenDelimiters
 
-def get_formattedVersion():
-    r'''So i dont get circular import errors, i've basically ported the functionality'''
-    replace = ''
-    if getCurVersion().endswith('-testver'): replace = '-testver'
-    if getCurVersion().endswith('-TestVer'): replace = '-TestVer'
-    versionString = f'## [{getCurVersion().replace(replace, '')}]'
-    return versionString  
+failMessage = '# Could not retrieve changelog! Might be a test version, the URL handler died, or the URL has been moved.'
 
 def get_changelog() -> str:
     url = ''
@@ -21,9 +15,9 @@ def get_changelog() -> str:
     try:
         url = search_betweenDelimiters(url, get_formattedVersion(), '## [' + lastVersion + ']')
         if url == None:
-            url = f'-# Failed to retrieve changelog!'
+            url = failMessage
     except Exception as e:
         log_err(get_filname(), f'SHIT HAD AN ERROR GETTING THAT! {str(e)}')
-        url = f'-# Failed to retrieve changelog! {str(e)}'
+        url = f'{failMessage} {str(e)}'
 
     return url.rstrip().lstrip().replace('> [!NOTE]\n', '').replace('> ', '-# ')

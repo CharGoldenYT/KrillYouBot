@@ -1,4 +1,5 @@
-from modules.backend.betterLogs.betterLogs import *; from modules.commands.krillAbout import get_filname; from modules.commands.krillVersion import getCurVersion
+from modules.backend.betterLogs.betterLogs import *
+from globalStuff import curVersion, get_filname
 import time, shutil, os
 from datetime import datetime
 filname = get_filname()
@@ -9,7 +10,7 @@ def doLogMove():
     dtime = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
     filename = f'logs/movingLogs/moveLogs-{dtime}.log'
     try:
-        create_logFile(filename, f'<!-- Created by Krill You Bot v{getCurVersion()}-->')
+        create_logFile(filename, f'<!-- Created by Krill You Bot v{curVersion}-->')
         for file in os.listdir('logs/'):
             for extension in ['.txt', '.log']:
                 if file.endswith(extension) and file != filname:

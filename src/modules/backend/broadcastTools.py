@@ -1,6 +1,6 @@
 from discord.guild import Guild
 from modules.backend.betterLogs.betterLogs import *
-from modules.commands.krillVersion import get_filname
+from globalStuff import get_filname
 
 
 def search_betweenDelimiters(string:str, start:str, end:str):

@@ -1,60 +1,14 @@
 r'''This script handles the processing of messages to match it to a valid command!'''
 from discord.message import Message
 from modules.discordpy.client import Client
-from modules.backend.betterLogs.betterLogs import log_err, log_error, log_info; from modules.commands.krillVersion import get_filname, getCurVersion
+from modules.backend.betterLogs.betterLogs import log_err, log_error, log_info
+from globalStuff import get_filname, curVersion
 from modules.backend.krillJson import parse_krillJson, new_Json
 from modules.commands.krillAbout import get_readme, get_tos, get_privacy_policy, make_author_string, make_changelog
 from modules.commands.krill import getKrillMessage
 from modules.backend.broadcastTools import *
 from modules.commands.components.confighelp import getCommands
-
-permittedUserIDs = [714247788715573310, 300020084808744962]
-#                      Main Account    |    Alt Account
-# "CHAR DONT DOX YOURSELF" Dude, User ID's are public info.
-
-def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
-    foundChannel = False
-    for channel in guild.channels:
-        if not foundChannel:
-            cID = channel.id
-            permissions = channel.permissions_for(guild.get_member(client.user.id))
-            if permissions.send_messages:
-                foundChannel = True
-                return cID
-
-def get_permittedServers(client:Client, message:Message, isBroadcastCommand:bool = False, versionCommand:bool = False) -> list[list]:
-    allowedServers :list[Guild] = []
-    serverChannels:list[int] = []
-    channelID:int = 0
-    if not message == None:
-        channelID = message.channel.id
-    for guild in client.guilds:
-        if message == None:
-            channelID = get_firstAvailableChannel(guild, client)
-        guildID = guild.id
-        serverSettings = parse_krillJson(idToPath(guildID), guildID, channelID)
-        if not isBroadcastCommand:
-            if serverSettings[1]:
-                allowedServers.append(guild)
-                serverChannels.append(serverSettings[0])
-        if isBroadcastCommand:
-            if serverSettings[3]:
-                allowedServers.append(guild)
-                serverChannels.append(serverSettings[0])
-        if versionCommand:
-            if serverSettings[3]:
-                allowedServers.append(guild)
-                serverChannels.append(serverSettings[4])
-            
-                
-    return [allowedServers, serverChannels]
-
-def get_permittedServers_version(client:Client, message:Message) -> list[list]:
-    return get_permittedServers(client, message, False, True)
-
-
-def idToPath(gID:int) -> str:
-    return f'serverSettings/serverID-{str(gID)}_Settings.json'
+from globalStuff import idToPath, ownerIDs as permittedUserIDs, get_permittedServers, get_permittedServers_version
 
 def get_setting(setting:str, path:str, gID:int, cID:int) -> (str | list[str]):
     try:
@@ -121,8 +75,6 @@ def replace_krillBroadcast(string:str):
 
 
 async def checkMessage(message:Message, client:Client):
-    from modules.backend.startTasks import check_allowReturns
-
     serverSettings = parse_krillJson(idToPath(message.guild.id), message.guild.id, message.channel.id)
 
     settingsPrefix = serverSettings[2]
@@ -194,15 +146,15 @@ async def checkMessage(message:Message, client:Client):
 
         if command.startswith('krill about'):
             cmd = settingsPrefix + 'krill about'
-            finalMessage = get_readme(check_allowReturns()).replace('`?', f'`{settingsPrefix}')
+            finalMessage = get_readme().replace('`?', f'`{settingsPrefix}')
 
         if command.startswith('krill tos'):
             cmd = settingsPrefix + 'krill tos'
-            finalMessage = get_tos(check_allowReturns())
+            finalMessage = get_tos()
 
         if command.startswith('krill privacypolicy'):
             cmd = settingsPrefix + 'krill privacypolicy'
-            finalMessage = get_privacy_policy(check_allowReturns())
+            finalMessage = get_privacy_policy()
 
         if command.startswith('krill version'):
             try:
@@ -214,7 +166,7 @@ async def checkMessage(message:Message, client:Client):
                 
                 if message.author.id in permittedUserIDs and not message.channel.id == 1279923362923151401:
                     yuh = get_permittedServers_version(client, message)
-                    await broadcast_announcement(yuh[0], yuh[1], f'Krill You Bot has updated! v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})', True)
+                    await broadcast_announcement(yuh[0], yuh[1], f'Krill You Bot has updated! ***v{curVersion}*** with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{curVersion})', True)
                 
                 if not message.author.id in permittedUserIDs:
                     member = message.guild.get_member(message.author.id)
@@ -227,10 +179,10 @@ async def checkMessage(message:Message, client:Client):
                         # Sends me an alert.
                         user.send(f'User {str(message.author.id)}({message.author.name}) tried to broadcast "{settingsPrefix}krill version"!')
 
-            if not getCurVersion().__contains__('b'):
-                finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
-            if getCurVersion().__contains__('b'):
-                finalMessage = f'The current version is v{getCurVersion()} with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md)'
+            if not curVersion.__contains__('b'):
+                finalMessage = f'The current version is ***v{curVersion}*** with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md) | See this versions release page [here](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{curVersion})'
+            if curVersion.__contains__('b'):
+                finalMessage = f'The current version is ***v{curVersion}*** with the changelog of:\n\n{make_changelog()}\n\n\n-# See the full changelog [here](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/changelog.md)'
 
         permission = message.channel.permissions_for(message.author).manage_channels or message.channel.permissions_for(message.author).manage_messages
 
@@ -283,7 +235,7 @@ async def checkMessage(message:Message, client:Client):
             else:
                 message2 = 'The message that was generated was 2000+!'
                 if cmd == settingsPrefix + 'krill version':
-                    message2 += f'\n -# But theres a new [version](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{getCurVersion()})'
+                    message2 += f'\n -# But theres a new [version](https://github.com/CharGoldenYT/KrillYouBot/releases/tag/v{curVersion})'
                 await message.channel.send(message2, suppress_embeds=(suppressEmbeds))
 
         if not cmd == None:
