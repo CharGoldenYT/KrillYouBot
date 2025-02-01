@@ -12,7 +12,7 @@ time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = "logs/krillYouBotLog-" + time + ".log"
 
 curVersion = 'Unreleased'
-lastVersion = '3.3h-2'
+lastVersion = '3.3h-3'
 ownerIDs = [714247788715573310, 300020084808744962, 940383429529337886,
             1081752556730064936, 428541977298993152] # The Discord User ID's who own the bot, and can use special commands.
 
