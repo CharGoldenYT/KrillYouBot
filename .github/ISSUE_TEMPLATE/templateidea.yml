@@ -1,7 +1,7 @@
-name: Documentation Suggestion
-description: Got an idea to better the documentation? Report it here!
+name: Issue Template Suggestion
+description: Got an idea to better the Issue Templates? Report it here!
 title: "Documentation Suggestion: "
-labels: [Documentation Suggestion, Pending Review, Suggestion]
+labels: [Issue Suggestion, Pending Review, Suggestion]
 assignees:
   - CharGoldenYT
 body:
