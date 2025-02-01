@@ -26,27 +26,21 @@ body:
   - type: dropdown
     id: ptarget
     attributes:
-      label: "What is your python version (If running native)?"
+      label: "(Sight Test) What is your python version (If running native)?"
       options:
-        - 3.12.4
-        - 3.12.5
-        - 3.12.6
-        - 3.12.7
-        - Other (Specify Below, if above 3.12, may be rejected!)
-    validations:
-      required: false
-
-  - type: textarea
-    id: version
-    attributes:
-      label: "If other, what version"
+        - 3.8.x
+        - 3.9.x
+        - 3.10.x
+        - 3.11.x
+        - 3.12.x
+        - 3.13.x
     validations:
       required: false
 
   - type: dropdown
     id: sighttest
     attributes:
-      label: "(Sight Test) What shouldn't you request?"
+      label: "(Sight Test pt.2) What shouldn't you request?"
       options:
         - "A nice flower."
         - "Fixing your damn documentation, its stupid."

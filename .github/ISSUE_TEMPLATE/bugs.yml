@@ -34,20 +34,14 @@ body:
   - type: dropdown
     id: ptarget
     attributes:
-      label: "What is your python version (If running native)?"
+      label: "(Sight Test) What is your python version (If running native)?"
       options:
-        - 3.12.4
-        - 3.12.5
-        - 3.12.6
-        - 3.12.7
-        - Other (Specify Below, if above 3.12, may be rejected!)
-    validations:
-      required: false
-
-  - type: textarea
-    id: version
-    attributes:
-      label: "If other, what version"
+        - 3.8.x
+        - 3.9.x
+        - 3.10.x
+        - 3.11.x
+        - 3.12.x
+        - 3.13.x
     validations:
       required: false
 
@@ -55,6 +49,6 @@ body:
     id: buildsummary
     attributes:
       label: "Did you edit anything? If so, mention or summarize your changes."
-      placeholder: "Yes, I edited your mom."
+      placeholder: "PUT CHEMICALS IN THE WATER THAT TURN THE FRIGGIN FROGS GAY"
     validations:
       required: true
