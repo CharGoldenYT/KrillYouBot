@@ -1,7 +1,7 @@
 name: Issue Template Suggestion
 description: Got an idea to better the Issue Templates? Report it here!
 title: "Issue Template Suggestion: "
-labels: [Issue Suggestion, Pending Review, Suggestion]
+labels: [Template Suggestion, Pending Review, Suggestion]
 assignees:
   - CharGoldenYT
 body:
