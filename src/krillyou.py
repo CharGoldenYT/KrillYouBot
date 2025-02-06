@@ -100,4 +100,5 @@ async def close():
     await broadcast_closeMessage(yuh[0], yuh[1])
 
 # LETS SEE IF THIS WORKS! - Me every time i do something that could potentially fail catastrophically.
-initialize_bot()
+while True: # While true it to HOPEFULLY not commit die on insignificant, recoverabale errors.
+    initialize_bot()

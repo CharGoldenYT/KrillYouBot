@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made a new `globalStuff.py` module to help prevent circular import errors.
 - Changed how the changelog error displays.
 - Moved most of krillVersion's functions to `globalStuffs.py`
+- `while True:`'d the initialize_bot function for recoverable errors!
 
 ## [3.3h-3]
 
