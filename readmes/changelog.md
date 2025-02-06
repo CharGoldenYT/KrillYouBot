@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed how the changelog error displays.
 - Moved most of krillVersion's functions to `globalStuffs.py`
 - `while True:`'d the initialize_bot function for recoverable errors!
+- used try/except on the initialize bot function so that if you keyboard interrupt it, or another generic error happens Krill You bot Status is useful.
 
 ## [3.3h-3]
 

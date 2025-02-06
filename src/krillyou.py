@@ -89,16 +89,50 @@ async def on_guild_join(guild:Guild):
 
 def initialize_bot():
     check_pythonVersion()
-    try:
-        client.run(botKey)
-    except Exception as e:
-        log_fatal(filename, f'[STARTUP]: Could not start/restart the Bot! "{str(e)}"', False, True)
+    client.run(botKey)
+        
 
 @client.event
 async def close():
     yuh = get_permittedServers(client, None)
     await broadcast_closeMessage(yuh[0], yuh[1])
 
+def die():
+    file = open('script.py', 'w'); file.write('''# Discord setup
+import discord
+from discord.client import Client
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = Client(intents=intents)
+
+# botkey
+botKey = None
+try:
+    botKey = open('botStuff/botKey.txt').read()
+except:
+    print('Error finding the botkey! make sure it is in a folder named "botStuff" where you launched the exe/script!')
+    exit(1)
+
+# actual shit to do.
+@client.event
+async def on_ready():
+# This gets ID's from my server then sends a message and closes!
+#                             My server ID              krill-bot-status Channel ID
+    await client.get_guild(991595497376714832).get_channel(1279923362923151401).send('Krill You Bot is Down!')
+    exit()
+
+client.run()'''); file.close()
+    import subprocess
+    process = subprocess.run(['python', 'script.py'])
+    print(process.stdout.decode())
+    exit()
+
+
 # LETS SEE IF THIS WORKS! - Me every time i do something that could potentially fail catastrophically.
 while True: # While true it to HOPEFULLY not commit die on insignificant, recoverabale errors.
-    initialize_bot()
+    try:
+        initialize_bot()
+    except:
+        die()
