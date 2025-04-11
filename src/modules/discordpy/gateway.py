@@ -43,8 +43,8 @@ from discord import utils
 from discord.activity import BaseActivity
 from discord.enums import SpeakingState
 from discord.errors import ConnectionClosed
-from modules.backend.betterLogs.betterLogs import *
-from globalStuff import get_filname
+from globalStuff import logger
+from inspect import currentframe, getframeinfo
 
 _log = logging.getLogger(__name__)
 
@@ -186,7 +186,7 @@ class KeepAliveHandler(threading.Thread):
                         else:
                             stack = ''.join(traceback.format_stack(frame))
                             msg = f'Shard ID {str(self.shard_id)} heartbeat blocked for more than {str(total)}s seconds. \nLoop thread traceback (most recent call last):\n{stack}'
-                            log_warning(get_filname(), msg)
+                            logger.log_warning(msg, True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
             except Exception:
                 self.stop()
@@ -210,7 +210,7 @@ class KeepAliveHandler(threading.Thread):
         self._last_ack = ack_time
         self.latency = ack_time - self._last_send
         if self.latency > 10:
-            log_warn(get_filname(), f"Can\'t keep up, shard ID {str(self.shard_id)} websocket is {str(self.latency)}s behind.")
+            logger.log_warn(f"Can\'t keep up, shard ID {str(self.shard_id)} websocket is {str(self.latency)}s behind.", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
 
 class VoiceKeepAliveHandler(KeepAliveHandler):
@@ -551,7 +551,7 @@ class DiscordWebSocket:
                 self.sequence = None
                 self.session_id = None
                 self.gateway = self.DEFAULT_GATEWAY
-                log_info(get_filname(), 'Shard ID ' + str(self.shard_id) + 'session has been invalidated.')
+                logger.log_info('Shard ID ' + str(self.shard_id) + 'session has been invalidated.', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
                 await self.close(code=1000)
                 raise ReconnectWebSocket(self.shard_id, resume=False)
 
@@ -562,12 +562,12 @@ class DiscordWebSocket:
             self.sequence = msg['s']
             self.session_id = data['session_id']
             self.gateway = yarl.URL(data['resume_gateway_url'])
-            log_info(get_filname(), '[STARTUP]: Shard ID ' + str(self.shard_id) + ' has connected to Gateway (Session ID: ' + self.session_id + ').', False, True)
+            logger.log_info('[STARTUP]: Shard ID ' + str(self.shard_id) + ' has connected to Gateway (Session ID: ' + self.session_id + ').', False, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
         elif event == 'RESUMED':
             # pass back the shard ID to the resumed handler
             data['__shard_id__'] = self.shard_id
-            log_info(get_filname(), 'Shard ID ' + str(self.shard_id) + ' has successfully RESUMED session (' + self.session_id + ').', True, True)
+            logger.log_info('Shard ID ' + str(self.shard_id) + ' has successfully RESUMED session (' + self.session_id + ').', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
         try:
             func = self._discord_parsers[event]

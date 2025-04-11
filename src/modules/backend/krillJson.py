@@ -3,8 +3,8 @@ from ftplib import FTP
 import json as pyJson
 import os
 from discord.client import Client
-from modules.backend.betterLogs.betterLogs import log_err
-from globalStuff import get_filname
+from globalStuff import logger
+from inspect import currentframe, getframeinfo
 
 def legacy_SettingsCheck(gID:int):
     r'''From earlier testing, i used a different file name format so yknow.'''
@@ -21,7 +21,7 @@ def initializeFTP():
     try:
         ftpSettings = open('botStuff/settings.txt', 'r').read().split('|'); ftp = FTP(ftpSettings[0], ftpSettings[1], ftpSettings[2]); return ftp
     except Exception as e:
-        log_err(get_filname(), f'SHIT THERE WAS AN ERROR! "{str(e)}"'); return None
+        logger.log_err(f'SHIT THERE WAS AN ERROR! "{str(e)}"', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return None
     
     
 from discord.guild import Guild

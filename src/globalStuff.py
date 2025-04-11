@@ -6,15 +6,19 @@ from discord.message import Message
 from discord.guild import Guild
 from datetime import datetime
 from platform import python_version
+from modules.backend.betterLogs.logs import Logging
 
 # Variables
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
-filname = "logs/krillYouBotLog-" + time + ".log"
+filname = "logs/krillYouBotLog-" + time + ".xml"
 
-curVersion = 'Unreleased'
+curVersion = '4.0'
 lastVersion = '3.3h-3'
 ownerIDs = [714247788715573310, 300020084808744962, 940383429529337886,
             1081752556730064936, 428541977298993152] # The Discord User ID's who own the bot, and can use special commands.
+
+logger:Logging = Logging('tempLog_' + time + '.xml', f'<!-- Created by Krill You Bot v{curVersion}-->')
+logger._set_filename(filname)
 
 # Functions
 def get_firstAvailableChannel(guild:Guild, client:Client) -> int:

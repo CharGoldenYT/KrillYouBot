@@ -1,6 +1,6 @@
 from modules.commands.krillAbout import make_changelog
-from modules.backend.betterLogs.betterLogs import *
-from globalStuff import get_filname, compareVersions, curVersion
+from inspect import currentframe, getframeinfo
+from globalStuff import get_filname, compareVersions, curVersion, logger
 from discord.guild import Guild
 from modules.backend.krillJson import initializeFTP
 
@@ -30,7 +30,7 @@ def create_logsFolders():
         if str(e).endswith("file already exists: 'logs/'"):
             print('Logs folder already exists, doing nothing!')
         if not str(e).endswith("file already exists: 'logs/'"):
-            log_error(get_filname(), f'SHIT THERE WAS AN ERROR "{str(e)}"')
+            logger.log_error(f'SHIT THERE WAS AN ERROR "{str(e)}"', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
     try:
         os.makedirs('logs/old')
@@ -38,7 +38,7 @@ def create_logsFolders():
         if str(e).endswith("file already exists: 'logs/old'"):
             print('Old logs folder already exists, doing nothing!')
         if not str(e).endswith("file already exists: 'logs/old'"):
-            log_error(get_filname(), f'SHIT THERE WAS AN ERROR "{str(e)}"')
+            logger.log_error(f'SHIT THERE WAS AN ERROR "{str(e)}"', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
             
     try:
         os.makedirs('logs/movingLogs')
@@ -46,7 +46,7 @@ def create_logsFolders():
         if str(e).endswith("file already exists: 'logs/movingLogs'"):
             print('Old logs folder already exists, doing nothing!')
         if not str(e).endswith("file already exists: 'logs/movingLogs'"):
-            log_error(get_filname(), f'SHIT THERE WAS AN ERROR "{str(e)}"')
+            logger.log_error(f'SHIT THERE WAS AN ERROR "{str(e)}"', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
     try:
         os.makedirs('serverSettings/')
@@ -54,11 +54,11 @@ def create_logsFolders():
         if str(e).endswith("file already exists: 'serverSettings/'"):
             print('Server Settings folder already exists, doing nothing!')
         if not str(e).endswith("file already exists: 'serverSettings/'"):
-            log_error(get_filname(), f'SHIT THERE WAS AN ERROR "{str(e)}"')
+            logger.log_error(f'SHIT THERE WAS AN ERROR "{str(e)}"', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
 
 def grab_serverSettings(servers:list[Guild]):
-    import os
+    """ import os
     isGrabbed = None
     for server in servers:
         path = f'serverSettings/serverID-{str(server.id)}_Settings.json'
@@ -81,13 +81,15 @@ def grab_serverSettings(servers:list[Guild]):
             os.remove(f'serverID-{str(server.id)}_Settings.temp')
         except Exception as e:
             log_err(get_filname(), f'[STARTUP]: There was an error processing server "{server.name}" ID: "{str(server.id)}"! The error was "{str(e)}"', False)
-    return isGrabbed
+    return isGrabbed """
+    return None
 
 def run_startTasks():
-    var = get_latestChangelog().lower()
-    if var == 'n':
-        log_warn(get_filname(), '[STARTUP]: Changelog potentially out of date! Make sure "modules.commands.krillAbout" was properly updated!', False)
     create_logsFolders()
-    create_logFile(get_filname(), f'<!-- Created by Krill You Bot v{curVersion}-->')
+
+    result = get_latestChangelog().lower()
+    if result == 'n':
+        logger.log_warn('[STARTUP]: Changelog potentially out of date! Make sure "modules.commands.krillAbout" was properly updated!', False)
+
     if compareVersions() == False:
-        log_warn(get_filname(), '[STARTUP]: New Update available! Check the github!', False, True)
+        logger.log_header('[STARTUP]: New Update available! Check the github!', 'warn', False)

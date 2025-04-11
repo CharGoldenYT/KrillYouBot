@@ -5,21 +5,14 @@
 from os import system
 import discord,atexit
 from modules.commands.krill import getKrillMessage
-from modules.backend.betterLogs.betterLogs import *
 from platform import python_version
 from modules.backend.exitTasks import doExitTasks
 from modules.backend.broadcastTools import *
 from modules.commands.checkMessage import checkMessage
-from globalStuff import get_permittedServers, get_firstAvailableChannel, check_pythonVersion
+from globalStuff import get_permittedServers, get_firstAvailableChannel, check_pythonVersion, logger
 
 # Setup
 system('title Krill You Bot "A discord bot to krill your friends!"')
-
-if python_version().startswith('3.13'):
-    print('Python 3.13 removes a library that discord.py requires at this current time. You cannot run this bot with 3.13!')
-    create_logFile(get_filname(), '<!-- The user tried to run this version of the bot with python 3.13! -->')
-    end_log(get_filname())
-    exit()
 
 botKey = None
 try:
@@ -28,10 +21,7 @@ except:
     print('Error finding the botkey! make sure it is in a folder named "botStuff" where you launched the exe/script!')
     exit(1)
 
-filename = get_filname()
-
-from modules.backend.startTasks import run_startTasks
-run_startTasks()
+from modules.backend.startTasks import run_startTasks; run_startTasks()
 
 from modules.discordpy.client import Client
 
@@ -57,7 +47,7 @@ isRunning = True
 
 @client.event
 async def on_ready():
-    log_info(filename, f'[STARTUP]: CLIENT READY: Ready to receive and send messages as: {client.user}{bcolors.ENDC}', False)
+    logger.log_info(f'[STARTUP]: CLIENT READY: Ready to receive and send messages as: {client.user}', False, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
     from modules.backend.startTasks import grab_serverSettings
     yuh = get_permittedServers(client, None)
     yuh2 = grab_serverSettings(yuh[0])
@@ -125,7 +115,7 @@ async def on_ready():
 
 client.run()'''); file.close()
     import subprocess
-    process = subprocess.run(['python', 'script.py'])
+    process = subprocess.run(['cmd /c', 'python', 'script.py'])
     print(process.stdout.decode())
     exit()
 

@@ -77,8 +77,7 @@ from discord.ui.dynamic import DynamicItem
 from discord.stage_instance import StageInstance
 from discord.threads import Thread
 from discord.sticker import GuildSticker, StandardSticker, StickerPack, _sticker_factory
-from modules.backend.betterLogs.betterLogs import *
-from globalStuff import get_filname
+from globalStuff import logger
 from inspect import currentframe, getframeinfo
 
 if TYPE_CHECKING:
@@ -300,7 +299,7 @@ class Client:
 
         if VoiceClient.warn_nacl:
             VoiceClient.warn_nacl = False
-            log_warning(get_filname(), "[STARTUP]: PyNaCl is not installed, voice will NOT be supported", False)
+            logger.log_warning("[STARTUP]: PyNaCl is not installed, voice will NOT be supported", False, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
     async def __aenter__(self) -> Self:
         await self._async_setup_hook()
@@ -717,7 +716,7 @@ class Client:
                         raise
 
                 retry = backoff.delay()
-                frameinfo = getframeinfo(currentframe()); log_err(get_filname(), f'Attempting a reconnect in {str(retry.__round__())}s', True, False, frameinfo.filename, frameinfo.lineno)
+                frameinfo = getframeinfo(currentframe()); logger.log_err(f'Attempting a reconnect in {str(retry.__round__())}s', True, frameinfo.filename, frameinfo.lineno)
                 await asyncio.sleep(retry)
                 # Always try to RESUME the connection
                 # If the connection is not RESUME-able then the gateway will invalidate the session.

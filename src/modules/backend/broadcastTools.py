@@ -1,7 +1,6 @@
 from discord.guild import Guild
-from modules.backend.betterLogs.betterLogs import *
-from globalStuff import get_filname
-
+from globalStuff import logger
+from inspect import currentframe, getframeinfo
 
 def search_betweenDelimiters(string:str, start:str, end:str):
     start_index = string.find(start)
@@ -32,7 +31,7 @@ async def broadcast_readyMessage(servers:list[Guild], channels:list[int]):
         try:
             await channel.send('Krill You Bot online!')
         except Exception as e:
-            log_err(get_filname(), f'Could not send message for server {channel.guild.id}({channel.guild.name})! {str(e)}')
+            logger.log_err(f'Could not send message for server {channel.guild.id}({channel.guild.name})! {str(e)}', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
 async def broadcast_closeMessage(servers:list[Guild], channels:list[int]):
     pos = -1
@@ -42,7 +41,7 @@ async def broadcast_closeMessage(servers:list[Guild], channels:list[int]):
         try:
             await channel.send('Krill You Bot is down!')
         except Exception as e:
-            log_err(get_filname(), f'Could not send message for server {channel.guild.id}({channel.guild.name})! {str(e)}')
+            logger.log_err(f'Could not send message for server {channel.guild.id}({channel.guild.name})! {str(e)}', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
 # The feature that started this whole recode.
 async def broadcast_announcement(servers:list[Guild], channels:list[int], message:str, suppressEmbeds:bool = False):
@@ -53,4 +52,4 @@ async def broadcast_announcement(servers:list[Guild], channels:list[int], messag
         try:
             await channel.send(replace_annoncementString(message), suppress_embeds=suppressEmbeds)
         except Exception as e:
-            log_err(get_filname(), f'Could not send message! {str(e)}')
+            logger.log_err(f'Could not send message for server {channel.guild.id}({channel.guild.name})! {str(e)}', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)

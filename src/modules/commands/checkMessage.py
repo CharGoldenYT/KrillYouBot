@@ -1,14 +1,12 @@
 r'''This script handles the processing of messages to match it to a valid command!'''
 from discord.message import Message
 from modules.discordpy.client import Client
-from modules.backend.betterLogs.betterLogs import log_err, log_error, log_info
-from globalStuff import get_filname, curVersion
+from globalStuff import logger, curVersion, idToPath, ownerIDs as permittedUserIDs, get_permittedServers, get_permittedServers_version
 from modules.backend.krillJson import parse_krillJson, new_Json
 from modules.commands.krillAbout import get_readme, get_tos, get_privacy_policy, make_author_string, make_changelog
 from modules.commands.krill import getKrillMessage
 from modules.backend.broadcastTools import *
 from modules.commands.components.confighelp import getCommands
-from globalStuff import idToPath, ownerIDs as permittedUserIDs, get_permittedServers, get_permittedServers_version
 
 def get_setting(setting:str, path:str, gID:int, cID:int) -> (str | list[str]):
     try:
@@ -103,13 +101,13 @@ async def checkMessage(message:Message, client:Client):
             try:
                 await message.delete()
             except:
-                log_error(get_filname(), "Can't delete that message! are there appropriate permissions?")
+                logger.log_error("Can't delete that message! are there appropriate permissions?", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
             try:
                 await message.channel.send(finalMessage)
             except:
-                log_err(get_filname(), "Can't send a message! are there appropriate permissions?")
+                logger.log_err("Can't send a message! are there appropriate permissions?", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
             author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
-            log_info(get_filname(), author)
+            logger.log_info(author, True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
         if messageLower.startswith('/pipebomb'):
             cmd = '/pipebomb'
@@ -125,9 +123,9 @@ async def checkMessage(message:Message, client:Client):
             try:
                 await message.channel.send(Finalmessage)
             except:
-                log_err(get_filname(), "Can't send a message! are there appropriate permissions?")
+                logger.log_err("Can't send a message! are there appropriate permissions?", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
             author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
-            log_info(get_filname(), author)
+            logger.log_info(author, True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
 
 
@@ -160,7 +158,7 @@ async def checkMessage(message:Message, client:Client):
             try:
                 await message.delete()
             except:
-                log_err(get_filname(), "Couldn't delete that message, does the bot have sufficient permissions?")
+                logger.log_error("Can't delete that message! are there appropriate permissions?", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
             cmd = settingsPrefix + 'krill version'
             if command == 'krill version true':
                 
@@ -174,7 +172,7 @@ async def checkMessage(message:Message, client:Client):
                         await member.send(f'You dont have permission to broadcast `{settingsPrefix}krill version`')
 
                     except Exception as e:
-                        log_err(get_filname(), f'User {str(message.author.id)}({message.author.name}) tried to broadcast "{settingsPrefix}krill version"!')
+                        logger.log_err(f'User {str(message.author.id)}({message.author.name}) tried to broadcast "{settingsPrefix}krill version"!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
                         user = client.get_user(714247788715573310)
                         # Sends me an alert.
                         user.send(f'User {str(message.author.id)}({message.author.name}) tried to broadcast "{settingsPrefix}krill version"!')
@@ -224,7 +222,7 @@ async def checkMessage(message:Message, client:Client):
                     try:
                         await message.delete()
                     except:
-                        log_err(get_filname(), "Couldn't delete that message, does the bot have sufficient permissions?")
+                        logger.log_err("Couldn't delete that message, does the bot have sufficient permissions?", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
                 yuh = get_permittedServers(client, message, True)
                 await broadcast_announcement(yuh[0], yuh[1], replace_krillBroadcast(message.content.replace(settingsPrefix, '', 1)), False)
@@ -240,4 +238,4 @@ async def checkMessage(message:Message, client:Client):
 
         if not cmd == None:
             author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
-            log_info(get_filname(), author)
+            logger.log_info(author, True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
