@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed to the new `chars-betterlogs` python package I've published
 - Added semantic versioning to the code.
-- Made a python script to embed the current version of the readme so it doesn't have to fetch from github
+- Made a python script to embed the current version of the all the md files so it doesn't have to fetch from github
+- Fixed up krillJson and made it use NeoCities as the file hoster. see [Neocities Settings Json](https://github.com/CharGoldenYT/KrillYouBot/blob/main/readmes/Neocities%20Settings%20Json.md)
 
 ## [4.0.0]
 

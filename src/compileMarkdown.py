@@ -2,6 +2,22 @@ import os, sys
 from time import sleep
 from io import TextIOWrapper
 from versionShit import curSemVersion, lastSemVersion
+from globalStuff import compareVersions, logger
+
+def get_gitVer()->str:
+    import urllib.request as urllib
+    from inspect import currentframe, getframeinfo
+    url = ''
+    versionToReturn = ''
+    try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/gitVer.txt').read().decode('utf-8'))
+    except urllib.HTTPError as e: 
+        frameinfo = getframeinfo(currentframe()); logger.log_err('shit the url handler died lmao: ' + str(e), True, frameinfo.filename, frameinfo.lineno)
+    if url != None:versionToReturn = url
+    else: versionToReturn = 'ah shite, url handler died'
+    return versionToReturn
+
+
+gitVer = get_gitVer()
 
 if curSemVersion.identifier == '-testver': curSemVersion.identifier = None
 
@@ -24,6 +40,8 @@ def getChangelog(rawChangelog:str)->str:
     return changelog.rstrip().lstrip().replace('> [!NOTE]\n', '').replace('> ', '-# ')
 
 print('This script will re insert all available readmes into a python script callable by krill you bot!')
+
+if not compareVersions(): print('Hey bro, you\'re compiling for an old version!')
 
 relativeReadmePath = '../readmes/'
 

@@ -1,10 +1,32 @@
 r'''This python script contains functions meant to handle the processing of Krill You Bot's server specific settings.'''
-from ftplib import FTP
+from modules.backend.neocitiesHandler import NeocitiesHandler
 import json as pyJson
 import os
 from discord.client import Client
 from globalStuff import logger
 from inspect import currentframe, getframeinfo
+from modules.backend.broadcastTools import search_betweenDelimiters
+
+def initSite()->NeocitiesHandler:
+    try:
+        rawJson = open('botStuff/neocitiesSettings.json', 'r')
+        json = pyJson.loads(rawJson.read()); rawJson.close()
+        return NeocitiesHandler(json['name'], json['pass'], json["fullURL"])
+    except Exception as e:
+        logger.log_err(f'SHIT THERE WAS AN ERROR! "{str(e)}"', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
+
+ncSite:NeocitiesHandler = initSite()
+    
+from discord.guild import Guild
+def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
+    foundChannel = False
+    for channel in guild.channels:
+        if not foundChannel:
+            cID = channel.id
+            permissions = channel.permissions_for(guild.get_member(client.user.id))
+            if permissions.send_messages:
+                foundChannel = True
+                return cID
 
 def legacy_SettingsCheck(gID:int):
     r'''From earlier testing, i used a different file name format so yknow.'''
@@ -16,115 +38,80 @@ def legacy_SettingsCheck(gID:int):
         file = open(newPath, 'w'); file.write(fileToRename); file.close
         os.remove(path)
 
-def initializeFTP():
-    r'''What the fuck you think this does, makes you suddenly have a giant bowl a' cereal?'''
-    try:
-        ftpSettings = open('botStuff/settings.txt', 'r').read().split('|'); ftp = FTP(ftpSettings[0], ftpSettings[1], ftpSettings[2]); return ftp
-    except Exception as e:
-        logger.log_err(f'SHIT THERE WAS AN ERROR! "{str(e)}"', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return None
-    
-    
-from discord.guild import Guild
-def initializeSettings(gID:int, cID:int) -> str:
+def retrieveSettings(gID:int):
+    if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT ACCESS A BACKUP!'); return
+    newSettings = ncSite.retrieveText(f'serverSettings/serverID-{str(gID)}_Settings.json')
+    if newSettings == None: return
+
     file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
-    file.write('''{\n   "serverSettings": {\n       "logsChannel": ''' + str(cID) +''',\n       "sendOnReadyMessage": true,\n       "allowBroadcasts": true,\n       "configPrefix": "?"\n   }\n}''')
+    file.write(newSettings)
     file.close()
-    return ('''{\n   "serverSettings": {''' + 
-             '''\n       "logsChannel": ''' + str(cID) +
-            ''',\n       "newVersionBroadcastChannel": ''' + str(cID) +
-            ''',\n       "sendOnReadyMessage": true'''+
-            ''',\n       "allowBroadcasts": true'''+
-            ''',\n       "configPrefix": "?"\n   }\n}''')
+
+def updateRemoteSettings(gID:str):
+    if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT MAKE A BACKUP!'); return
+    return ncSite.addFile(f'serverSettings/serverID-{str(gID)}_Settings.json')
 
 
-def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
-    foundChannel = False
-    for channel in guild.channels:
-        if not foundChannel:
-            cID = channel.id
-            permissions = channel.permissions_for(guild.get_member(client.user.id))
-            if permissions.send_messages:
-                foundChannel = True
-                return cID
-            
-            
-# The following are ran when using "?krill settings" or "?krill config"
+def write_serverSettings(gID:int, cID:int, bool:bool, prefix:str, allowBroadcasts:bool, newVersionBroadcastChannel:int)->bool:
+    retrieveSettings(gID) # Always update the local copy BEFORE writing.
 
-def new_Json(gID:int, cID:int, bool:bool, prefix:str, allowBroadcasts:bool, newVersionBroadcastChannel:int) -> bool:
-    r'''ok so basically, tries to write to a path determined by the gID, if it cant, it returns False, else True.'''
-    try:
-        file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
-        file.write('''{\n   "serverSettings": {''' +
+    try: os.read('serverSettings/')
+    except:
+        try:os.mkdir('serverSettings/')
+        except OSError as e: pass
+    file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
+    file.write('''{\n   "serverSettings": {''' +
                     '''\n       "logsChannel": ''' + str(cID) +
                    ''',\n       "newVersionBroadcastChannel": ''' + str(newVersionBroadcastChannel) +
                    ''',\n       "sendOnReadyMessage": ''' + str(bool).lower() + 
                    ''',\n       "allowBroadcasts": ''' + str(allowBroadcasts).lower() + 
                    ''',\n       "configPrefix": "''' + prefix +
                    '''"\n   }\n}''')
-        file.close()
-        return True
-    except Exception as e:
-        print(f'ERROR! "{str(e)}"')
-        return False
-            
-def checkFor_outdatedJsons(path:str, gID:int):
-    rawJson = open(path, 'r').read()
-    json = pyJson.loads(rawJson)
-    json = json['serverSettings']
-    try:
-        var = json['allowBroadcasts']
-        #print(f'{path} is up to date!')
-    except Exception as e:
-        if str(e).__contains__('allowBroadcasts'):
-            print(f'{path} is malformed or outdated!')
-            change_setting(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["sendOnReadyMessage"], json["logsChannel"])
-            return # return since its such an old file it wouldn't have "allowBroadcasts" in it.
+    file.close()
     
+    updateRemoteSettings(gID)
+    return None
+
+def pullServerSettings():
+    try: os.read('serverSettings/')
+    except: logger.log_err('COULD NOT OPEN FOLDER `serverSettings/`!'); return False
+    
+    for file in os.read('serverSettings/'):
+        gID = search_betweenDelimiters(file, 'serverID-', '_Settings.json')
+        if gID != None: retrieveSettings(gID)
+
+def get_Json(gID:int)->(str|None):
     try:
-        var = json['newVersionBroadcastChannel']
+        file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'r')
+        s = file.read(); file.close()
+        return s
     except Exception as e:
-        if str(e).__contains__('newVersionBroadcastChannel'):
-            print(f'{path} is malformed or outdated!')
-            change_setting(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["allowBroadcasts"], json["logsChannel"])
-            return # In case of future additions, return since the older file would already be 2 versions behind anyway.
+        logger.log_err('Could not open `' + f'serverSettings/serverID-{str(gID)}_Settings.json' + '`!'); return None
 
-
-
-def parse_krillJson(path:str, gID:int, cID:int, client:(None | Client) = None) -> list:
-    r'''This makes it possible to read stored server data.'''
-
-    checkFor_outdatedJsons(path, gID)
+def checkSettings(gID):
     try:
-        file = open(path, 'r').read()
-        json = pyJson.loads(file)
-        json = json['serverSettings']
-        return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts'], json['newVersionBroadcastChannel']]
+        file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'r')
+        json = pyJson.loads(file.read())['serverSettings']; file.close()
+
+        try: test = json["allowBroadcasts"]
+        except Exception as e: write_serverSettings((gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["sendOnReadyMessage"], json["logsChannel"]))
+    
+        try: test = json['newVersionBroadcastChannel']
+        except Exception as e: write_serverSettings(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["allowBroadcasts"], json["logsChannel"])
+    
     except Exception as e:
-        print(f'Cant parse {path}! "{e}"')
-        firstChannel = get_firstAvailableChannel(client.get_guild(gID))
-        if client == None:
-            rawJson = initializeSettings(gID, cID)
-            json = pyJson.loads(rawJson); json = json['serverSettings']
-            return [cID, False, '?', False, firstChannel]
-        if not client == None:
-            rawJson = initializeSettings(gID, firstChannel, client)
-            json = pyJson.loads(rawJson); json = json['serverSettings']
-            return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts'], json['newVersionBroadcastChannel']]
+        logger.log_err('Could not open `' + f'serverSettings/serverID-{str(gID)}_Settings.json' + '`!'); return
 
-def write_cloudSettings(gID:int):
-    path = f'serverSettings/serverID-{str(gID)}_Settings.json'
-    fileToWrite = open(path, 'rb')
-    try:
-        ftp = initializeFTP(); ftp.cwd('htdocs/krillYouBot_ServerSettings'); ftp.storlines(f'STOR {path}', fileToWrite); ftp.close()
-        return None
-    except Exception as e:
-        return f'SHIT HAD AN ERROR {str(e)}'
+def parse_krillJson(gID:int, cID:int, client:(None | Client) = None) -> list:
+    legacy_SettingsCheck(gID)
+    checkSettings(gID)
+    
+    json = get_Json(gID)
 
+    if json == None:
+        write_serverSettings(gID, cID, True, '?', True, cID)
+        json = get_Json(gID)
 
-def change_setting(gID:int, logsChannel:int, sendOnReadyMessage:bool, prefix:str, allowBroadcasts:bool, newVersionBroadcastChannel:int):
-    path = f'serverSettings/serverID-{str(gID)}_Settings.json'
-    print(f'Overwriting "{path}"!')
-    if new_Json(gID, logsChannel, sendOnReadyMessage, prefix, allowBroadcasts, newVersionBroadcastChannel):
-        """ print('Uploading to FTP!')
-        var = write_cloudSettings(gID) """ # FTP SHIT BROKEY.
-        return None
+    json = pyJson.loads(json)["serverSettings"]
+
+    return [json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json['allowBroadcasts'], json['newVersionBroadcastChannel']]

@@ -2,7 +2,7 @@ from modules.commands.krillAbout import make_changelog
 from inspect import currentframe, getframeinfo
 from globalStuff import get_filname, compareVersions, curVersion, logger
 from discord.guild import Guild
-from modules.backend.krillJson import initializeFTP
+from modules.backend.krillJson import pullServerSettings, initSite
 
 class bcolors:
     HEADER = '\033[95m'
@@ -58,34 +58,11 @@ def create_logsFolders():
 
 
 def grab_serverSettings(servers:list[Guild]):
-    """ import os
-    isGrabbed = None
-    for server in servers:
-        path = f'serverSettings/serverID-{str(server.id)}_Settings.json'
-        try:
-            ftp = initializeFTP()
-            ftp.cwd('htdocs/krillYouBot_ServerSettings')
-            file = open(path, 'rb')
-            fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'wb')
-            try:
-                ftp.retrbinary(f'RETR {path}', fileCompare.write); fileCompare.close()
-                fileCompare = open(f'serverID-{str(server.id)}_Settings.temp', 'rb')
-                if not fileCompare == file:
-                    #print('Files are different, replacing with upstream ver')
-                    isGrabbed = True
-                    file = open(path, 'wb'); file.writelines(fileCompare.readlines()); file.close(); fileCompare.close()
-            except Exception as e:
-                fileCompare.close()
-                file.close()
-                log_err(get_filname(), f'There was an error trying to grab server settings for {str(server.id)}: "{str(e)}"')
-            os.remove(f'serverID-{str(server.id)}_Settings.temp')
-        except Exception as e:
-            log_err(get_filname(), f'[STARTUP]: There was an error processing server "{server.name}" ID: "{str(server.id)}"! The error was "{str(e)}"', False)
-    return isGrabbed """
-    return None
+    return pullServerSettings()
 
 def run_startTasks():
     create_logsFolders()
+    initSite()
 
     result = get_latestChangelog().lower()
     if result == 'n':

@@ -7,7 +7,7 @@ from discord.guild import Guild
 from datetime import datetime
 from platform import python_version
 from chars_betterlogs.logs import Logging
-from modules.backend.semver import SemVer
+from modules.backend.semver import SemVer, fromString
 from time import sleep
 from versionShit import *
 
@@ -45,7 +45,7 @@ def get_permittedServers(client:Client, message:Message, isBroadcastCommand:bool
             channelID = get_firstAvailableChannel(guild, client)
         guildID = guild.id
         from modules.backend.krillJson import parse_krillJson
-        serverSettings = parse_krillJson(idToPath(guildID), guildID, channelID)
+        serverSettings = parse_krillJson(guildID, channelID)
         if not isBroadcastCommand:
             if serverSettings[1]:
                 allowedServers.append(guild)
@@ -92,8 +92,8 @@ def compareVersions() -> bool:
         try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/gitVer.txt').read().decode('utf-8'))
         except urllib.HTTPError as e: 
             frameinfo = getframeinfo(currentframe()); logger.log_err('shit the readme url handler died lmao: ' + str(e), True, frameinfo.filename, frameinfo.lineno)
-        if not url == None:versionToReturn = url
-    return curVersion == versionToReturn
+        if url != None:versionToReturn = url
+    return curSemVersion.isEqual(fromString(versionToReturn))
 
 def get_formattedVersion():
     r'''So i dont get circular import errors, i've basically ported the functionality'''

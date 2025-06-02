@@ -2,7 +2,7 @@ r'''This script handles the processing of messages to match it to a valid comman
 from discord.message import Message
 from modules.discordpy.client import Client
 from globalStuff import logger, curVersion, idToPath, ownerIDs as permittedUserIDs, get_permittedServers, get_permittedServers_version
-from modules.backend.krillJson import parse_krillJson, new_Json
+from modules.backend.krillJson import parse_krillJson
 from modules.commands.krillAbout import get_readme, get_tos, get_privacy_policy, make_author_string, make_changelog
 from modules.commands.krill import getKrillMessage
 from modules.backend.broadcastTools import *
@@ -25,7 +25,7 @@ def get_setting(setting:str, path:str, gID:int, cID:int) -> (str | list[str]):
         return [f'Could not get setting `{setting}`: "`', str(e), '`"']
 
 def set_setting(setting:str, v:str, gID:int, globalSettings:list):
-    from modules.backend.krillJson import change_setting
+    from modules.backend.krillJson import write_serverSettings as change_setting
     if setting == 'configprefix':
         return change_setting(gID, globalSettings[0], globalSettings[1], v, globalSettings[3], globalSettings[4])
         
@@ -73,7 +73,7 @@ def replace_krillBroadcast(string:str):
 
 
 async def checkMessage(message:Message, client:Client):
-    serverSettings = parse_krillJson(idToPath(message.guild.id), message.guild.id, message.channel.id)
+    serverSettings = parse_krillJson(message.guild.id, message.channel.id)
 
     settingsPrefix = serverSettings[2]
 

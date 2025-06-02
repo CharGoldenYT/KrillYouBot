@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+def fromString(version:str)->SemVer: return SemVer.fromString(version)
+
 class SemVer:
     r'''Modified version of the Semantic Versioning system that allows for an additional string identifier.
     
@@ -52,6 +54,7 @@ class SemVer:
                 for char in patchStringSplit:
                     newVersion+=char
                 ver.identifier = newVersion
+        return ver
     
     def greaterThan(self, version:SemVer) -> bool:
         r'Checks if another SemVer is greater than this SemVer (Ignores Identifier.)'
@@ -78,3 +81,5 @@ class SemVer:
         if (self.lessThan(version)): return True
         if self.major == version.major and self.minor == version.minor and self.patch == version.patch: return True
         return False
+    
+    def isEqual(self, version:SemVer)->bool: return (self.major == version.major and self.minor == version.minor and self.patch == version.patch)
