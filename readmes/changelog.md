@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.0]
+## [4.1.0]
+
+### Changed
+
+- Changed to the new `chars-betterlogs` python package I've published
+- Added semantic versioning to the code.
+- Made a python script to embed the current version of the readme so it doesn't have to fetch from github
+
+## [4.0.0]
 
 > [!NOTE]
 > Wow 4 whole versions of Krill You Bot!

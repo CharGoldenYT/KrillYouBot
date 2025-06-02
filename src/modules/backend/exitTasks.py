@@ -1,4 +1,4 @@
-from modules.backend.betterLogs.logs import bcolors, Logging
+from chars_betterlogs.logs import bcolors, Logging
 from globalStuff import curVersion, filname, logger as global_logger
 import time, shutil, os
 from inspect import currentframe, getframeinfo

@@ -5,3 +5,5 @@ logs
 serverSettings/*
 betterLogs*/
 script.py
+*/backup/*
+*.backup

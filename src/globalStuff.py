@@ -6,16 +6,19 @@ from discord.message import Message
 from discord.guild import Guild
 from datetime import datetime
 from platform import python_version
-from modules.backend.betterLogs.logs import Logging
+from chars_betterlogs.logs import Logging
+from modules.backend.semver import SemVer
+from time import sleep
+from versionShit import *
 
 # Variables
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = "logs/krillYouBotLog-" + time + ".xml"
 
-curVersion = '4.0'
-lastVersion = '3.3h-3'
-ownerIDs = [714247788715573310, 300020084808744962, 940383429529337886,
-            1081752556730064936, 428541977298993152] # The Discord User ID's who own the bot, and can use special commands.
+curVersion = curSemVersion.toString()
+lastVersion = lastSemVersion.toString()
+ownerIDs = [714247788715573310, 300020084808744962, 940383429529337886, 1081752556730064936, 428541977298993152]
+# The Discord User ID's who own the bot, or that I trust, and can use special commands.
 
 logger:Logging = Logging('tempLog_' + time + '.xml', f'<!-- Created by Krill You Bot v{curVersion}-->')
 logger._set_filename(filname)
@@ -69,21 +72,26 @@ def get_filname():
     return filname
 
 def check_pythonVersion():
-    # Fun fact it seems all 3.12 versions work lmao
-    if not python_version().__contains__('3.12') and not python_version().__contains__('3.13'):
-        print(f'Krill you bot\'s rewrite was coded and tested with Python 3.12 you may run into problems or unexpected errors!')
+    from inspect import currentframe, getframeinfo
+    pyVerList = python_version().split('.')
+    pyVer = f'{pyVerList[0]}.{pyVerList[1]}'
 
+    match pyVer:
+        case '3.12' | '3.13':msg = 'Well guess yer\' safe. Fer\' now.'
+        case _:
+            semPyVer = SemVer(int(pyVerList[0]), int(pyVerList[1]), int(pyVerList[2]))
+            if semPyVer.lessThan(SemVer(3, 10, 0)): logger.log_fatal("Python version is lower than 3.10! please update your python version and run this script again!"); exit(1)
+            frameinfo = getframeinfo(currentframe()); logger.log_warn('Krill you bot\'s rewrite was coded and tested with Python 3.12 you may run into problems or unexpected errors!', True, frameinfo.filename, frameinfo.lineno)
         
 def compareVersions() -> bool:
     import urllib.request as urllib
     from inspect import currentframe, getframeinfo
-    from modules.backend.betterLogs.betterLogs import log_err
     url = ''
     versionToReturn = curVersion
     if not curVersion.lower() == 'unreleased':
         try:url = str(urllib.urlopen('https://raw.githubusercontent.com/gameygu-0213/KrillYouBot/main/gitVer.txt').read().decode('utf-8'))
         except urllib.HTTPError as e: 
-            frameinfo = getframeinfo(currentframe()); log_err(filname, '[' + str(frameinfo.filename) + '] [' + str(frameinfo.lineno) + ']shit the readme url handler died lmao: ' + str(e))
+            frameinfo = getframeinfo(currentframe()); logger.log_err('shit the readme url handler died lmao: ' + str(e), True, frameinfo.filename, frameinfo.lineno)
         if not url == None:versionToReturn = url
     return curVersion == versionToReturn
 

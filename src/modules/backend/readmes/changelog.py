@@ -1,0 +1,1 @@
+changelog = 'You forgot to run `<repoPath>/batchfiles/compileMarkdown.py`!'
