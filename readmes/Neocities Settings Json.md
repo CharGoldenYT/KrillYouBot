@@ -6,6 +6,6 @@ under `botStuff/` add a file named `neocitiesSettings.json` formatted like so, a
 {
     "name": "site-name",
     "pass": "passWord",
-    "fullURL": "https://siteName.neocities.com/" // Remember, this does NOT have to be a neocities site, it can also be your owned domain!
+    "fullURL": "https://siteName.neocities.org/" // Remember, this does NOT have to be a neocities site, it can also be your owned domain!
 }
 ```
