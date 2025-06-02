@@ -2,7 +2,7 @@ bot-env/*
 logs/*
 export/*
 pyinstaller/*
-__pycache__/*
+*/__pycache__/*
 .vscode/*
 botKey.txt
 *.spec

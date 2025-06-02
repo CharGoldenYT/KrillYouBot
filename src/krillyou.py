@@ -19,6 +19,7 @@ try:
     botKey = open('botStuff/botKey.txt').read()
 except:
     print('Error finding the botkey! make sure it is in a folder named "botStuff" where you launched the exe/script!')
+    logger.close()
     exit(1)
 
 from modules.backend.startTasks import run_startTasks; run_startTasks()
