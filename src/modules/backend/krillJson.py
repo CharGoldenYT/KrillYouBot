@@ -73,10 +73,10 @@ def write_serverSettings(gID:int, cID:int, bool:bool, prefix:str, allowBroadcast
     return None
 
 def pullServerSettings():
-    try: os.read('./serverSettings/')
+    try: os.listdir('./serverSettings/')
     except OSError as e: logger.log_err(f'COULD NOT OPEN FOLDER `./serverSettings/` "{e}"!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return False
     
-    for file in os.read('./serverSettings/'):
+    for file in os.listdir('./serverSettings/'):
         gID = search_betweenDelimiters(file, 'serverID-', '_Settings.json')
         if gID != None: retrieveSettings(gID)
 
