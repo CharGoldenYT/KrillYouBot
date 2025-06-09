@@ -39,7 +39,7 @@ def legacy_SettingsCheck(gID:int):
         os.remove(path)
 
 def retrieveSettings(gID:int):
-    if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT ACCESS A BACKUP!'); return
+    if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT ACCESS A BACKUP!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return
     newSettings = ncSite.retrieveText(f'serverSettings/serverID-{str(gID)}_Settings.json')
     if newSettings == None: return
 
@@ -48,7 +48,7 @@ def retrieveSettings(gID:int):
     file.close()
 
 def updateRemoteSettings(gID:str):
-    if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT MAKE A BACKUP!'); return
+    if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT MAKE A BACKUP!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return
     return ncSite.addFile(f'serverSettings/serverID-{str(gID)}_Settings.json')
 
 
@@ -73,10 +73,10 @@ def write_serverSettings(gID:int, cID:int, bool:bool, prefix:str, allowBroadcast
     return None
 
 def pullServerSettings():
-    try: os.read('serverSettings/')
-    except: logger.log_err('COULD NOT OPEN FOLDER `serverSettings/`!'); return False
+    try: os.read('./serverSettings/')
+    except OSError as e: logger.log_err(f'COULD NOT OPEN FOLDER `./serverSettings/` "{e}"!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return False
     
-    for file in os.read('serverSettings/'):
+    for file in os.read('./serverSettings/'):
         gID = search_betweenDelimiters(file, 'serverID-', '_Settings.json')
         if gID != None: retrieveSettings(gID)
 
@@ -86,7 +86,7 @@ def get_Json(gID:int)->(str|None):
         s = file.read(); file.close()
         return s
     except Exception as e:
-        logger.log_err('Could not open `' + f'serverSettings/serverID-{str(gID)}_Settings.json' + '`!'); return None
+        logger.log_err('Could not open `' + f'serverSettings/serverID-{str(gID)}_Settings.json' + '`!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return None
 
 def checkSettings(gID):
     try:
@@ -100,7 +100,7 @@ def checkSettings(gID):
         except Exception as e: write_serverSettings(gID, json["logsChannel"], json["sendOnReadyMessage"], json["configPrefix"], json["allowBroadcasts"], json["logsChannel"])
     
     except Exception as e:
-        logger.log_err('Could not open `' + f'serverSettings/serverID-{str(gID)}_Settings.json' + '`!'); return
+        logger.log_err('Could not open `' + f'serverSettings/serverID-{str(gID)}_Settings.json' + '`!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return
 
 def parse_krillJson(gID:int, cID:int, client:(None | Client) = None) -> list:
     legacy_SettingsCheck(gID)
