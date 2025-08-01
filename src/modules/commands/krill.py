@@ -2,7 +2,7 @@ from datetime import datetime
 import random
 
 def getKrillMessage(userID:str):
-    userID = userID.replace('<@ ', '')
+    userID = userID.replace('<@ ', '').replace("<@", "").replace("/krill", "")
     dateNow = str(datetime.today().strftime('%m/%d'))
     integer = 0
     message = ''

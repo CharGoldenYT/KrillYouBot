@@ -7,63 +7,8 @@ from modules.commands.krillAbout import get_readme, get_tos, get_privacy_policy,
 from modules.commands.krill import getKrillMessage
 from modules.backend.broadcastTools import *
 from modules.commands.components.confighelp import getCommands
-
-def get_setting(setting:str, path:str, gID:int, cID:int) -> (str | list[str]):
-    try:
-        settings = parse_krillJson(path, gID, cID)
-        if setting == 'logschannel':
-            return str(settings[0])
-        if setting == 'sendonreadymessage':
-            return str(settings[1])
-        if setting == 'configprefix':
-            return str(settings[2])
-        if setting == 'allowbroadcasts':
-            return str(settings[3])
-        if setting == 'newversionbroadcastchannel':
-            return str(settings[4])
-    except Exception as e:
-        return [f'Could not get setting `{setting}`: "`', str(e), '`"']
-
-def set_setting(setting:str, v:str, gID:int, globalSettings:list):
-    from modules.backend.krillJson import write_serverSettings as change_setting
-    if setting == 'configprefix':
-        return change_setting(gID, globalSettings[0], globalSettings[1], v, globalSettings[3], globalSettings[4])
-        
-    if setting == 'logschannel':
-        try:
-            int(v)
-        except Exception as e:
-            return f'Had an error setting `logsChannel`! "{str(e)}"'
-        if globalSettings[4] == globalSettings[0]:
-            return change_setting(gID, int(v), globalSettings[1], globalSettings[2], globalSettings[3], int(v))
-        return change_setting(gID, int(v), globalSettings[1], globalSettings[2], globalSettings[3], globalSettings[4])
-        
-    if setting == 'newversionbroadcastchannel':
-        try:
-            int(v)
-        except Exception as e:
-            return f'Had an error setting `newversionbroadcastchannel`! "{str(e)}"'
-        
-        return change_setting(gID, globalSettings[0], globalSettings[1], globalSettings[2], globalSettings[3], int(v))
-        
-    if setting == 'sendonreadymessage':
-        if not v == 'true' and not v == 'false':
-            return f'Only valid options for `sendOnReadyMessage` are "true" or "false"! got {v}'
-        if v == 'true':
-            return change_setting(gID, globalSettings[0], True, globalSettings[2], globalSettings[3], globalSettings[4])
-        if v == 'false':
-            return change_setting(gID, globalSettings[0], False, globalSettings[2], globalSettings[3], globalSettings[4])
-        
-    if setting == 'allowbroadcasts':
-        if not v == 'true' and not v == 'false':
-            return f'Only valid options for `allowBroadcasts` are "true" or "false"! got {v}'
-        if v == 'true':
-            return change_setting(gID, globalSettings[0], globalSettings[1], globalSettings[2], True, globalSettings[4])
-        if v == 'false':
-            return change_setting(gID, globalSettings[0], globalSettings[1], globalSettings[2], False, globalSettings[4])
-        
-    return f"That's not a valid setting! `{setting}`"
-        
+from modules.commands.krillConfigure import configure_setting as configCommand
+import random
 
 def replace_krillBroadcast(string:str):
     import re
@@ -111,7 +56,6 @@ async def checkMessage(message:Message, client:Client):
 
         if messageLower.startswith('/pipebomb'):
             cmd = '/pipebomb'
-            import random
             varRandInt = random.randint(0,4)
             Finalmessage = ''
             if varRandInt == 0: Finalmessage = 'KABLOOOEY'
@@ -127,9 +71,24 @@ async def checkMessage(message:Message, client:Client):
             author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
             logger.log_info(author, True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
+        if messageLower.startswith("/rolldice"):
+            cmd = "/rolldice"
+            diceTypes:list[str] = ["d4", "d6", "d8", "d10", "d12", "d20", "d100"]
 
+            finalMessage = "Invalid dice type! the valid values are `d4, d6, d8, d10, d12, d20, d100`"
+            diceType = messageLower.replace("/rolldice ", "")
+            rawNum = messageLower.replace("/rolldice d", "")
+            print(diceType)
+            if diceTypes.__contains__(diceType):
+                varRandInt = random.randint(0, int(rawNum))
+                finalMessage = "Rolled a " + str(varRandInt) + "!"
 
-            
+            try:
+                await message.channel.send(finalMessage)
+            except:
+                logger.log_err("Can't send a message! are there appropriate permissions?", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
+            author = make_author_string(str(message.author), message.author.id, cmd, message.content, message.channel.id, message.guild.name, message.guild.id)
+            logger.log_info(author, True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
     if messageLower.startswith(settingsPrefix):
         suppressEmbeds = True
@@ -193,24 +152,7 @@ async def checkMessage(message:Message, client:Client):
             commandList = command.replace('krill configure', '').rstrip().lstrip().split(' ')
             #print(commandList)
 
-            if commandList[0] == 'help':
-                suppressEmbeds = False
-                finalMessage = getCommands(settingsPrefix)
-                
-            if not commandList[0] == 'help':
-                if commandList[1] == '?' or commandList[1] == 'help':
-                            var = get_setting(commandList[0], idToPath(message.guild.id), message.guild.id, message.channel.id)
-                            if isinstance(var, str):
-                                finalMessage = f'`{commandList[0]}` is "`' + var + '`"'
-                            if not isinstance(var, str):
-                                finalMessage = var[0] + var[1] + var[2]
-
-                                
-                if permission and not commandList[0] == 'help' and not (commandList[1] == '?' or commandList[1] == 'help'):
-                    if not commandList[1] == '?' and not commandList[1] == 'help':
-                            finalMessage = set_setting(commandList[0], commandList[1], message.guild.id, serverSettings)
-                            if finalMessage == None:
-                                finalMessage = f'Set setting `{commandList[0]}` to `{commandList[1]}`!'
+            configCommand(commandList, idToPath(message.guild.id), message.guild.id, message.channel.id, serverSettings, settingsPrefix)
 
         if command.startswith('krill broadcast'):
             cmd = settingsPrefix + 'krill broadcast'

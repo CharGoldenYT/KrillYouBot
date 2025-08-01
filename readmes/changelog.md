@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.1]
+
+### Changed
+
+- Fixed a bug where `/krill<@name` resulted in `Krilled /krill<@name`
+- Added dice rolling because yes. (`/rollDice [d4/d6/d8/d10/d20/d100]`)
+
 ## [4.1.0]
 
 ### Changed

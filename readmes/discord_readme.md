@@ -16,6 +16,8 @@
 
 `/pipebomb` pipebomb
 
+`/rolldice [d4/d6/d8/d10/d20/d100]` rolls a dice of the selected type.
+
 `?levelup` Funny message for people who wanna know how to level up (Not Configurable yet!!!!)
 
 ***(Since 3.0)*** `?krill configure` Configure server specific settings use `?krill configure help` to see available settings!
