@@ -50,6 +50,6 @@ class NeocitiesHandler:
         try:url = str(urllib.urlopen(f'{rawURL}{path}').read().decode('utf-8'))
         except Exception as e:
             strThing = str(e).split(":")[0]
-            raise NCError(int(strThing.replace("HTTP Error ", "")), str(e))
+            print(NCError(int(strThing.replace("HTTP Error ", "")), str(e)).__repr__())
 
         return url
