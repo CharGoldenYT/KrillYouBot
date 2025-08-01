@@ -5,6 +5,9 @@ import urllib.request as urllib
 from globalStuff import logger
 from inspect import currentframe, getframeinfo
 
+class NCError(Exception):
+    errcode:int; message:str
+
 class NeocitiesHandler:
     sitename:str; password:str; fullURL:str
     site:NeoCities
@@ -42,10 +45,11 @@ class NeocitiesHandler:
         url = 'Could not fetch file'
         rawURL = self.fullURL
         if not rawURL.endswith('/'): rawURL += '/'
+        print(f"{rawURL}{path}")
 
         try:url = str(urllib.urlopen(f'{rawURL}{path}').read().decode('utf-8'))
         except Exception as e:
-            logger.log_err('shit the url handler died lmao: ' + str(e), True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
-            return None
+            strThing = str(e).split(":")[0]
+            raise NCError(int(strThing.replace("HTTP Error ", "")), str(e))
 
         return url

@@ -40,6 +40,7 @@ def legacy_SettingsCheck(gID:int):
 
 def retrieveSettings(gID:int):
     if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT ACCESS A BACKUP!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return
+    print(ncSite.fullURL)
     newSettings = ncSite.retrieveText(f'serverSettings/serverID-{str(gID)}_Settings.json')
     if newSettings == None: return
 
@@ -77,7 +78,7 @@ def pullServerSettings():
     except OSError as e: logger.log_err(f'COULD NOT OPEN FOLDER `./serverSettings/` "{e}"!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return False
     
     for file in os.listdir('./serverSettings/'):
-        gID = search_betweenDelimiters(file, 'serverID-', '_Settings.json')
+        gID = file.replace("serverID-", "").replace("_Settings.json", "")
         if gID != None: retrieveSettings(gID)
 
 def get_Json(gID:int)->(str|None):
