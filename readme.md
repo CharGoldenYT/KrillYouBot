@@ -40,7 +40,4 @@ If you didn't already do it, check [here](docs/pathSetup/readme.md)
 then simply run `build.bat` from the root of the repo with everything downloaded.
 
 > [!NOTE]
->
-> discord.py uses a library that is missing in 3.13 and thus this bot cannot be compiled/used with any version 3.13.x right now.
->
-> Extra Note: Pre 1.4 you may have to manually create the `logs` folder.
+> Pre 1.4 you may have to manually create the `logs` folder.
