@@ -16,7 +16,7 @@
 
 `/pipebomb` pipebomb
 
-`/rolldice [d4/d6/d8/d10/d20/d100]` rolls a dice of the selected type.
+***(Since 4.1.1)*** `/rolldice [d4/d6/d8/d10/d20/d100]` rolls a dice of the selected type.
 
 `?levelup` Funny message for people who wanna know how to level up (Not Configurable yet!!!!)
 
