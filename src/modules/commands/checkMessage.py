@@ -80,7 +80,7 @@ async def checkMessage(message:Message, client:Client):
             rawNum = messageLower.replace("/rolldice d", "")
             print(diceType)
             if diceTypes.__contains__(diceType):
-                varRandInt = random.randint(0, int(rawNum))
+                varRandInt = random.randint(1, int(rawNum))
                 finalMessage = "Rolled a " + str(varRandInt) + "!"
 
             try:
