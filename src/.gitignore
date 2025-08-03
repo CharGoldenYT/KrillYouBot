@@ -3,7 +3,7 @@ __pycache__/*
 botStuff/*
 logs
 serverSettings/*
-betterLogs*/
+./betterLogs*/
 script.py
 */backup/*
 *.backup
