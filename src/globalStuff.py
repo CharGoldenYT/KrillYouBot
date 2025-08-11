@@ -7,23 +7,46 @@ from discord.guild import Guild
 from datetime import datetime
 from platform import python_version
 from chars_betterlogs.logs import Logging
-from modules.backend.semver import SemVer, fromString
+from modules.backend.krilljson.semver import SemVer, fromString
 from time import sleep
 from versionShit import *
+import sys
+
+# Classes
+class GlobalFunctions:
+    class ListTools:
+        def removeHyphenFromStrList(strlist:list[str])->list[str]:
+            newList:list[str] = []
+            for string in strlist:
+                newList.append(string.removeprefix("-"))
+
+            return newList
 
 # Variables
 time = str(datetime.today().strftime('%d_%m_%Y-%H_%M_%S'))
 filname = "logs/krillYouBotLog-" + time + ".xml"
+scriptArgs:list[str] = GlobalFunctions.ListTools.removeHyphenFromStrList(sys.argv)
+isDebugMode:bool = (scriptArgs.__contains__("isDebug") or scriptArgs.__contains__("debug"))
 
 curVersion = curSemVersion.toString()
 lastVersion = lastSemVersion.toString()
 ownerIDs = [714247788715573310, 300020084808744962, 940383429529337886, 1081752556730064936, 428541977298993152]
 # The Discord User ID's who own the bot, or that I trust, and can use special commands.
+lockdownIDs = [1263399385312530453]
+# The Server ID's this can only run in when debug testing is enabled.
 
 logger:Logging = Logging('tempLog_' + time + '.xml', f'<!-- Created by Krill You Bot v{curVersion}-->')
 logger._set_filename(filname)
 
+
 # Functions
+def removeHyphenFromStrList(strlist:list[str])->list[str]:
+    newList:list[str] = []
+    for string in strlist:
+        newList.append(string.removeprefix("-"))
+
+    return newList
+
 def get_firstAvailableChannel(guild:Guild, client:Client) -> int:
     foundChannel = False
     for channel in guild.channels:
@@ -44,7 +67,7 @@ def get_permittedServers(client:Client, message:Message, isBroadcastCommand:bool
         if message == None:
             channelID = get_firstAvailableChannel(guild, client)
         guildID = guild.id
-        from modules.backend.krillJson import parse_krillJson
+        from modules.backend.krilljson.krillJson import parse_krillJson
         serverSettings = parse_krillJson(guildID, channelID)
         if not isBroadcastCommand:
             if serverSettings[1]:

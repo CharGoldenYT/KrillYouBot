@@ -7,3 +7,4 @@ serverSettings/*
 script.py
 */backup/*
 *.backup
+*.xml

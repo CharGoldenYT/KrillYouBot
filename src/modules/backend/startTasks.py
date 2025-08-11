@@ -2,7 +2,8 @@ from modules.commands.krillAbout import make_changelog
 from inspect import currentframe, getframeinfo
 from globalStuff import get_filname, compareVersions, curVersion, logger
 from discord.guild import Guild
-from modules.backend.krillJson import pullServerSettings, initSite
+from modules.backend.krilljson.krillJson import pullServerSettings, initSite
+from chars_betterlogs.internal.semver import SemVer
 
 class bcolors:
     HEADER = '\033[95m'

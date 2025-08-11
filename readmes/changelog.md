@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.2.0]
+
+### Changed
+
+- Made crashes actually able to tell you that the bot is down.
+- Made a debug testing mode
+- Fixed an oversight that would destroy server setting files and replace them with `Could not fetch file` if the files existed, but no copy existed on the Neocities backup.
+- Fixed a bug that would cause the path for downloading a Neocities backup to point to an invalid path
+
 ## [4.1.2]
 
 ### Changed

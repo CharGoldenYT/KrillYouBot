@@ -34,14 +34,7 @@ async def broadcast_readyMessage(servers:list[Guild], channels:list[int]):
             logger.log_err(f'Could not send message for server {channel.guild.id}({channel.guild.name})! {str(e)}', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
 async def broadcast_closeMessage(servers:list[Guild], channels:list[int]):
-    pos = -1
-    for server in servers:
-        pos += 1
-        channel = server.get_channel(channels[pos])
-        try:
-            await channel.send('Krill You Bot is down!')
-        except Exception as e:
-            logger.log_err(f'Could not send message for server {channel.guild.id}({channel.guild.name})! {str(e)}', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
+    print("DEPRECATED: This function has been stubbed, and is no longer used!")
 
 # The feature that started this whole recode.
 async def broadcast_announcement(servers:list[Guild], channels:list[int], message:str, suppressEmbeds:bool = False):

@@ -1,4 +1,4 @@
-from modules.backend.krillJson import parse_krillJson
+from modules.backend.krilljson.krillJson import parse_krillJson
 from modules.commands.components.confighelp import getCommands
 
 def get_setting(setting:str, path:str, gID:int, cID:int) -> (str | list[str]):
@@ -17,8 +17,8 @@ def get_setting(setting:str, path:str, gID:int, cID:int) -> (str | list[str]):
     except Exception as e:
         return [f'Could not get setting `{setting}`: "`', str(e), '`"']
 
-def set_setting(setting:str, v:str, gID:int, globalSettings:list):
-    from modules.backend.krillJson import write_serverSettings as change_setting
+def set_setting(setting:str, v:str, gID:int, globalSettings:list)->(bool | str):
+    from modules.backend.krilljson.krillJson import write_serverSettings as change_setting
     if setting == 'configprefix':
         return change_setting(gID, globalSettings[0], globalSettings[1], v, globalSettings[3], globalSettings[4])
         

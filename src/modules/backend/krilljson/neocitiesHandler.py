@@ -1,6 +1,6 @@
 import neocities
 from neocities import NeoCities
-from modules.backend.siteFile import SiteFile
+from modules.backend.krilljson.siteFile import SiteFile
 import urllib.request as urllib
 from globalStuff import logger
 from inspect import currentframe, getframeinfo

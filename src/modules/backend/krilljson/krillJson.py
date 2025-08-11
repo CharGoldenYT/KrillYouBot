@@ -1,5 +1,5 @@
 r'''This python script contains functions meant to handle the processing of Krill You Bot's server specific settings.'''
-from modules.backend.neocitiesHandler import NeocitiesHandler
+from modules.backend.krilljson.neocitiesHandler import NeocitiesHandler
 import json as pyJson
 import os
 from discord.client import Client
@@ -39,12 +39,14 @@ def legacy_SettingsCheck(gID:int):
         os.remove(path)
 
 def retrieveSettings(gID:int):
+    path = f'serverSettings/serverID-{gID.__str__()}_Settings.json'
     if ncSite == None: logger.log_warn('HEY, YOU DIDN\'T PROVIDE NEOCITIES SITE DETAILS, YOU CANNOT ACCESS A BACKUP!', True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno); return
     print(ncSite.fullURL)
-    newSettings = ncSite.retrieveText(f'serverSettings/serverID-{str(gID)}_Settings.json')
-    if newSettings == None: return
+    newSettings = ncSite.retrieveText(path)
+    if newSettings == None or newSettings == "Could not fetch file": 
+        logger.log_error("File not found!"); return
 
-    file = open(f'serverSettings/serverID-{str(gID)}_Settings.json', 'w')
+    file = open(path, 'w')
     file.write(newSettings)
     file.close()
 

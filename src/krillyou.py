@@ -1,5 +1,11 @@
 # holy SHIT i cleaned up the main code a lot.
 
+# Version Requisite Checks
+
+from chars_betterlogs.logs import Logging, SemVer
+if Logging.version.lessThan(SemVer(3,3,0)):
+    print("You MUST have at least `chars-betterlogs==3.3.0.dev1` to run Krill You Bot!")
+
 
 # Imports
 from os import system
@@ -45,7 +51,6 @@ atexit.register(close)
 
 # Main code
 isRunning = True
-
 @client.event
 async def on_ready():
     logger.log_info(f'[STARTUP]: CLIENT READY: Ready to receive and send messages as: {client.user}', False, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
@@ -88,8 +93,18 @@ async def close():
     yuh = get_permittedServers(client, None)
     await broadcast_closeMessage(yuh[0], yuh[1])
 
-def die():
-    file = open('script.py', 'w'); file.write('''# Discord setup
+def convertGuildList(gList:list[list])->list[list[int]]:
+    cIDs:list[int] = gList[1]
+    gIDs:list[int] = []
+
+    for guild in gList[0]:
+        gIDs.append(guild.id)
+
+    return [gIDs, cIDs]
+
+def getScript()->str:
+
+    return f'''# Discord setup
 import discord
 from discord.client import Client
 
@@ -98,26 +113,37 @@ intents.message_content = True
 
 client = Client(intents=intents)
 
+
 # botkey
 botKey = None
 try:
     botKey = open('botStuff/botKey.txt').read()
 except:
     print('Error finding the botkey! make sure it is in a folder named "botStuff" where you launched the exe/script!')
+    logger.close()
     exit(1)
 
+servers:list[list] = {convertGuildList(get_permittedServers(client, None))}
 # actual shit to do.
 @client.event
 async def on_ready():
-# This gets ID's from my server then sends a message and closes!
-#                             My server ID              krill-bot-status Channel ID
-    await client.get_guild(991595497376714832).get_channel(1279923362923151401).send('Krill You Bot is Down!')
-    exit()
+    pos:int = 0
+    for serer in servers[0]:
+        try:
+            await client.get_guild(serer).get_channel(servers[1][pos]).send('Krill You Bot is Down!')
+        except Exception as e:
+            file = open("script.log", "a"); file.write(str(e)); file.close()
+        pos = pos + 1
 
-client.run()'''); file.close()
+client.run(botKey)'''
+
+def die():
+    file = open('script.py', 'w'); file.write(getScript()); file.close()
     import subprocess
-    process = subprocess.run(['cmd /c', 'python', 'script.py'])
+    process = subprocess.Popen(["cmd",  "/c", "python", "script.py"])
     print(process.stdout.decode())
+    import os
+    os.remove("script.py")
     exit()
 
 

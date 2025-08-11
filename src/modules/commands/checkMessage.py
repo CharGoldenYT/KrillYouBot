@@ -1,8 +1,8 @@
 r'''This script handles the processing of messages to match it to a valid command!'''
 from discord.message import Message
 from modules.discordpy.client import Client
-from globalStuff import logger, curVersion, idToPath, ownerIDs as permittedUserIDs, get_permittedServers, get_permittedServers_version
-from modules.backend.krillJson import parse_krillJson
+from globalStuff import logger, curVersion, idToPath, ownerIDs as permittedUserIDs, lockdownIDs, isDebugMode, get_permittedServers, get_permittedServers_version
+from modules.backend.krilljson.krillJson import parse_krillJson
 from modules.commands.krillAbout import get_readme, get_tos, get_privacy_policy, make_author_string, make_changelog
 from modules.commands.krill import getKrillMessage
 from modules.backend.broadcastTools import *
@@ -25,6 +25,14 @@ async def checkMessage(message:Message, client:Client):
     messageLower = message.content.lower()
 
     cmd = None
+
+    curServer = message.channel.guild.id
+
+    if curServer == None or (isDebugMode and not lockdownIDs.__contains__(curServer)):
+        try:
+            await message.channel.send("Krill You Bot is currently in debug testing, you cannot use this bot at the moment")
+        except:
+            logger.log_err("Can't send a message! are there appropriate permissions?", True, getframeinfo(currentframe()).filename, getframeinfo(currentframe()).lineno)
 
     if messageLower.startswith('/'):
 
@@ -97,6 +105,13 @@ async def checkMessage(message:Message, client:Client):
 
         finalMessage = None
 
+        if command.startswith("cmd"):
+            if not permittedUserIDs.__contains__(message.author.id): finalMessage = "Why would I let random people run random commands on my computer?"
+            commandList = command.replace("cmd", "", 1).split()
+
+            from modules.backend.commandInterpreter import ReprCommand, runCommand
+            runCommand(ReprCommand(commandList.pop(0), commandList))
+
         if command.startswith('levelup'):
             cmd = settingsPrefix + 'levelup'
             finalMessage = 'I dunno :3c=L\n-# You Level up by simply talking'
@@ -152,7 +167,7 @@ async def checkMessage(message:Message, client:Client):
             commandList = command.replace('krill configure', '').rstrip().lstrip().split(' ')
             #print(commandList)
 
-            configCommand(commandList, idToPath(message.guild.id), message.guild.id, message.channel.id, serverSettings, settingsPrefix)
+            return configCommand(commandList, idToPath(message.guild.id), message.guild.id, message.channel.id, serverSettings, settingsPrefix)
 
         if command.startswith('krill broadcast'):
             cmd = settingsPrefix + 'krill broadcast'
